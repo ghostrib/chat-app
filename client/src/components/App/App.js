@@ -5,6 +5,7 @@ import ChatBox from '../ChatBox/ChatBox';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
 import Footer from '../Footer/Footer';
+import Modal from '../Modal/Modal';
 
 import img1 from '../../assets/babelfish-new.png';
 import img2 from '../../assets/chat.png';
@@ -59,6 +60,11 @@ class App extends Component {
         },
       ],
     };
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+
+  toggleModal() {
+    this.setState({ visible: !this.state.visible });
   }
 
   render() {
@@ -66,13 +72,17 @@ class App extends Component {
       <>
         <Container>
           <>
-            <Header />
+            <Header toggleModal={this.toggleModal} />
             <SideBar usersOnline={this.state.usersOnline} />
             <ChatBox />
             <TextInput />
             <Footer />
           </>
         </Container>
+        <Modal
+          toggleModal={this.toggleModal}
+          visible={this.state.visible}
+        />
       </>
     );
   }

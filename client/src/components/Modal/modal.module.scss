@@ -1,0 +1,278 @@
+/* .modal,
+.modal__inner,
+.bottom,
+.middle,
+.last {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 100%;
+}
+
+.modal {
+  background: repeating-linear-gradient(
+    45deg,
+    blue 0px,
+    blue 80px,
+    black 80px,
+    black 90px,
+    orange 90px,
+    orange 160px,
+    black 160px,
+    black 170px
+  );
+  opacity: 50%;
+  animation: closedoor 4s linear infinite alternate;
+}
+
+.modal__inner {
+  background: repeating-linear-gradient(
+    315deg,
+    orange 0px,
+    orange 80px,
+    black 80px,
+    black 90px,
+    blue 90px,
+    blue 160px,
+    black 160px,
+    black 170px
+  );
+  opacity: 50%;
+  animation: opendoor 4s linear infinite alternate;
+}
+
+.bottom {
+  background: repeating-linear-gradient(
+    90deg,
+    white 0px,
+    white 20px,
+    black 20px,
+    black 40px
+  );
+  opacity: 50%;
+}
+
+.middle {
+  background: repeating-linear-gradient(
+    0deg,
+    black 0px,
+    black 20px,
+    white 20px,
+    white 40px
+  );
+  opacity: 50%;
+}
+
+@keyframes thing {
+  0% {
+    background: orange;
+  }
+  50% {
+    background: blue;
+  }
+  100% {
+    background: orange;
+  }
+}
+
+@keyframes opaque {
+  0% {
+    opacity: 25%;
+  }
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 25%;
+  }
+}
+
+@keyframes opaque2 {
+  0% {
+    opacity: 50%;
+  }
+  50% {
+    opacity: 25%;
+  }
+  100% {
+    opacity: 50%;
+  }
+}
+
+@keyframes stretch {
+  0% {
+    background: repeating-linear-gradient(
+      45deg,
+      blue 0px,
+      blue 10px,
+      black 10px,
+      black 20px,
+      orange 20px,
+      orange 30px,
+      black 30px,
+      black 40px
+    );
+  }
+  50% {
+    background: repeating-linear-gradient(
+      45deg,
+      blue 0px,
+      blue 80px,
+      black 80px,
+      black 90px,
+      orange 90px,
+      orange 160px,
+      black 160px,
+      black 170px
+    );
+  }
+  100% {
+    background: repeating-linear-gradient(
+      45deg,
+      blue 0px,
+      blue 10px,
+      black 10px,
+      black 20px,
+      orange 20px,
+      orange 30px,
+      black 30px,
+      black 40px
+    );
+  }
+} */
+
+/* .last {
+  background: black;
+}
+
+@keyframes opendoor {
+  from {
+    visibility: visible;
+    transform: translate(100%, -100%);
+    transform: perspective(10px) translate(10px, 20px) rotateY(3deg);
+    transform: translate(0%, -50%) rotateY(90deg);
+    skewY(-8deg);
+    skew(0, -180deg);
+  }
+  to {
+    visibility: visible;
+    transform: translate(-50%, -50%) rotateY(0deg);
+
+    transform: perspective(500px) translate(-42%, -50%) rotateY(87deg);
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes closedoor {
+  from {
+    transform: translate(-100%, -50%) rotateY(90deg);
+  }
+  to {
+    transform: translateY(-50%, -50%) rotateY(0deg);
+  }
+} */
+
+/* 
+
+
+
+
+
+
+
+*/
+
+.modal {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 100%;
+  opacity: 90%;
+  background: black;
+}
+
+.modal__window {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 50%;
+  width: 40%;
+  opacity: 100%;
+  background: #e7e7e7;
+}
+
+.login__form {
+  height: 80%;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button__google {
+  display: grid;
+  grid-template-columns: 40px 220px;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 40px;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #0061eb;
+  color: #0061eb;
+  font-size: 19px;
+  font-family: Lato;
+  font-weight: 700;
+  outline: none;
+}
+
+.button__google:hover {
+  background: linear-gradient(
+    90deg,
+    white 0px,
+    white 40px,
+    #0061eb 40px
+  );
+  color: white;
+}
+
+.button__google:active {
+  background: linear-gradient(
+    90deg,
+    white 0px,
+    white 40px,
+    hsl(215, 100%, 25%) 40px
+  );
+}
+
+.googleLogo {
+  height: 26px;
+  width: 26px;
+}
+
+.close {
+  justify-self: flex-end;
+  align-self: flex-start;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
