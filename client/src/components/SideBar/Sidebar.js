@@ -1,31 +1,29 @@
 import React from 'react';
 import s from './sidebar.module.scss';
 
-const SideBar = () => {
+import PropTypes from 'prop-types';
+import UserCard from './UserCard/UserCard';
+
+const SideBar = ({ usersOnline }) => {
   return (
     <aside className={s.sidebar}>
-      <ul>
-        <li className={s.sidebar__list__item}>
-          <span className={s.username}>billy bob backscratch</span>
-        </li>
-        <li className={s.sidebar__list__item}>
-          <span className={s.username}>Chuck the fabulous</span>
-        </li>
-        <li className={s.sidebar__list__item}>
-          {' '}
-          <span className={s.username}>Raymond peters</span>
-        </li>
-        <li className={s.sidebar__list__item}>
-          {' '}
-          <span className={s.username}>Jason Marshals</span>
-        </li>
-        <li className={s.sidebar__list__item}>
-          {' '}
-          <span className={s.username}>Pauline Chambers</span>
-        </li>
+      <ul className={s.sidebar__list}>
+        {usersOnline.map((user, i) => {
+          return (
+            <UserCard
+              key={(i + 1) * Math.random()}
+              username={user.name}
+              imageUrl={user.image}
+            />
+          );
+        })}
       </ul>
     </aside>
   );
 };
 
 export default SideBar;
+
+SideBar.propTypes = {
+  usersOnline: PropTypes.array,
+};
