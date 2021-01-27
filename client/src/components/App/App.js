@@ -24,14 +24,14 @@ class App extends Component {
       // dummy messages until we get the backend api setup
       messages: [
         {
-          name: 'I_AM_COLOSSUS',
-          image: img6,
+          username: 'I_AM_COLOSSUS',
+          imageUrl: img6,
           message:
             'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste cumque molestias tempore adipisci minima odio nesciunt aut minus possimus dolore vel deserunt nemo, natus expedita. Tenetur excepturi eum error harum. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam eos et eius nemo quos quas debitis odio, reiciendis eum vero cum. Odit nisi iure assumenda doloremque eligendi, totam est exercitationem.',
         },
         {
-          name: 'The Great and Powerful OZ',
-          image: img6,
+          username: 'The Great and Powerful OZ',
+          imageUrl: img6,
           message:
             'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia labore, maiores facere cum doloremque dignissimos nihil assumenda architecto fugit impedit magni voluptas aut expedita iusto beatae, dolorum dolor mollitia vitae! Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur deserunt iusto voluptatibus reprehenderit aliquam? Dolore tenetur repudiandae quibusdam adipisci, itaque ipsam explicabo officiis numquam, maiores odio voluptates eius voluptas. Illum?',
         },
@@ -65,6 +65,7 @@ class App extends Component {
     this.initClient = this.initClient.bind(this);
     this.signInWithGoogle = this.signInWithGoogle.bind(this);
     this.signOutWithGoogle = this.signOutWithGoogle.bind(this);
+    this.saveMessage = this.saveMessage.bind(this);
   }
 
   initClient() {
@@ -132,6 +133,21 @@ class App extends Component {
     this.setState({ visible: !this.state.visible });
   }
 
+  saveMessage(message) {
+    if (!this.isLoggedIn()) {
+      return this.toggleModal();
+    }
+    const { messages, username, imageUrl } = this.state;
+    const currentMessage = { username, imageUrl, message };
+    this.setState({
+      messages: [...messages, currentMessage],
+    });
+  }
+
+  isLoggedIn() {
+    return this.state.isSignedIn;
+  }
+
   componentDidMount() {
     window.gapi.load('auth2', this.initClient);
   }
@@ -149,8 +165,8 @@ class App extends Component {
               signOutWithGoogle={this.signOutWithGoogle}
             />
             <SideBar usersOnline={this.state.usersOnline} />
-            <ChatBox />
-            <TextInput />
+            <ChatBox messages={this.state.messages} />
+            <TextInput saveMessage={this.saveMessage} />
             <Footer />
           </>
         </Container>

@@ -1,0 +1,50 @@
+.container {
+  height: 80px;
+  line-height: 22px;
+}
+
+.container__user {
+  padding: 12px;
+  margin: 12px;
+}
+
+.container__user:hover {
+  background: rgb(211, 211, 211);
+}
+
+.user {
+  display: grid;
+  grid-template-columns: 50px auto;
+  grid-template-areas:
+    'image name'
+    'image message';
+  align-items: flex-start;
+  gap: 2px 12px;
+  /* background: lightblue; */
+}
+
+.user:hover {
+  background: rgb(211, 211, 211);
+  /* padding: 28px; */
+}
+
+.image {
+  height: 48px;
+  grid-area: image;
+}
+
+.user__image {
+  height: 100%;
+}
+
+.user__name {
+  font-size: 17px;
+  font-weight: 800;
+  grid-area: name;
+}
+
+.user__message {
+  font-family: lato;
+  font-size: 16px;
+  font-weight: 400;
+}

@@ -1,0 +1,20 @@
+.main {
+  background: #ebebeb;
+  grid-area: main;
+  height: var(--main-height);
+  overflow-y: auto;
+}
+
+.main__list {
+  /* margin: 20px; */
+  display: flex;
+  flex-direction: column;
+}
+
+.main__list__item {
+  padding: 10px;
+}
+
+.user_avatar {
+  max-height: 40px;
+}
