@@ -1,9 +1,8 @@
-.dropdown {
-  /* display: fixed; */
+.slideout {
   display: flex;
   width: var(--signin-button-width);
 }
 
-.dropdown__list {
+.slideout__list {
   justify-content: flex-start;
 }
