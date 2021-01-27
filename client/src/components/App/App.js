@@ -20,6 +20,7 @@ class App extends Component {
     this.state = {
       visible: false,
       googleAuth: null,
+      isSignedIn: null,
       // dummy messages until we get the backend api setup
       messages: [
         {
@@ -140,7 +141,13 @@ class App extends Component {
       <>
         <Container>
           <>
-            <Header toggleModal={this.toggleModal} />
+            <Header
+              toggleModal={this.toggleModal}
+              isSignedIn={this.state.isSignedIn}
+              username={this.state.username}
+              imageUrl={this.state.imageUrl}
+              signOutWithGoogle={this.signOutWithGoogle}
+            />
             <SideBar usersOnline={this.state.usersOnline} />
             <ChatBox />
             <TextInput />

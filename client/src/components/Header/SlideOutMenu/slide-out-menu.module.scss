@@ -1,0 +1,9 @@
+.dropdown {
+  /* display: fixed; */
+  display: flex;
+  width: var(--signin-button-width);
+}
+
+.dropdown__list {
+  justify-content: flex-start;
+}
