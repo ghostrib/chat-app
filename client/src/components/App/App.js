@@ -61,10 +61,78 @@ class App extends Component {
       ],
     };
     this.toggleModal = this.toggleModal.bind(this);
+    this.initClient = this.initClient.bind(this);
+    this.signInWithGoogle = this.signInWithGoogle.bind(this);
+    this.signOutWithGoogle = this.signOutWithGoogle.bind(this);
+  }
+
+  initClient() {
+    window.gapi.auth2
+      .init({ client_id: process.env.REACT_APP_GAPI_CLIENT_ID })
+      .then((googleAuth) => {
+        const isSignedIn = googleAuth.isSignedIn.get();
+
+        this.setState({ isSignedIn, showButton: true, googleAuth });
+
+        if (isSignedIn) {
+          this.getUserProfile();
+        }
+
+        googleAuth.isSignedIn.listen((isSignedIn) => {
+          this.setState({ isSignedIn });
+          isSignedIn
+            ? this.getUserProfile()
+            : this.removeUserProfile();
+        });
+      });
+  }
+
+  getUserProfile() {
+    const { googleAuth } = this.state;
+    const user = googleAuth.currentUser.get().getBasicProfile();
+    const username = user.getName();
+    const imageUrl = user.getImageUrl();
+    const newUser = { name: username, image: imageUrl };
+    const { usersOnline } = this.state;
+    this.setState({
+      username,
+      imageUrl,
+      visible: false,
+      usersOnline: [...usersOnline, newUser],
+    });
+  }
+
+  removeUserProfile() {
+    const { usersOnline } = this.state;
+    const currentOnline = usersOnline.filter((user) => {
+      return (
+        user.image !== this.state.imageUrl &&
+        user.name !== this.state.username
+      );
+    });
+    this.setState({ usersOnline: currentOnline });
+  }
+
+  signInWithGoogle(e) {
+    e.preventDefault();
+    const { googleAuth } = this.state;
+    const isSignedIn = googleAuth.isSignedIn.get();
+    if (!isSignedIn) {
+      googleAuth.signIn({ prompt: 'select_account' });
+    }
+  }
+
+  signOutWithGoogle() {
+    this.removeUserProfile();
+    this.state.googleAuth.signOut();
   }
 
   toggleModal() {
     this.setState({ visible: !this.state.visible });
+  }
+
+  componentDidMount() {
+    window.gapi.load('auth2', this.initClient);
   }
 
   render() {
@@ -82,6 +150,7 @@ class App extends Component {
         <Modal
           toggleModal={this.toggleModal}
           visible={this.state.visible}
+          signInWithGoogle={this.signInWithGoogle}
         />
       </>
     );
