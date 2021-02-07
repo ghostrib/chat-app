@@ -22,12 +22,12 @@ const Header = ({
           imageUrl={imageUrl}
           signOutWithGoogle={signOutWithGoogle}
         />
-      ) : !isSignedIn && isSignedIn !== null ? (
+      ) : (
         <SignInButton
           toggleModal={toggleModal}
           buttonClass={buttonClass}
         />
-      ) : null}
+      )}
     </header>
   );
 };
