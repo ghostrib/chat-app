@@ -49,6 +49,38 @@ class App extends Component {
     }
   }
 
+  getUsersOnline() {
+    const db = firebase.database().ref('/userlist');
+    db.once('value')
+      .then((query) => query.val())
+      .then((data) => Object.values(data))
+      .then((users) => users.filter((user) => user.online))
+      .then((usersOnline) => this.setState({ usersOnline }))
+      .catch(console.error);
+
+    db.on('value', (data) => {
+      const usersOnline = Object.values(data.val()).filter((users) => users.online);
+      this.setState({ usersOnline });
+    });
+  }
+
+  getMessages() {
+    const db = firebase.database().ref('/messages');
+    db.limitToLast(10)
+      .once('value')
+      .then((query) => query.val())
+      .then((data) => Object.values(data))
+      .then((array) => array.sort((a, b) => a.time - b.time))
+      .then((messages) => this.setState({ messages }))
+      .catch(console.error);
+
+    db.on('child_added', (message) => {
+      this.setState({
+        messages: [...this.state.messages, message.val()],
+      });
+    });
+  }
+
   async createOrUpdate() {
     try {
       const userStatus = await firebase.database().ref(`/userlist/${this.state.uid}`);
@@ -66,8 +98,8 @@ class App extends Component {
   async componentDidMount() {
     console.clear();
 
-    // this.getUsersOnline();
-    // this.getMessages();
+    this.getUsersOnline();
+    this.getMessages();
     firebase.auth().onAuthStateChanged(this.handleAuthStateChanged);
   }
 
