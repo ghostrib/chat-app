@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import s from './usercard.module.scss';
-const UserCard = ({ username, imageUrl }) => {
+const UserCard = ({ name, image }) => {
   return (
     <li className={s.sidebar__list__item}>
-      <img
-        className={s.avatar}
-        src={imageUrl}
-        alt="user profile picture"
-      />
-      <span className={s.username}>{username}</span>
+      <img className={s.avatar} src={image} alt="user profile picture" />
+      <span className={s.name}>{name}</span>
     </li>
   );
 };
@@ -17,6 +13,6 @@ const UserCard = ({ username, imageUrl }) => {
 export default UserCard;
 
 UserCard.propTypes = {
-  username: PropTypes.string,
-  imageUrl: PropTypes.string,
+  name: PropTypes.string,
+  image: PropTypes.string,
 };

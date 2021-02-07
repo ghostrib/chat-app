@@ -3,29 +3,20 @@ import PropTypes from 'prop-types';
 import s from './user-profile.module.scss';
 import SlideOutMenu from '../SlideOutMenu/SlideOutMenu';
 
-const UserProfile = ({ username, imageUrl, signOutWithGoogle }) => {
+const UserProfile = ({ name, image }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
-    <button
-      className={s.profile}
-      onClick={() => setIsVisible(!isVisible)}
-    >
-      {isVisible ? (
-        <SlideOutMenu
-          username={username}
-          signOutWithGoogle={signOutWithGoogle}
-        />
-      ) : null}
-      <img src={imageUrl} alt="" className={s.profile__image} />
+    <button className={s.profile} onClick={() => setIsVisible(!isVisible)}>
+      {isVisible ? <SlideOutMenu name={name} /> : null}
+      <img src={image} alt="" className={s.profile__image} />
     </button>
   );
 };
 
 UserProfile.propTypes = {
-  username: PropTypes.string,
-  imageUrl: PropTypes.string,
-  signOutWithGoogle: PropTypes.func.isRequired,
+  name: PropTypes.string,
+  image: PropTypes.string,
 };
 
 export default UserProfile;
