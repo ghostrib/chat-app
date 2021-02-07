@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import s from './textinput.module.scss';
+import firebase from '../../firebase';
 
 class TextInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentMessage: '',
+      message: '',
     };
     this.updateMessage = this.updateMessage.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
@@ -14,9 +15,24 @@ class TextInput extends React.Component {
 
   sendMessage(e) {
     e.preventDefault();
-    const { currentMessage } = this.state;
-    this.props.saveMessage(currentMessage);
-    this.setState({ currentMessage: '' });
+    if (!this.props.state.isSignedIn) {
+      this.props.toggleModal();
+      return;
+    }
+    if (this.state.message.length) {
+      const db = firebase.database().ref();
+      const key = Date.now(); //db.child('messages').push().key;
+
+      const { name, email, image, uid } = this.props.state;
+      const { message } = this.state;
+      const post = { name, email, image, uid, message, time: key };
+
+      const updates = {};
+      updates['/messages/' + key] = post;
+
+      db.update(updates);
+      this.setState({ message: '' });
+    }
   }
 
   updateMessage(e) {
@@ -27,7 +43,7 @@ class TextInput extends React.Component {
 
   render() {
     const { updateMessage, sendMessage } = this;
-    const { currentMessage } = this.state;
+    const { message } = this.state;
     return (
       <div className={s.message}>
         <form className={s.message__form} onSubmit={sendMessage}>
@@ -36,8 +52,8 @@ class TextInput extends React.Component {
             type="text"
             className={s.message__form__text}
             placeholder="Say hi..."
-            name="currentMessage"
-            value={currentMessage}
+            name="message"
+            value={message}
           />
         </form>
       </div>
@@ -46,7 +62,8 @@ class TextInput extends React.Component {
 }
 
 TextInput.propTypes = {
-  saveMessage: PropTypes.func,
+  state: PropTypes.object.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
 
 export default TextInput;

@@ -113,11 +113,10 @@ class App extends Component {
               isSignedIn={this.state.isSignedIn}
               name={this.state.name}
               image={this.state.image}
-              signOutWithGoogle={this.signOutWithGoogle}
             />
             <SideBar usersOnline={this.state.usersOnline} />
             <ChatBox messages={this.state.messages} />
-            <TextInput saveMessage={this.saveMessage} />
+            <TextInput state={this.state} toggleModal={this.toggleModal} />
             <Footer />
           </>
         </GridContainer>
