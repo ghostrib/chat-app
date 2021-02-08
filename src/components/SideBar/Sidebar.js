@@ -9,7 +9,9 @@ const SideBar = ({ usersOnline }) => {
     <aside className={s.sidebar}>
       <ul className={s.sidebar__list}>
         {usersOnline.map((user, i) => {
-          return <UserCard key={(i + 1) * Math.random()} name={user.name} image={user.image} />;
+          return (
+            <UserCard key={(i + 1) * Math.random()} name={user.name} image={user.image} />
+          );
         })}
       </ul>
     </aside>

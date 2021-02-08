@@ -96,36 +96,23 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    console.clear();
-
     this.getUsersOnline();
     this.getMessages();
     firebase.auth().onAuthStateChanged(this.handleAuthStateChanged);
   }
 
   render() {
+    const { isSignedIn, name, image, usersOnline, messages, visible } = this.state;
+    const { toggleModal, state } = this;
     return (
-      <>
-        <GridContainer>
-          <>
-            <Header
-              toggleModal={this.toggleModal}
-              isSignedIn={this.state.isSignedIn}
-              name={this.state.name}
-              image={this.state.image}
-            />
-            <SideBar usersOnline={this.state.usersOnline} />
-            <ChatBox messages={this.state.messages} />
-            <TextInput state={this.state} toggleModal={this.toggleModal} />
-            <Footer />
-          </>
-        </GridContainer>
-        <Modal
-          toggleModal={this.toggleModal}
-          visible={this.state.visible}
-          signInWithGoogle={this.signInWithGoogle}
-        />
-      </>
+      <GridContainer>
+        <Header toggleModal={toggleModal} isSignedIn={isSignedIn} name={name} image={image} />
+        <SideBar usersOnline={usersOnline} />
+        <ChatBox messages={messages} />
+        <TextInput state={state} toggleModal={toggleModal} />
+        <Footer />
+        <Modal toggleModal={toggleModal} visible={visible} />
+      </GridContainer>
     );
   }
 }

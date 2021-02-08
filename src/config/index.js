@@ -9,4 +9,4 @@ const config = {
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
 };
 
-export default config
+export default config;

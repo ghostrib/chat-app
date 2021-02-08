@@ -15,7 +15,9 @@ const ChatBox = ({ messages }) => {
       <ul className={s.main__list}>
         {messages.map((messageObject, i) => {
           const { name, message, image } = messageObject;
-          return <Message avatar={image} name={name} message={message} key={i} />;
+          return (
+            <Message avatar={image} name={name} message={message} key={i} />
+          );
         })}
         <AlwaysScrollToBottom />
       </ul>
