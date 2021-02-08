@@ -12,9 +12,17 @@
   --grid-messsage: message;
   --grid-footer: footer;
 
+  --sidebar-bg: #313f4e;
   --header-bg: #2c3849;
+  /* #3c4144; */
+  /* --header-bg: #3c4144; */
   --header-color: #e6e6e6;
-  --signin-button-width: 170px;
+  --signin-button-width: 100px;
+  --signin-button-height: 36px;
+  --signin-button-radius: 14px;
+  --signin-button-font-size: 18px;
+  --signin-button-margin: 0 20px 0 0;
+
   --avatar-height: 70%;
 
   --footer-bg: hsl(0, 0%, 70%);
