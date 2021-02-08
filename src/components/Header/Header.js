@@ -1,12 +1,13 @@
 import React from 'react';
 import s from './header.module.scss';
-import SignInButton from './SignInButton/SignInButton';
+// import SignInButton from './LoginButton/LoginButton';
+import ButtonWrapper from './ButtonWrapper/ButtonWrapper';
 
 import UserProfile from './UserProfile/UserProfile';
 import PropTypes from 'prop-types';
 
 const Header = ({ isSignedIn, toggleModal, name, image }) => {
-  const buttonClass = isSignedIn ? s.hidden : s.visible;
+  // const buttonClass = isSignedIn ? s.hidden : s.visible;
 
   return (
     <header className={s.header}>
@@ -16,7 +17,7 @@ const Header = ({ isSignedIn, toggleModal, name, image }) => {
       {isSignedIn ? (
         <UserProfile name={name} image={image} />
       ) : (
-        <SignInButton toggleModal={toggleModal} buttonClass={buttonClass} />
+        <ButtonWrapper toggleModal={toggleModal} isSignedIn={isSignedIn} />
       )}
     </header>
   );
