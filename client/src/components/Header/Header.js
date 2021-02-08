@@ -10,6 +10,9 @@ const Header = ({ isSignedIn, toggleModal, name, image }) => {
 
   return (
     <header className={s.header}>
+      <div className={s.logo}>
+        <div className={s.logo__name}>My awesome chat app</div>
+      </div>
       {isSignedIn ? (
         <UserProfile name={name} image={image} />
       ) : (
