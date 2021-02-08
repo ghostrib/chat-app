@@ -1,0 +1,8 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(var(--signin-button-width), 1fr));
+  // grid-template-rows: var(--header-height);
+  // align-items: center;
+  // height: var(--header-height)
+  // height: 100%;
+}
