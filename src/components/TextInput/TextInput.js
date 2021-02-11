@@ -36,9 +36,17 @@ class TextInput extends React.Component {
   }
 
   updateMessage(e) {
+    sessionStorage.setItem('autosave', e.target.value);
+
     this.setState({
       [e.target.name]: e.target.value,
     });
+  }
+
+  componentDidMount() {
+    if (sessionStorage.getItem('autosave')) {
+      this.setState({ message: sessionStorage.getItem('autosave') });
+    }
   }
 
   render() {
