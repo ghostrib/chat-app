@@ -10,13 +10,12 @@ const ButtonWrapper = ({ isSignedIn, toggleModal }) => {
   return (
     <div className={s.wrapper}>
       <LoginButton isSignedIn={isSignedIn} toggleModal={toggleModal} />
-      <SignUpButton />
     </div>
   );
 };
 
 ButtonWrapper.propTypes = {
-  isSignedIn: PropTypes.bool.isRequired,
+  isSignedIn: PropTypes.any,
   toggleModal: PropTypes.func.isRequired,
 };
 
