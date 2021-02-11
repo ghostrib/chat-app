@@ -1,21 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import s from './login.module.scss';
+import firebase from '../../../firebase';
 
-const SignInButton = ({ toggleModal, isSignedIn }) => {
+const LoginButton = ({ toggleModal, isSignedIn }) => {
+  // const isSignedIn = firebase.auth().currentUser !== null;
   const buttonClass = isSignedIn ? s.login__hidden : s.login__button;
+
   return (
     <div className={s.login}>
       <button className={buttonClass} onClick={toggleModal}>
-        <span className={s.login__button__text}>Log in</span>
+        <span className={s.login__button__text}>Sign in</span>
       </button>
     </div>
   );
 };
 
-SignInButton.propTypes = {
+LoginButton.propTypes = {
   toggleModal: PropTypes.func.isRequired,
-  isSignedIn: PropTypes.bool.isRequired,
+  isSignedIn: PropTypes.any,
 };
 
-export default SignInButton;
+export default LoginButton;
