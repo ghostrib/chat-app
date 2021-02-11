@@ -8,7 +8,8 @@ import TextInput from '../TextInput/TextInput';
 import Footer from '../Footer/Footer';
 import Modal from '../Modal/Modal';
 
-import firebase, { provider, db, createNewUserEntry } from '../../firebase';
+import firebase, { createNewUserEntry } from '../../firebase';
+import { echo, checkCookies, initApp, parseCookies } from '../../utils';
 
 class App extends Component {
   constructor(props) {
@@ -29,8 +30,10 @@ class App extends Component {
 
   handleAuthStateChanged(user) {
     const isSignedIn = user !== null;
+    echo({ isSignedIn });
     let profile = {};
     if (isSignedIn) {
+      document.cookie = `login=${Date.now()}`;
       profile = {
         name: user.displayName,
         image: user.photoURL,
@@ -88,7 +91,7 @@ class App extends Component {
       const values = await query.val();
 
       values
-        ? userStatus.update({ online: this.state.isSignedIn })
+        ? userStatus.update({ online: this.state.isSignedIn, image: this.state.image })
         : createNewUserEntry(this.state);
     } catch (error) {
       console.error(error.message);
@@ -96,9 +99,33 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    // initApp();
+    const watchForChanges = checkCookies();
+
+    const id = setInterval(watchForChanges, 100);
+    this.setState({ intervalId: id });
+
     this.getUsersOnline();
     this.getMessages();
     firebase.auth().onAuthStateChanged(this.handleAuthStateChanged);
+
+    firebase
+      .auth()
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then((data) => echo({ data }))
+      .catch(console.error);
+
+    firebase.auth().onIdTokenChanged((user) => {
+      if (user) {
+        user
+          .getIdTokenResult()
+          .then((data) => {
+            echo({ data });
+          })
+          .catch(console.error);
+        // user.getIdTokenResult();
+      }
+    });
   }
 
   render() {
