@@ -25,3 +25,5 @@ yarn-error.log*
 
 *tests
 .eslintcache
+
+login-form.png
