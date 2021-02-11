@@ -1,0 +1,22 @@
+.header {
+  height: 100%;
+  width: 100%;
+
+  background: #303e4d;
+  font-size: 1em;
+  color: whitesmoke;
+  font-family: 'Amatic SC';
+}
+
+.title {
+  font-size: 48px;
+  text-align: center;
+  width: 100%;
+}
+
+.close {
+  position: absolute;
+  transform: translate(-80%, 0%);
+  width: 100%;
+  text-align: right;
+}
