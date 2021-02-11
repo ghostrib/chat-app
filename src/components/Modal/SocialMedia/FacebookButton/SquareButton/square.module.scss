@@ -1,0 +1,42 @@
+
+
+
+$mediaLoginWidth: 1.8rem;
+$borderRadius: 1rem / 8;
+$white: hsl(0, 0, 88%);
+
+
+
+.button {
+  width: $mediaLoginWidth;
+  height: $mediaLoginWidth;
+  background: #4267b2;
+
+  border-radius: $borderRadius;
+  border: none;
+  outline: none;
+  box-shadow: 0px 0px 0px 1px #4267b2;
+
+  &:hover {
+    background: #3a5b9c;
+    box-shadow: 0px 0px 0px 1px #3a5b9c;
+  }
+
+  &:active {
+    box-shadow: 0px 0px 0px 0px #324e86;
+    background: #324e86;
+    .button__logo__icon {
+      width: $mediaLoginWidth / 1.55;
+    }
+  }
+}
+
+.button__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .button__logo__icon {
+    width: $mediaLoginWidth / 1.5;
+  }
+}
