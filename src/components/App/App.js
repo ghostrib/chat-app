@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import GridContainer from '../Grid/Grid';
-
-import Header from '../Header/Header';
+import firebase, { createNewUserEntry } from '../../firebase';
+import { checkCookies, echo } from '../../utils';
 import ChatBox from '../ChatBox/ChatBox';
+import Footer from '../Footer/Footer';
+import GridContainer from '../Grid/Grid';
+import Header from '../Header/Header';
+import Modal from '../Modal/Modal';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
-import Footer from '../Footer/Footer';
-import Modal from '../Modal/Modal';
-
-import firebase, { createNewUserEntry } from '../../firebase';
-import { echo, checkCookies, initApp, parseCookies } from '../../utils';
 
 class App extends Component {
   constructor(props) {
@@ -99,7 +97,6 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    // initApp();
     const watchForChanges = checkCookies();
 
     const id = setInterval(watchForChanges, 100);
