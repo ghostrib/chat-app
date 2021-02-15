@@ -1,17 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import s from './login.module.scss';
-import firebase from '../../../firebase';
+import PropTypes from "prop-types";
+import React from "react";
+import s from "./login.module.scss";
 
 const LoginButton = ({ toggleModal, isSignedIn }) => {
   // const isSignedIn = firebase.auth().currentUser !== null;
   const buttonClass = isSignedIn ? s.login__hidden : s.login__button;
 
   return (
-    <div className={s.login}>
-      <button className={buttonClass} onClick={toggleModal}>
-        <span className={s.login__button__text}>Sign in</span>
-      </button>
+    <div className={s.wrapper}>
+      <div className={s.login}>
+        <button className={buttonClass} onClick={toggleModal}>
+          <span className={s.login__button__text}>Sign in</span>
+        </button>
+      </div>
     </div>
   );
 };
