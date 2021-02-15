@@ -1,7 +1,7 @@
-import React from 'react';
-import s from './slide-out-menu.module.scss';
 import PropTypes from 'prop-types';
+import React from 'react';
 import firebase from '../../../firebase';
+import s from './slide-out-menu.module.scss';
 
 const SlideOutMenu = ({ name }) => {
   const signout = () => {
@@ -13,9 +13,9 @@ const SlideOutMenu = ({ name }) => {
       <ul className={s.slideout__list}>
         <li className={s.slideout__list__name}>{name}</li>
         <li className={s.slideout__list__signout}>
-          <a href="#" className={s.signout} onClick={signout}>
+          <button className={s.signout} onClick={signout}>
             Sign out
-          </a>
+          </button>
         </li>
       </ul>
     </div>
