@@ -2,9 +2,9 @@ import React from 'react';
 import s from './footer.module.scss';
 
 const Footer = () => (
-  <header className={s.footer}>
+  <footer className={s.footer}>
     <div></div>
-  </header>
+  </footer>
 );
 
 export default Footer;
