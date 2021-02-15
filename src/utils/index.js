@@ -12,7 +12,7 @@ export const parseCookies = () => {
       try {
         val = decodeURIComponent(val.replace(/"+/g, ''));
       } catch (ex) {
-        null;
+        return null;
       }
     obj[key] = val;
     return obj;
@@ -22,7 +22,7 @@ export const parseCookies = () => {
 export const checkCookies = function () {
   let firstCookie = document.cookie;
   return function () {
-    let currentCookie = document.cookie;
+    const currentCookie = document.cookie;
 
     if (firstCookie !== currentCookie) {
       if (Object.values(parseCookies()).length) {
@@ -31,7 +31,6 @@ export const checkCookies = function () {
         echo('User has cleared cookies so we should sign out');
         firebase.auth().signOut();
       }
-      // console.log('cookieChanged', 'first', firstCookie, 'current', currentCookie);
       firstCookie = currentCookie;
     }
   };
@@ -67,10 +66,9 @@ export async function loginWith(provider) {
     ) {
       const providers = await firebase.auth().fetchSignInMethodsForEmail(err.email);
       const firstPopupProviderMethod = providers.find((p) =>
-        supportedPopupSignInMethods.includes(p),
+        supportedPopupSignInMethods.includes(p)
       );
 
-      // Test: Could this happen with email link then trying social provider?
       if (!firstPopupProviderMethod) {
         throw new Error(`Your account is linked to a provider that isn't supported.`);
       }
@@ -78,51 +76,10 @@ export async function loginWith(provider) {
       const linkedProvider = getProvider(firstPopupProviderMethod);
       linkedProvider.setCustomParameters({ login_hint: err.email });
 
-      const result = await firebase.auth().signInWithPopup(linkedProvider); //.signInWithPopup(linkedProvider);
+      const result = await firebase.auth().signInWithPopup(linkedProvider);
       result.user.linkWithCredential(err.credential);
     }
-
-    // Handle errors...
-    // toast.error(err.message || err.toString());
   }
 }
 
 window.parseCookies = parseCookies;
-
-// var watchForChanges = checkCookies();
-
-// setInterval(watchForChanges, 100);
-
-export function initApp() {
-  // Result from Redirect auth flow.
-  firebase
-    .auth()
-    .getRedirectResult()
-    .then(function (result) {
-      if (result.credential) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-
-        // The signed-in user info.
-        var user = result.user;
-
-        echo({ token, user });
-      }
-    })
-    .catch(function (error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      if (errorCode === 'auth/account-exists-with-different-credential') {
-        alert('You have already signed up with a different auth provider for that email.');
-        // If you are using multiple auth providers on your app you should handle linking
-        // the user's accounts here.
-      } else {
-        console.error(error);
-      }
-    });
-}
