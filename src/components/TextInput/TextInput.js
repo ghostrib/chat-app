@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import s from './textinput.module.scss';
+import React from 'react';
 import firebase from '../../firebase';
+import s from './textinput.module.scss';
 
 class TextInput extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class TextInput extends React.Component {
     }
     if (this.state.message.length) {
       const db = firebase.database().ref();
-      const key = Date.now(); //db.child('messages').push().key;
+      const key = Date.now();
 
       const { name, email, image, uid } = this.props.state;
       const { message } = this.state;
