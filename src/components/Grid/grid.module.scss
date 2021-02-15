@@ -1,9 +1,11 @@
 .container {
   display: grid;
   grid-template-columns: var(--sidebar-width) auto;
-  grid-template-rows: var(--header-height) auto var(
-      --message-form-height
-    ) var(--footer-height);
+  grid-template-rows:
+    var(--header-height)
+    auto 
+    var(--message-form-height)
+    var(--footer-height);
   grid-template-areas:
     'header header'
     'sidebar main'
