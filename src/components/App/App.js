@@ -9,6 +9,9 @@ import Modal from '../Modal/Modal';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
 
+import services from '../../services';
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -103,14 +106,60 @@ class App extends Component {
     const id = setInterval(watchForChanges, 100);
     this.setState({ intervalId: id });
 
-    this.getUsersOnline();
+    // this.getUsersOnline();
+
+    services.getUsersOnline(usersOnline => {
+      console.log(usersOnline);
+      this.setState({ usersOnline });
+    });
+
     this.getMessages();
-    firebase.auth().onAuthStateChanged(this.handleAuthStateChanged);
+    // firebase.auth().onAuthStateChanged(this.handleAuthStateChanged);
+    firebase.auth().onAuthStateChanged(user => {
+      // user is not null so therefore is signed in
+      if (user) {
+        // determine if the user is a new user
+        const { creationTime, lastSignInTime } = firebase.auth().currentUser.metadata;
+        const isNewUser = creationTime === lastSignInTime;
+
+
+        user.getIdTokenResult().then(tokenResult => {
+          const userData = {
+            name: tokenResult.claims.name,
+            email: tokenResult.claims.email,
+            image: tokenResult.claims.picture,
+            uid: tokenResult.claims.user_id,
+            online: true
+          };
+
+          if (isNewUser) {
+            services.createUserAccount(userData, (response) => {
+              this.setState({
+                name: response.name,
+                image: response.image
+              });
+            });
+          }
+        });
+
+        // user is authenticated and their data stored in database
+        // now we can update the state of our app
+        services.getUsersOnline(usersOnline => this.setState({ usersOnline, isSignedIn: true }));
+      }
+      else {
+        // user is null therefore is signed out
+        this.setState({
+          isSignedIn: false,
+          name: '',
+          image: ''
+        });
+      }
+    });
 
     firebase
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then((data) => echo({ data }))
+      .then((data) => console.log({ dataPersistance: data }))
       .catch(console.error);
 
     firebase.auth().onIdTokenChanged((user) => {
@@ -118,7 +167,7 @@ class App extends Component {
         user
           .getIdTokenResult()
           .then((data) => {
-            echo({ data });
+            echo({ tokenResult: data });
           })
           .catch(console.error);
         // user.getIdTokenResult();

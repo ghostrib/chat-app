@@ -23,15 +23,16 @@ class TextInput extends React.Component {
       const db = firebase.database().ref();
       const key = Date.now();
 
-      const { name, email, image, uid } = this.props.state;
+      const { name, image } = this.props.state;
       const { message } = this.state;
-      const post = { name, email, image, uid, message, time: key };
+      const post = { name, image, message, time: key };
 
       const updates = {};
       updates['/messages/' + key] = post;
 
       db.update(updates);
       this.setState({ message: '' });
+      sessionStorage.setItem('autosave', '');
     }
   }
 

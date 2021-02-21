@@ -5,7 +5,11 @@ import s from './slide-out-menu.module.scss';
 
 const SlideOutMenu = ({ name }) => {
   const signout = () => {
-    firebase.auth().signOut();
+    const uid = firebase.auth().currentUser.uid;
+    firebase.database().ref(`/users/${uid}`)
+      .update({ online: false })
+      .then(() => firebase.auth().signOut())
+      .catch(console.error);
   };
 
   return (

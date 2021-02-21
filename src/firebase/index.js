@@ -26,4 +26,6 @@ facebookProvider.addScope('public_profile, email');
 
 export { googleProvider, facebookProvider, createNewUserEntry };
 
+window.firebase = firebase;
+
 export default firebase;

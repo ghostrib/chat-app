@@ -38,7 +38,7 @@
     "consistent-this": [0, "self"],
     "func-call-spacing": "error",
     "func-name-matching": "warn",
-    "func-style": "warn",
+    "func-style": "off",
     "key-spacing": ["error", { "beforeColon": false }],
     "keyword-spacing": [
       "error",
