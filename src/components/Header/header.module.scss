@@ -5,7 +5,6 @@
   grid-area: header;
 
   display: flex;
-  // justify-content: flex-end;
   justify-content: space-between;
   align-items: center;
 }
@@ -14,17 +13,7 @@
   margin: 0 0 0 20px;
 }
 
-// .logo__name {
-//   // font-family: Lato;
-//   font-family: "Amatic SC";
-//   font-weight: 700;
-//   letter-spacing: 4px;
-//   font-size: 40px;
-//   text-shadow: 1px 1px 2px black;
-// }
-
 .logo__name {
-  // font-family: Lato;
   font-family: "Amatic SC";
   font-weight: 700;
   letter-spacing: 4px;
