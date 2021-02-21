@@ -8,7 +8,7 @@ firebase.initializeApp(firebaseConfig);
 
 const createNewUserEntry = (state) => {
   const { name, image, uid, isSignedIn } = state;
-  const userStatus = firebase.database().ref(`/userlist/${uid}`);
+  const userStatus = firebase.database().ref(`/users/${uid}`);
   userStatus.set({ name, image, online: isSignedIn });
 };
 

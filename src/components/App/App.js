@@ -51,7 +51,7 @@ class App extends Component {
   }
 
   getUsersOnline() {
-    const db = firebase.database().ref('/userlist');
+    const db = firebase.database().ref('/users');
     db.once('value')
       .then((query) => query.val())
       .then((data) => Object.values(data))
@@ -77,21 +77,22 @@ class App extends Component {
 
     db.on('child_added', (message) => {
       this.setState({
-        messages: [...this.state.messages, message.val()],
+        messages: [ ...this.state.messages, message.val() ],
       });
     });
   }
 
   async createOrUpdate() {
     try {
-      const userStatus = await firebase.database().ref(`/userlist/${this.state.uid}`);
+      const userStatus = await firebase.database().ref(`/users/${this.state.uid}`);
       const query = await userStatus.get();
       const values = await query.val();
 
       values
         ? userStatus.update({ online: this.state.isSignedIn, image: this.state.image })
         : createNewUserEntry(this.state);
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error.message);
     }
   }

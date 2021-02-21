@@ -1,6 +1,6 @@
 import React from 'react';
 import googleLogo from '../../../assets/g-logo.png';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import s from './google-button.module.scss';
 import firebase, { provider } from '../../../firebase';
 

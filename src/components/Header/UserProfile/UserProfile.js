@@ -4,7 +4,7 @@ import s from './user-profile.module.scss';
 import SlideOutMenu from '../SlideOutMenu/SlideOutMenu';
 
 const UserProfile = ({ name, image }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [ isVisible, setIsVisible ] = useState(false);
 
   return (
     <button className={s.profile} onClick={() => setIsVisible(!isVisible)}>

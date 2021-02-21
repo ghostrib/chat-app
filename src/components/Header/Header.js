@@ -10,9 +10,11 @@ const Header = ({ isSignedIn, toggleModal, name, image }) => {
       <div className={s.logo}>
         <div className={s.logo__name}>The Elbow Room</div>
       </div>
-      {isSignedIn ? (
+      {isSignedIn
+? (
         <UserProfile name={name} image={image} />
-      ) : (
+      )
+: (
         <LoginButton toggleModal={toggleModal} isSignedIn={isSignedIn} />
       )}
     </header>

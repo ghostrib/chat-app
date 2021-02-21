@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import LoginButton from '../LoginButton/LoginButton';
-import SignUpButton from '../SignUpButton/SignUpButton';
+// import SignUpButton from '../SignUpButton/SignUpButton';
 
 import s from './wrapper.module.scss';
 

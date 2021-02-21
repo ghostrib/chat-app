@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import React from "react";
-import s from "./login.module.scss";
+import PropTypes from 'prop-types';
+import React from 'react';
+import s from './login.module.scss';
 
 const LoginButton = ({ toggleModal, isSignedIn }) => {
   // const isSignedIn = firebase.auth().currentUser !== null;

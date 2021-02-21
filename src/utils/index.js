@@ -11,7 +11,8 @@ export const parseCookies = () => {
     if (val !== null)
       try {
         val = decodeURIComponent(val.replace(/"+/g, ''));
-      } catch (ex) {
+      }
+      catch (ex) {
         return null;
       }
     obj[key] = val;
@@ -27,7 +28,8 @@ export const checkCookies = function () {
     if (firstCookie !== currentCookie) {
       if (Object.values(parseCookies()).length) {
         echo('User refreshed or did something but is still signed in');
-      } else {
+      }
+      else {
         echo('User has cleared cookies so we should sign out');
         firebase.auth().signOut();
       }
@@ -58,7 +60,8 @@ const supportedPopupSignInMethods = [
 export async function loginWith(provider) {
   try {
     await firebase.auth().signInWithRedirect(provider);
-  } catch (err) {
+  }
+  catch (err) {
     if (
       err.email &&
       err.credential &&
@@ -70,7 +73,7 @@ export async function loginWith(provider) {
       );
 
       if (!firstPopupProviderMethod) {
-        throw new Error(`Your account is linked to a provider that isn't supported.`);
+        throw new Error('Your account is linked to a provider that isn\'t supported.');
       }
 
       const linkedProvider = getProvider(firstPopupProviderMethod);
