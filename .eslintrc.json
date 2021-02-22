@@ -14,7 +14,7 @@
   "plugins": ["react"],
   "rules": {
     "semi": ["error", "always"],
-    "multiline-ternary": ["error", "always-multiline"],
+    "multiline-ternary": ["off", "always-multiline"],
     "quotes": ["error", "single"],
     "indent": [
       "error",
