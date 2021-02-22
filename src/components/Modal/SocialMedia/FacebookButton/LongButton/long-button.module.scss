@@ -40,6 +40,9 @@
   &:focus {
     color: hsl(221, 48%, 49%);
   }
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
 .text__background {
@@ -60,3 +63,8 @@
   font-family: 'Montserrat';
   letter-spacing: 1px;
 }
+
+.button__logo {
+  height: calc(var(--media-login-height) - 15px);
+}
+

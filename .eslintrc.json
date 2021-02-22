@@ -54,7 +54,7 @@
     "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 3 }],
     "no-array-constructor": "error",
     "no-lonely-if": "error",
-    "no-multiple-empty-lines": ["error", { "max": 8 }],
+    "no-multiple-empty-lines": ["warn", { "max": 2 }],
     "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
     "no-new-object": "error",
     "no-unneeded-ternary": "error",

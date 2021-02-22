@@ -26,12 +26,19 @@
 }
 
 .button__anchor {
-  grid-area: logo;
   // color: #39a2f2;
+  grid-area: logo;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
+// .button__logo {
+//   height: var(--media-login-logo-height);
+// }
+
 .button__logo {
-  height: var(--media-login-logo-height);
+  height: calc(var(--media-login-height) - 15px);
 }
 
 .text__background {

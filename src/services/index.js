@@ -3,10 +3,9 @@ import {
   getMessages,
   getUserInfo,
   createUserAccount,
-  loginWithProvider,
+  loginWith,
   isNewUser,
 } from './firebase';
-
 
 
 const services = {
@@ -14,7 +13,7 @@ const services = {
   getMessages,
   getUserInfo,
   createUserAccount,
-  loginWithProvider,
+  loginWith,
   isNewUser,
 };
 

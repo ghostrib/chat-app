@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import firebase, { createNewUserEntry } from '../../firebase';
-import { checkCookies, echo } from '../../utils';
+import firebase from '../../firebase';
+
 import ChatBox from '../ChatBox/ChatBox';
 import Footer from '../Footer/Footer';
 import GridContainer from '../Grid/Grid';
@@ -10,6 +10,7 @@ import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
 
 import services from '../../services';
+import { checkCookies } from '../../utils/cookies';
 
 
 class App extends Component {
@@ -22,51 +23,51 @@ class App extends Component {
       usersOnline: [],
     };
     this.toggleModal = this.toggleModal.bind(this);
-    this.handleAuthStateChanged = this.handleAuthStateChanged.bind(this);
+    // this.handleAuthStateChanged = this.handleAuthStateChanged.bind(this);
   }
 
   toggleModal() {
     this.setState({ visible: !this.state.visible });
   }
 
-  handleAuthStateChanged(user) {
-    const isSignedIn = user !== null;
-    echo({ isSignedIn });
-    let profile = {};
-    if (isSignedIn) {
-      document.cookie = `login=${Date.now()}`;
-      profile = {
-        name: user.displayName,
-        image: user.photoURL,
-        email: user.email,
-        uid: user.uid,
-        visible: false,
-      };
-    }
+  // handleAuthStateChanged(user) {
+  //   const isSignedIn = user !== null;
+  //   console.log({ isSignedIn });
+  //   let profile = {};
+  //   if (isSignedIn) {
+  //     document.cookie = `login=${Date.now()}`;
+  //     profile = {
+  //       name: user.displayName,
+  //       image: user.photoURL,
+  //       email: user.email,
+  //       uid: user.uid,
+  //       visible: false,
+  //     };
+  //   }
 
-    profile = { ...profile, isSignedIn };
-    this.setState(profile);
+  //   profile = { ...profile, isSignedIn };
+  //   this.setState(profile);
 
-    const uid = this.state.uid;
-    if (uid) {
-      this.createOrUpdate();
-    }
-  }
+  //   const uid = this.state.uid;
+  //   if (uid) {
+  //     this.createOrUpdate();
+  //   }
+  // }
 
-  getUsersOnline() {
-    const db = firebase.database().ref('/users');
-    db.once('value')
-      .then((query) => query.val())
-      .then((data) => Object.values(data))
-      .then((users) => users.filter((user) => user.online))
-      .then((usersOnline) => this.setState({ usersOnline }))
-      .catch(console.error);
+  // getUsersOnline() {
+  //   const db = firebase.database().ref('/users');
+  //   db.once('value')
+  //     .then((query) => query.val())
+  //     .then((data) => Object.values(data))
+  //     .then((users) => users.filter((user) => user.online))
+  //     .then((usersOnline) => this.setState({ usersOnline }))
+  //     .catch(console.error);
 
-    db.on('value', (data) => {
-      const usersOnline = Object.values(data.val()).filter((users) => users.online);
-      this.setState({ usersOnline });
-    });
-  }
+  //   db.on('value', (data) => {
+  //     const usersOnline = Object.values(data.val()).filter((users) => users.online);
+  //     this.setState({ usersOnline });
+  //   });
+  // }
 
   getMessages() {
     const db = firebase.database().ref('/messages');
@@ -85,20 +86,20 @@ class App extends Component {
     });
   }
 
-  async createOrUpdate() {
-    try {
-      const userStatus = await firebase.database().ref(`/users/${this.state.uid}`);
-      const query = await userStatus.get();
-      const values = await query.val();
+  // async createOrUpdate() {
+  //   try {
+  //     const userStatus = await firebase.database().ref(`/users/${this.state.uid}`);
+  //     const query = await userStatus.get();
+  //     const values = await query.val();
 
-      values
-        ? userStatus.update({ online: this.state.isSignedIn, image: this.state.image })
-        : createNewUserEntry(this.state);
-    }
-    catch (error) {
-      console.error(error.message);
-    }
-  }
+  //     values
+  //       ? userStatus.update({ online: this.state.isSignedIn, image: this.state.image })
+  //       : createNewUserEntry(this.state);
+  //   }
+  //   catch (error) {
+  //     console.error(error.message);
+  //   }
+  // }
 
   async componentDidMount() {
     const watchForChanges = checkCookies();
@@ -132,11 +133,29 @@ class App extends Component {
             online: true
           };
 
+          console.log(userData);
+
           if (isNewUser) {
             services.createUserAccount(userData, (response) => {
               this.setState({
                 name: response.name,
                 image: response.image
+              });
+            });
+            console.log(firebase.auth().currentUser);
+          }
+          else {
+            // returning user.
+            // retrieve info from database
+            services.getUserInfo(user).then(result => {
+              this.setState({
+                name: result.name,
+                image: result.image
+              });
+            }).then(() => {
+              const uid = firebase.auth().currentUser.uid;
+              firebase.database().ref(`/users/${uid}`).update({
+                online: true
               });
             });
           }
@@ -162,17 +181,17 @@ class App extends Component {
       .then((data) => console.log({ dataPersistance: data }))
       .catch(console.error);
 
-    firebase.auth().onIdTokenChanged((user) => {
-      if (user) {
-        user
-          .getIdTokenResult()
-          .then((data) => {
-            echo({ tokenResult: data });
-          })
-          .catch(console.error);
-        // user.getIdTokenResult();
-      }
-    });
+    // firebase.auth().onIdTokenChanged((user) => {
+    //   if (user) {
+    //     user
+    //       .getIdTokenResult()
+    //       .then((data) => {
+    //         console.log({ tokenResult: data });
+    //       })
+    //       .catch(console.error);
+    //     // user.getIdTokenResult();
+    //   }
+    // });
   }
 
   render() {

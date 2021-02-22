@@ -16,7 +16,7 @@ const SocialMediaLogin = () => {
       </div>
       <div className={s.signup}>
         <p>Dont have an account?</p>
-        <a href="">Sign up</a>
+        <a href="#">Sign up</a>
       </div>
     </footer>
   );
