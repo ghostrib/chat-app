@@ -15,11 +15,11 @@ const SlideOutMenu = ({ name }) => {
   return (
     <div className={s.slideout}>
       <ul className={s.slideout__list}>
-        <li className={s.slideout__list__name}>{name}</li>
+        {/* <li className={s.slideout__list__name}>{name}</li> */}
         <li className={s.slideout__list__signout}>
-          <button className={s.signout} onClick={signout}>
+          <span className={s.signout} onClick={signout}>
             Sign out
-          </button>
+          </span>
         </li>
       </ul>
     </div>

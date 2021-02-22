@@ -1,10 +1,22 @@
 .slideout {
   display: flex;
-  width: var(--signin-button-width);
+  // width: var(--signin-button-width);
+  // width: 300px;
+  cursor: pointer;
+  // background: red;
+
+  padding: 10px;
+  
 }
 
 .slideout__list {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
   justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0 20px
+
 }
 
 // .signout {
