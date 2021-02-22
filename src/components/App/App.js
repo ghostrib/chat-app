@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from '../../firebase';
-
+import services from '../../services';
+import { checkCookies } from '../../utils/cookies';
 import ChatBox from '../ChatBox/ChatBox';
 import Footer from '../Footer/Footer';
 import GridContainer from '../Grid/Grid';
@@ -8,9 +9,6 @@ import Header from '../Header/Header';
 import Modal from '../Modal/Modal';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
-
-import services from '../../services';
-import { checkCookies } from '../../utils/cookies';
 
 
 class App extends Component {
@@ -110,7 +108,7 @@ class App extends Component {
     // this.getUsersOnline();
 
     services.getUsersOnline(usersOnline => {
-      console.log(usersOnline);
+      // console.log(usersOnline);
       this.setState({ usersOnline });
     });
 
@@ -133,7 +131,7 @@ class App extends Component {
             online: true
           };
 
-          console.log(userData);
+          // console.log(userData);
 
           if (isNewUser) {
             services.createUserAccount(userData, (response) => {
@@ -142,7 +140,7 @@ class App extends Component {
                 image: response.image
               });
             });
-            console.log(firebase.auth().currentUser);
+            // console.log(firebase.auth().currentUser);
           }
           else {
             // returning user.
@@ -178,7 +176,6 @@ class App extends Component {
     firebase
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then((data) => console.log({ dataPersistance: data }))
       .catch(console.error);
 
     // firebase.auth().onIdTokenChanged((user) => {
