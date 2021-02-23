@@ -3,6 +3,16 @@
 $mainColor: hsl(211, 23%, 25%);
 $accent: hsl(211, 36%, 42%);
 
+.form {
+  position: absolute;
+  width: 80vw;
+  margin: auto;
+  top: 20%;
+  left: 0;
+  right: 0;
+}
+
+
 .manual {
   display: flex;
   flex-direction: column;

@@ -13,3 +13,16 @@
   letter-spacing: 0.08em;
   font-weight: 500;
 }
+
+.footer {
+  position: absolute;
+  bottom: 15%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 22vh;
+}

@@ -3,7 +3,7 @@ import f from './manual.module.scss';
 
 const ManualEntryForm = () => {
   return (
-    <form action="" onSubmit={(e) => e.preventDefault()}>
+    <form className={f.form} action="" onSubmit={(e) => e.preventDefault()}>
       <div className={f.manual}>
         <input type="email" name="email" placeholder="Email or Phone" className={f.email} />
         <input type="password" name="password" placeholder="Password" className={f.password} />
