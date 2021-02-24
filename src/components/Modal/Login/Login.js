@@ -2,7 +2,7 @@
 import s from './login.module.scss';
 import GoogleButton from './GoogleButton';
 import FacebookButton from './FacebookButton';
-import TwitterButton from './TwitterButton';
+// import TwitterButton from './TwitterButton';
 
 
 const Login = ({ select }) => {
@@ -45,7 +45,7 @@ const Login = ({ select }) => {
         <section className={s.buttons}>
           <GoogleButton />
           <FacebookButton />
-          <TwitterButton />
+          {/* <TwitterButton /> */}
         </section>
 
         <footer className={s.footer}>
