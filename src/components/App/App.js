@@ -134,6 +134,7 @@ class App extends Component {
     // firebase.auth().onAuthStateChanged(this.handleAuthStateChanged);
     firebase.auth().onAuthStateChanged((user) => {
       // user is not null so therefore is signed in
+      console.log({ onAuthStateChanged: user });
       if (user) {
         // determine if the user is a new user
         const {
@@ -142,45 +143,53 @@ class App extends Component {
         } = firebase.auth().currentUser.metadata;
         const isNewUser = creationTime === lastSignInTime;
 
-        user.getIdTokenResult().then((tokenResult) => {
-          const userData = {
-            name: tokenResult.claims.name,
-            email: tokenResult.claims.email,
-            image: tokenResult.claims.picture,
-            uid: tokenResult.claims.user_id,
-            online: true,
-          };
+        user.getIdTokenResult()
+          .then((tokenResult) => {
+            console.log({ tokenResult });
+            const userData = {
+              name: tokenResult.claims.name,
+              email: tokenResult.claims.email,
+              image: tokenResult.claims.picture,
+              uid: tokenResult.claims.user_id,
+              online: true,
+            };
 
-          // console.log(userData);
+            // console.log(userData);
 
-          if (isNewUser) {
-            services.createUserAccount(userData, (response) => {
-              this.setState({
-                name: response.name,
-                image: response.image,
+            if (isNewUser) {
+              services.createUserAccount(userData, (response) => {
+                this.setState({
+                  name: response.name,
+                  image: response.image,
+                });
               });
-            });
             // console.log(firebase.auth().currentUser);
-          }
-          else {
+            }
+            else {
             // returning user.
             // retrieve info from database
-            services
-              .getUserInfo(user)
-              .then((result) => {
-                this.setState({
-                  name: result.name,
-                  image: result.image,
-                });
-              })
-              .then(() => {
-                const uid = firebase.auth().currentUser.uid;
-                firebase.database().ref(`/users/${uid}`).update({
-                  online: true,
-                });
-              });
-          }
-        });
+              services
+                .getUserInfo(user)
+                .then((result) => {
+                  if (result) {
+                    this.setState({
+                      name: result.name,
+                      image: result.image,
+                    });
+                  }
+                  else {
+                    throw new Error('result is either null or undefined. value is: ' + result);
+                  }
+                })
+                .then(() => {
+                  const uid = firebase.auth().currentUser.uid;
+                  firebase.database().ref(`/users/${uid}`).update({
+                    online: true,
+                  });
+                })
+                .catch(console.error);
+            }
+          });
 
         // user is authenticated and their data stored in database
         // now we can update the state of our app

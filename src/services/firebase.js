@@ -104,6 +104,17 @@ export const getUserInfo = (user) => {
     .ref(`/users/${user.uid}`)
     .get()
     .then((data) => data.val())
+    .then(result => {
+      if (!result) {
+        throw new Error(`
+          result is null or undefined:
+          value of result = ${result}`
+        );
+      }
+      else {
+        return result;
+      }
+    })
     .catch(console.error);
 };
 
