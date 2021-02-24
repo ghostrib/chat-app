@@ -59,7 +59,6 @@ const LoginButton = ({ showLogin, isSignedIn }) => {
 
 
 const Header = ({ isSignedIn, name, image, select }) => {
-  console.log({ select });
   const { showLogin } = select;
   return (
     <header className={s.header}>
