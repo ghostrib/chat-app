@@ -44,12 +44,12 @@ const UserProfile = ({ name, image }) => {
 };
 
 
-const LoginButton = ({ toggleModal, isSignedIn }) => {
+const LoginButton = ({ showLogin, isSignedIn }) => {
   const buttonClass = isSignedIn ? s.login__hidden : s.login__button;
   return (
     <div className={s.wrapper}>
       <div className={s.login}>
-        <button className={buttonClass} onClick={toggleModal}>
+        <button className={buttonClass} onClick={showLogin}>
           <span className={s.login__button__text}>Sign in</span>
         </button>
       </div>
@@ -58,7 +58,9 @@ const LoginButton = ({ toggleModal, isSignedIn }) => {
 };
 
 
-const Header = ({ isSignedIn, toggleModal, name, image }) => {
+const Header = ({ isSignedIn, name, image, select }) => {
+  console.log({ select });
+  const { showLogin } = select;
   return (
     <header className={s.header}>
       <div className={s.logo}>
@@ -67,7 +69,7 @@ const Header = ({ isSignedIn, toggleModal, name, image }) => {
       {isSignedIn ? (
         <UserProfile name={name} image={image} />
       ) : (
-        <LoginButton toggleModal={toggleModal} isSignedIn={isSignedIn} />
+        <LoginButton showLogin={showLogin} isSignedIn={isSignedIn} />
       )}
     </header>
   );

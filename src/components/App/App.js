@@ -10,22 +10,40 @@ import Modal from '../Modal/Modal';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
 
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      isModalVisible: false,
+      isLoginForm: false,
+      isSignupForm: false,
       isSignedIn: null,
       messages: [],
       usersOnline: [],
     };
     this.toggleModal = this.toggleModal.bind(this);
+    this.showLogin = this.showLogin.bind(this);
+    this.showSignup = this.showSignup.bind(this);
+
+    this.select = {
+      showLogin: this.showLogin,
+      showSignup: this.showSignup,
+      toggleModal: this.toggleModal
+    };
+
     // this.handleAuthStateChanged = this.handleAuthStateChanged.bind(this);
   }
 
   toggleModal() {
-    this.setState({ visible: !this.state.visible });
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  }
+
+  showLogin() {
+    this.setState({ isModalVisible: true, isLoginForm: true, isSignupForm: false });
+  }
+
+  showSignup() {
+    this.setState({ isModalVisible: true, isLoginForm: false, isSignupForm: true });
   }
 
   // handleAuthStateChanged(user) {
@@ -39,7 +57,7 @@ class App extends Component {
   //       image: user.photoURL,
   //       email: user.email,
   //       uid: user.uid,
-  //       visible: false,
+  //       isModalVisible: false,
   //     };
   //   }
 
@@ -107,28 +125,30 @@ class App extends Component {
 
     // this.getUsersOnline();
 
-    services.getUsersOnline(usersOnline => {
+    services.getUsersOnline((usersOnline) => {
       // console.log(usersOnline);
       this.setState({ usersOnline });
     });
 
     this.getMessages();
     // firebase.auth().onAuthStateChanged(this.handleAuthStateChanged);
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       // user is not null so therefore is signed in
       if (user) {
         // determine if the user is a new user
-        const { creationTime, lastSignInTime } = firebase.auth().currentUser.metadata;
+        const {
+          creationTime,
+          lastSignInTime,
+        } = firebase.auth().currentUser.metadata;
         const isNewUser = creationTime === lastSignInTime;
 
-
-        user.getIdTokenResult().then(tokenResult => {
+        user.getIdTokenResult().then((tokenResult) => {
           const userData = {
             name: tokenResult.claims.name,
             email: tokenResult.claims.email,
             image: tokenResult.claims.picture,
             uid: tokenResult.claims.user_id,
-            online: true
+            online: true,
           };
 
           // console.log(userData);
@@ -137,7 +157,7 @@ class App extends Component {
             services.createUserAccount(userData, (response) => {
               this.setState({
                 name: response.name,
-                image: response.image
+                image: response.image,
               });
             });
             // console.log(firebase.auth().currentUser);
@@ -145,30 +165,35 @@ class App extends Component {
           else {
             // returning user.
             // retrieve info from database
-            services.getUserInfo(user).then(result => {
-              this.setState({
-                name: result.name,
-                image: result.image
+            services
+              .getUserInfo(user)
+              .then((result) => {
+                this.setState({
+                  name: result.name,
+                  image: result.image,
+                });
+              })
+              .then(() => {
+                const uid = firebase.auth().currentUser.uid;
+                firebase.database().ref(`/users/${uid}`).update({
+                  online: true,
+                });
               });
-            }).then(() => {
-              const uid = firebase.auth().currentUser.uid;
-              firebase.database().ref(`/users/${uid}`).update({
-                online: true
-              });
-            });
           }
         });
 
         // user is authenticated and their data stored in database
         // now we can update the state of our app
-        services.getUsersOnline(usersOnline => this.setState({ usersOnline, isSignedIn: true }));
+        services.getUsersOnline((usersOnline) =>
+          this.setState({ usersOnline, isSignedIn: true })
+        );
       }
       else {
         // user is null therefore is signed out
         this.setState({
           isSignedIn: false,
           name: '',
-          image: ''
+          image: '',
         });
       }
     });
@@ -192,16 +217,37 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, name, image, usersOnline, messages, visible } = this.state;
-    const { toggleModal, state } = this;
+    const {
+      isSignedIn,
+      name,
+      image,
+      usersOnline,
+      messages,
+      isModalVisible,
+      isLoginForm,
+      isSignupForm,
+    } = this.state;
+    const { toggleModal, state, select } = this;
     return (
       <GridContainer>
-        <Header toggleModal={toggleModal} isSignedIn={isSignedIn} name={name} image={image} />
+        <Header
+          toggleModal={toggleModal}
+          isSignedIn={isSignedIn}
+          name={name}
+          image={image}
+          select={select}
+        />
         <SideBar usersOnline={usersOnline} />
         <ChatBox messages={messages} />
         <TextInput state={state} toggleModal={toggleModal} />
         <Footer />
-        <Modal toggleModal={toggleModal} visible={visible} />
+        <Modal
+          toggleModal={toggleModal}
+          isModalVisible={isModalVisible}
+          isLoginForm={isLoginForm}
+          isSignupForm={isSignupForm}
+          select={select}
+        />
       </GridContainer>
     );
   }

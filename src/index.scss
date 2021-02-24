@@ -6,13 +6,51 @@
   box-sizing: border-box;
 }
 
+// @function strip-unit($value) {
+//   @return $value / ($value * 0 + 1);
+// }
+
+// @mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+//   $u1: unit($min-vw);
+//   $u2: unit($max-vw);
+//   $u3: unit($min-font-size);
+//   $u4: unit($max-font-size);
+
+//   @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+//     & {
+//       font-size: $min-font-size;
+//       @media screen and (min-width: $min-vw) {
+//         font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+//       }
+//       @media screen and (min-width: $max-vw) {
+//         font-size: $max-font-size;
+//       }
+//     }
+//   }
+// }
+
+
+// $min_width: 320px;
+// $max_width: 1200px;
+// $min_font: 16px;
+// $max_font: 24px;
+
+// html {
+//   @include fluid-type($min_width, $max_width, $min_font, $max_font);
+// }
+
+
+
 $linkColor: hsl(211, 80%, 35%);
 
 :root {
-  --media-login-width: 250px;
-  --media-login-height: 40px;
-  --media-login-diff: calc(var(--media-login-width) - var(--media-login-height));
-  --media-login-logo-height: calc(var(--media-login-height) / 2);
+  // font-size: 18px;
+
+
+  --header-height: 60px;
+  --message-form-height: 80px;
+  --sidebar-width: 200px;
+  --footer-height: 80px;
 
   --grid-header: header;
   --grid-sidebar: sidebar;
@@ -20,37 +58,62 @@ $linkColor: hsl(211, 80%, 35%);
   --grid-messsage: message;
   --grid-footer: footer;
 
-  --sidebar-bg: #313f4e;
+
   --header-bg: #2c3849;
-  /* #3c4144; */
-  /* --header-bg: #3c4144; */
   --header-color: #e6e6e6;
+
+  --footer-bg: #b3b3b3;
+  --footer-color: #e6e6e6;
+
+
+
   --signin-button-width: 100px;
   --signin-button-height: 36px;
   --signin-button-radius: 4px;
-  --signin-button-font-size: 18px;
+  // --signin-button-font-size: 18px;
   --signin-button-margin: 0 20px 0 0;
 
-  --image-height: 70%;
 
-  --footer-bg: hsl(0, 0%, 70%);
-  --footer-color: #e6e6e6;
 
-  --header-height: 60px;
-  --message-form-height: 80px;
-  --footer-height: 20px;
-  --sidebar-width: 200px;
 
-  --diff-main: calc(
-    var(--header-height) + var(--footer-height) + var(--message-form-height)
-  );
+  
+  --sidebar-bg: #313f4e;
+
+
+
+  --diff-main: calc(var(--header-height) + var(--footer-height) + var(--message-form-height));
   --diff-sidebar: calc(var(--header-height) + var(--footer-height));
-
+  
   --main-height: calc(100vh - var(--diff-main));
 
-  --round: 100%;
 
-  font-size: 18px;
+
+
+  --media-button-width: 280px;
+  --media-button-height: 50px;
+  --media-button-diff: calc(var(--media-button-width) - var(--media-button-height));
+  --media-button-logo-height: calc(var(--media-button-height) / 2);
+
+
+  --login-form-min-width: 320px;
+  --login-form-max-width: 800px;
+  --login-form-width: 60vw;
+  --login-form-background: #e7e7e7;
+
+  --facebook-primary: hsl(221, 31%, 49%);
+  --facebook-outline: hsl(221, 41%, 54%);
+  --facebook-hover: hsl(221, 36%, 42%);
+  --facebook-active: hsl(221, 30%, 37%);
+
+  --google-primary: hsl(217, 83%, 59%);
+  --google-outline: hsl(217, 93%, 44%);
+  --google-hover: hsl(217, 86%, 40%);
+  --google-active: hsl(217, 80%, 35%);
+
+  --twitter-primary: hsl(206, 88%, 59%);
+  --twitter-outline: hsl(206, 98%, 54%);
+  --twitter-hover: hsl(206, 93%, 42%);
+  --twitter-active: hsl(206, 85%, 37%);
 }
 
 /* width */
