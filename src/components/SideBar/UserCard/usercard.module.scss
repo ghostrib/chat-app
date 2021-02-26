@@ -6,6 +6,7 @@
   display: flex;
   height: 100%;
   align-items: center;
+  // justify-content: space-between;
   overflow: hidden;
   padding: 10px;
 }
@@ -25,4 +26,5 @@
   max-height: 30px;
   min-height: inherit;
   max-height: inherit;
+  margin: 0 10px 0 0;
 }
