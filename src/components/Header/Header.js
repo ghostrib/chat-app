@@ -29,11 +29,13 @@ const SlideOutMenu = ({ name }) => {
 
 const UserProfile = ({ user }) => {
   const [ isVisible, setIsVisible ] = useState(false);
-  const className = isVisible ? s.visible : s.hidden;
+  const buttonClass = isVisible ? s.visible : s.hidden;
+  const nameClass = isVisible ? s.hideName : s.showName;
   return (
-    <div>
-      {/* <strong>{user.name}</strong> */}
-      <button className={className} onClick={() => setIsVisible(!isVisible)}>
+    // <div className={className}>
+    <div className={s.user}>
+      <strong className={nameClass}>{user.name}</strong>
+      <button className={buttonClass} onClick={() => setIsVisible(!isVisible)}>
         {
         isVisible
           ? <SlideOutMenu name={user.name} />
@@ -43,6 +45,7 @@ const UserProfile = ({ user }) => {
 
       </button>
     </div>
+    // </div>
   );
 };
 
