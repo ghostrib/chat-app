@@ -16,14 +16,14 @@ class TextInput extends React.Component {
   sendMessage(e) {
     e.preventDefault();
     if (!this.props.state.isSignedIn) {
-      this.props.toggleModal();
+      this.props.select.showLogin();
       return;
     }
     if (this.state.message.length) {
       const db = firebase.database().ref();
       const key = Date.now();
 
-      const { name, image } = this.props.state;
+      const { name, image } = this.props.state.user;
       const { message } = this.state;
       const post = { name, image, message, time: key };
 
@@ -72,7 +72,7 @@ class TextInput extends React.Component {
 
 TextInput.propTypes = {
   state: PropTypes.object.isRequired,
-  toggleModal: PropTypes.func.isRequired,
+  select: PropTypes.object.isRequired
 };
 
 export default TextInput;

@@ -1,50 +1,143 @@
-import firebase from '../firebase';
+import firebase, { providers } from '../firebase';
 import { createIcon } from './icons';
 import { generateHash } from '../utils/hash';
 
-const supportedPopupSignInMethods = [
-  firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-  firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-  firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-];
+// const supportedPopupSignInMethods = [
+//   firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+//   firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+//   // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+// ];
 
-function getProvider(providerId) {
-  switch (providerId) {
-    case firebase.auth.GoogleAuthProvider.PROVIDER_ID:
-      return new firebase.auth.GoogleAuthProvider();
-    case firebase.auth.FacebookAuthProvider.PROVIDER_ID:
-      return new firebase.auth.FacebookAuthProvider();
-    case firebase.auth.TwitterAuthProvider.PROVIDER_ID:
-      return new firebase.auth.TwitterAuthProvider();
-    default:
-      throw new Error(`No provider implemented for ${providerId}`);
-  }
-}
+// function getProvider(providerId) {
+//   switch (providerId) {
+//     case firebase.auth.GoogleAuthProvider.PROVIDER_ID:
+//       return new firebase.auth.GoogleAuthProvider();
+//     case firebase.auth.FacebookAuthProvider.PROVIDER_ID:
+//       return new firebase.auth.FacebookAuthProvider();
+//     // case firebase.auth.TwitterAuthProvider.PROVIDER_ID:
+//     //   return new firebase.auth.TwitterAuthProvider();
+//     default:
+//       throw new Error(`No provider implemented for ${providerId}`);
+//   }
+// }
 
-export async function loginWith(provider) {
+export const loginWith = async (provider) => {
   try {
     await firebase.auth().signInWithRedirect(provider);
   }
-  catch (err) {
-    if (err.email && err.credential && err.code === 'auth/account-exists-with-different-credential') {
-      const providers = await firebase.auth().fetchSignInMethodsForEmail(err.email);
-
-      const firstPopupProviderMethod = providers.find((p) =>
-        supportedPopupSignInMethods.includes(p)
-      );
-
-      if (!firstPopupProviderMethod) {
-        throw new Error('Your account is linked to a provider that isn\'t supported.');
-      }
-
-      const linkedProvider = getProvider(firstPopupProviderMethod);
-      linkedProvider.setCustomParameters({ login_hint: err.email });
-
-      const result = await firebase.auth().signInWithPopup(linkedProvider);
-      result.user.linkWithCredential(err.credential);
-    }
+  catch (error) {
+    console.error(error);
   }
-}
+};
+
+// const handleRedirect = async (callback) => {
+//   await firebase.auth().getRedirectResult()
+//     .then(result => {
+//       console.log({ REDIRECT_RESULT: result });
+//       if (result.user) {
+//         console.log({ OPERATION_TYPE: result.operationType });
+
+//         if (result.operationType === 'signIn') {
+//           // user just signed in
+//           console.log({ NEW_SIGN_IN: result.user });
+//           console.log(result.additionalUserInfo);
+//           if (result.additionalUserInfo.isNewUser) {
+//             // a new user
+//             // create user profile and save to database
+//             const userData = {
+//               name: result.user.displayName,
+//               image: result.user.photoURL,
+//               email: result.user.email,
+//               uid: result.user.uid,
+//               online: true
+//             };
+//             createUserAccount(userData, (response) => {
+//               callback(response);
+//             // this.setState({ user: { name: response.name, image: response.image, userId: response.userId }, isSignedIn: true });
+//             });
+//           }
+//           else {
+//             // returning user
+//             console.log({ RETURNING_USER: result.user });
+//             const isSignedIn = result.user !== null;
+//             setUserOnline(result.user.uid, (userData) => callback(userData, isSignedIn));
+//           // setUserOnline(authUser.uid, (user) => this.setState({ user, isSignedIn }));
+//           }
+//         }
+
+//         if (result.operationType === 'link') {
+//           // accounts are linked
+//         }
+//       }
+//       // else {
+//       //   const usersOnline = this.state.usersOnline.filter(user => {
+//       //     return user.userId !== this.state.user.userId;
+//       //   });
+//       //   this.setState({ isSignedIn: false, usersOnline, user: {} });
+//       // }
+//       return result;
+//     })
+//     .catch(error => {
+//       console.log({ REDIRECT_ERROR: error });
+//       handleAuthError(error);
+//     });
+// };
+
+// const handleAuthError = async (error) => {
+//   if (error.email && error.credential && error.code === 'auth/account-exists-with-different-credential') {
+//     firebase.auth().fetchSignInMethodsForEmail(error.email).then(async signInMethods => {
+//       console.log({ signInMethods });
+
+//       const providerKey = signInMethods[0].split('.')[0];
+//       const provider = providers[providerKey];
+
+//       console.log({ provider });
+
+//       provider.setCustomParameters({ login_hint: error.email });
+
+//       const result = await firebase.auth().signInWithPopup(provider);
+//       result.user.linkWithCredential(error.credential).then(data => {
+//         console.log({ DATA: data });
+//         const info = data.additionalUserInfo;
+//         const credential = data.credential;
+//         const operationType = data.operationType;
+//         const user = data.user;
+
+//         console.log({ info, credential, operationType, user });
+
+//         return data;
+//       }).catch(error => {
+//         console.log({ AN_ERROR: error });
+//       });
+//     });
+//   }
+// };
+
+
+// export async function loginWith(provider) {
+// try {
+// await firebase.auth().signInWithRedirect(provider);
+// }
+// catch (err) {
+//   if (err.email && err.credential && err.code === 'auth/account-exists-with-different-credential') {
+//     const providers = await firebase.auth().fetchSignInMethodsForEmail(err.email);
+
+//     const firstPopupProviderMethod = providers.find((p) =>
+//       supportedPopupSignInMethods.includes(p)
+//     );
+
+//     if (!firstPopupProviderMethod) {
+//       throw new Error('Your account is linked to a provider that isn\'t supported.');
+//     }
+
+//     const linkedProvider = getProvider(firstPopupProviderMethod);
+//     linkedProvider.setCustomParameters({ login_hint: err.email });
+
+//     const result = await firebase.auth().signInWithPopup(linkedProvider);
+//     result.user.linkWithCredential(err.credential);
+//   }
+// }
+// }
 
 
 // export const loginWithProvider = async (provider) => {
@@ -76,7 +169,8 @@ export const getUsersOnline = (callback) => {
         const usersOnline = Object.values(data.val()).map(user => {
           return {
             name: user.name,
-            image: user.image
+            image: user.image,
+            userId: user.userId
           };
         });
         callback(usersOnline);
@@ -96,6 +190,36 @@ export const getMessages = (callback) => {
       }
     });
 };
+
+export const setUserOnline = (uid, callback) => {
+  const userRef = firebase.database().ref(`/users/${uid}`);
+  userRef.update({ online: true });
+  userRef.get().then(data => {
+    if (data.val()) {
+      const { name, image, userId } = data.val();
+      const userData = { name, image, userId };
+      callback(userData);
+    }
+  });
+};
+
+
+// export const getMessages = () => {
+//   const db = firebase.database().ref('/messages');
+//   db.limitToLast(10)
+//     .once('value')
+//     .then((query) => query.val())
+//     .then((data) => Object.values(data))
+//     .then((array) => array.sort((a, b) => a.time - b.time))
+//     .then((messages) => this.setState({ messages }))
+//     .catch(console.error);
+
+//   db.on('child_added', (message) => {
+//     this.setState({
+//       messages: [ ...this.state.messages, message.val() ],
+//     });
+//   });
+// }
 
 
 export const getUserInfo = (user) => {
@@ -125,10 +249,11 @@ export const createUserAccount = async (userData, callback) => {
     const color = hashedValue.slice(0, 6);
     const image = createIcon(hashedValue, color);
     userData.image = image;
+    userData.userId = hashedValue;
   });
   await firebase.database().ref(`/users/${userData.uid}`).set(userData)
     .then(() => {
-      const data = { name: userData.name, image: userData.image };
+      const data = { name: userData.name, image: userData.image, userId: userData.userId };
       callback(data);
     })
     .catch(console.error);

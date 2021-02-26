@@ -1,13 +1,15 @@
 import React from 'react';
 import googleLogo from '../../../assets/google.png';
 import s from './google.module.scss';
-import { googleProvider } from '../../../firebase';
+import { providers } from '../../../firebase';
 import services from '../../../services';
+
 const { loginWith } = services;
+const { google } = providers;
 
 const GoogleButton = () => {
   return (
-    <button className={s.button} onClick={() => loginWith(googleProvider)}>
+    <button className={s.button} onClick={() => loginWith(google)}>
       <span className={s.button__anchor}>
         <img className={s.button__logo} src={googleLogo} alt="google" />
       </span>

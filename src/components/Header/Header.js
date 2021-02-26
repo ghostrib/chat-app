@@ -13,7 +13,7 @@ const signout = () => {
     .catch(console.error);
 };
 
-const SlideOutMenu = () => {
+const SlideOutMenu = ({ name }) => {
   return (
     <div className={s.slideout}>
       <ul className={s.slideout__list}>
@@ -27,19 +27,22 @@ const SlideOutMenu = () => {
   );
 };
 
-const UserProfile = ({ name, image }) => {
+const UserProfile = ({ user }) => {
   const [ isVisible, setIsVisible ] = useState(false);
   const className = isVisible ? s.visible : s.hidden;
   return (
-    <button className={className} onClick={() => setIsVisible(!isVisible)}>
-      {
+    <div>
+      {/* <strong>{user.name}</strong> */}
+      <button className={className} onClick={() => setIsVisible(!isVisible)}>
+        {
         isVisible
-          ? <SlideOutMenu name={name} />
+          ? <SlideOutMenu name={user.name} />
           : null
-      }
-      <SVG className={s.profile__image} src={image} width={40} height={40} />
+        }
+        <SVG className={s.profile__image} src={user.image} width={40} height={40} />
 
-    </button>
+      </button>
+    </div>
   );
 };
 
@@ -58,7 +61,7 @@ const LoginButton = ({ showLogin, isSignedIn }) => {
 };
 
 
-const Header = ({ isSignedIn, name, image, select }) => {
+const Header = ({ isSignedIn, user, select }) => {
   const { showLogin } = select;
   return (
     <header className={s.header}>
@@ -66,7 +69,7 @@ const Header = ({ isSignedIn, name, image, select }) => {
         <div className={s.logo__name}>The Elbow Room</div>
       </div>
       {isSignedIn ? (
-        <UserProfile name={name} image={image} />
+        <UserProfile user={user} />
       ) : (
         <LoginButton showLogin={showLogin} isSignedIn={isSignedIn} />
       )}
@@ -79,6 +82,7 @@ Header.propTypes = {
   isSignedIn: PropTypes.bool,
   name: PropTypes.string,
   image: PropTypes.string,
+  user: PropTypes.object.isRequired,
 };
 
 export default Header;

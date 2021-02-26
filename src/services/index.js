@@ -5,6 +5,7 @@ import {
   createUserAccount,
   loginWith,
   isNewUser,
+  setUserOnline,
 } from './firebase';
 
 
@@ -15,6 +16,7 @@ const services = {
   createUserAccount,
   loginWith,
   isNewUser,
+  setUserOnline
 };
 
 export default services;

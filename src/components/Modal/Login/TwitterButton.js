@@ -1,13 +1,15 @@
 import React from 'react';
 import twitterLogo from '../../../assets/twitter.png';
 import s from './twitter.module.scss';
-import { twitterProvider } from '../../../firebase';
+import { providers } from '../../../firebase';
 import services from '../../../services';
+
 const { loginWith } = services;
+const { twitter } = providers;
 
 const TwitterButton = () => {
   return (
-    <button className={s.button} onClick={() => loginWith(twitterProvider)}>
+    <button className={s.button} onClick={() => loginWith(twitter)}>
       <span className={s.button__anchor}>
         <img className={s.button__logo} src={twitterLogo} alt="twitter" />
       </span>

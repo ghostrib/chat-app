@@ -19,34 +19,34 @@ export const parseCookies = () => {
   }, {});
 };
 
-export const checkCookies = () => {
-  let original = document.cookie;
-  return function() {
-    const current = document.cookie;
-    if (original !== current) {
-      if (Object.values(parseCookies()).length === 0) {
-        firebase.auth().signOut();
-      }
-      original = current;
-    }
-  };
-};
-
-
-// export const checkCookies = function () {
-//   let firstCookie = document.cookie;
-//   return function () {
-//     const currentCookie = document.cookie;
-
-//     if (firstCookie !== currentCookie) {
-//       if (Object.values(parseCookies()).length) {
-//         console.log('User refreshed or did something but is still signed in');
-//       }
-//       else {
-//         console.log('User has cleared cookies so we should sign out');
+// export const checkCookies = () => {
+//   let original = document.cookie;
+//   return function() {
+//     const current = document.cookie;
+//     if (original !== current) {
+//       if (Object.values(parseCookies()).length === 0) {
 //         firebase.auth().signOut();
 //       }
-//       firstCookie = currentCookie;
+//       original = current;
 //     }
 //   };
 // };
+
+
+export const checkCookies = function () {
+  let firstCookie = document.cookie;
+  return function () {
+    const currentCookie = document.cookie;
+
+    if (firstCookie !== currentCookie) {
+      if (Object.values(parseCookies()).length) {
+        console.log('User refreshed or did something but is still signed in');
+      }
+      else {
+        console.log('User has cleared cookies so we should sign out');
+        firebase.auth().signOut();
+      }
+      firstCookie = currentCookie;
+    }
+  };
+};
