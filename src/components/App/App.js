@@ -171,19 +171,6 @@ class App extends Component {
               if (result.operationType === 'link') {
                 // accounts are linked
               }
-
-              // const userData = {
-              //   name: user.displayName,
-              //   email: user.email,
-              //   uid: user.uid,
-              //   image:
-              // }
-              // services.createUserAccount(userData, (response) => {
-              //   this.setState({
-              //     name: response.name,
-              //     image: response.image,
-              //   });
-              // });
             }
             return result;
           })

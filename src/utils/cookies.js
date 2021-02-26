@@ -44,6 +44,10 @@ export const checkCookies = function () {
       }
       else {
         console.log('User has cleared cookies so we should sign out');
+        const user = firebase.auth().currentUser;
+        if (user) {
+          firebase.database().ref(`/users/${user.uid}`).update({ online: false });
+        }
         firebase.auth().signOut();
       }
       firstCookie = currentCookie;
