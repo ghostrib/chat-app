@@ -1,3 +1,6 @@
+
+
+
 .form {
   
   position: fixed;
@@ -127,6 +130,8 @@
   font-family: "Montserrat", sans-serif;
 }
 
+
+
 .username,
 .email,
 .password,
@@ -137,6 +142,9 @@
     box-shadow: 0 0 0 1px blue;
   }
 }
+
+
+
 
 .login,
 .register {
@@ -169,20 +177,14 @@
     border-radius: 6px;
     border: none;
     outline: none;
-    box-shadow: 0 0 0 1px #303e4d;
+    // box-shadow: 0 0 0 1px #303e4d;
     padding: 1em;
     font-family: "Montserrat", sans-serif;
     // margin: 2% 0;
+
   }
 
 
-  input[type=email] {
-    // margin: 3% 0 0 0;
-  }
-
-  input[type=password] {
-    // margin: 3% 0;
-  }
 
   input[type=submit] {
     font-size: 0.8em;
@@ -194,9 +196,6 @@
     cursor: pointer;
   }
 
-  input[type=checkbox] {
-    // margin: -20px 0 0 0;
-  }
 
 
   input[type=text],
@@ -206,8 +205,38 @@
     margin: 0.75em 0;
   }
 
+
+  .error {
+    box-shadow: 0px 0px 0px 1px red;
+    background: hsla(0, 30%, 80%, 0.8);
+    width: 100%;
+  }
+  
+  .success {
+    box-shadow: 0px 0px 0px 1px green;
+    background: hsla(120, 30%, 80%, 0.8)
+
+  }
   
 }
+
+.label__username {
+  // position:relative;
+
+}
+
+
+.tooltip {
+}
+
+// .tooltip__arrow {
+//   border-color: red;
+// }
+
+.target {
+  border:2px solid red;
+}
+
 
 
 
@@ -246,87 +275,6 @@
 //   height: 90vh;
 //   background: #e7e7e7;
 // }
-
-/* #### Mobile Phones Portrait #### */
-@media screen and (max-device-width: 480px) and (orientation: portrait) {
-  .loginForm {
-    max-width: 480px;
-    width: 100%;
-    height: 90vh;
-    background: purple;
-  }
-}
-
-/* #### Mobile Phones Landscape #### */
-@media screen and (max-device-width: 640px) and (orientation: landscape) {
-  /* some CSS here */
-}
-
-/* #### Mobile Phones Portrait or Landscape #### */
-@media screen and (max-device-width: 640px) {
-  .loginForm {
-    max-width: 640px;
-    width: 100%;
-    height: 90vh;
-    background: orange;
-  }
-}
-
-/* #### iPhone 4+ Portrait or Landscape #### */
-@media screen and (min-device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
-  .loginForm {
-    min-width: 320px;
-    width: 100vw;
-    height: 90vh;
-    background: green;
-  }
-}
-
-/* #### iPhone 5 Portrait or Landscape #### */
-@media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
-  .loginForm {
-    min-width: 320px;
-    max-width: 568px;
-    min-height: 320px;
-    max-height: 568px;
-    width: 100%;
-    height: 90vh;
-    background: blue;
-  }
-}
-
-/* #### iPhone 6 and 6 plus Portrait or Landscape #### */
-@media (min-device-height: 667px) and (min-device-width: 375px) and (-webkit-min-device-pixel-ratio: 3) {
-  .loginForm {
-    min-width: 375px;
-    max-width: 667px;
-    min-height: 667px;
-    width: 100%;
-    height: 90vh;
-    background: red;
-  }
-}
-
-/* #### Tablets Portrait or Landscape #### */
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  .loginForm {
-    min-width: 768px;
-    max-width: 1024px;
-    width: 100%;
-    height: 90vh;
-    background: #e7e7e7;
-  }
-}
-
-/* #### Desktops #### */
-@media screen and (min-width: 1024px) {
-  .loginForm {
-    min-width: 320px;
-    max-width: 612px;
-    width: 60vw;
-    background: #e7e7e7;
-  }
-}
 
 
 
@@ -420,6 +368,11 @@
 
 .isVisible {
   display: block;
+  background: #191919;
+  color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 
@@ -439,6 +392,19 @@
 }
 
 
+
+// .error {
+//   height: 5.5em;
+//   border-radius: 6px;
+//   border: 3px solid red;
+//   // outline: none;
+//   // box-shadow:1px 1px 1px red;
+//   padding: 1em;
+//   // outline: 1px solid red;
+//   font-family: "Montserrat", sans-serif;
+//   // background: red;
+//   font-size: 90px;
+// }
 
 
 // /* #### Mobile Phones Portrait #### */
@@ -507,3 +473,89 @@
       height: 100%;
     }
 }
+
+
+
+
+/* #### Mobile Phones Portrait #### */
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+  .loginForm {
+    max-width: 480px;
+    width: 100%;
+    height: 90vh;
+    background: purple;
+  }
+}
+
+/* #### Mobile Phones Landscape #### */
+@media screen and (max-device-width: 640px) and (orientation: landscape) {
+  /* some CSS here */
+}
+
+/* #### Mobile Phones Portrait or Landscape #### */
+@media screen and (max-device-width: 640px) {
+  .loginForm {
+    max-width: 640px;
+    width: 100%;
+    height: 90vh;
+    background: orange;
+  }
+}
+
+/* #### iPhone 4+ Portrait or Landscape #### */
+@media screen and (min-device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
+  .loginForm {
+    min-width: 320px;
+    width: 100vw;
+    height: 90vh;
+    background: green;
+  }
+}
+
+/* #### iPhone 5 Portrait or Landscape #### */
+@media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
+  .loginForm {
+    min-width: 320px;
+    max-width: 568px;
+    min-height: 320px;
+    max-height: 568px;
+    width: 100%;
+    height: 90vh;
+    background: blue;
+  }
+}
+
+/* #### iPhone 6 and 6 plus Portrait or Landscape #### */
+@media (min-device-height: 667px) and (min-device-width: 375px) and (-webkit-min-device-pixel-ratio: 3) {
+  .loginForm {
+    min-width: 375px;
+    max-width: 667px;
+    min-height: 667px;
+    width: 100%;
+    height: 90vh;
+    background: red;
+  }
+}
+
+/* #### Tablets Portrait or Landscape #### */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .loginForm {
+    min-width: 768px;
+    max-width: 1024px;
+    width: 100%;
+    height: 90vh;
+    background: #e7e7e7;
+  }
+}
+
+/* #### Desktops #### */
+@media screen and (min-width: 1024px) {
+  .loginForm {
+    min-width: 320px;
+    max-width: 612px;
+    width: 60vw;
+    background: #e7e7e7;
+  }
+}
+
+

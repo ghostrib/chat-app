@@ -133,9 +133,22 @@ class App extends Component {
       if (isSignedIn) {
         document.cookie = `login=${Date.now()}`;
 
-        services.setUserOnline(authUser.uid, (user) => this.setState({ user, isSignedIn }));
+        services.setUserOnline(authUser.uid, (userData) => {
+          console.log({ authUser });
+          console.log({ userData });
 
-        console.log({ USER: authUser });
+          firebase.database().ref(`/users/${authUser.uid}`).get()
+            .then(data => {
+              const { name, image, userId } = data.val();
+              const user = { name, image, userId };
+              this.setState({ user, isSignedIn });
+            });
+
+          // const user = { name: authUser.displayName, image: authUser.photoURL, }
+          // this.setState({ user, isSignedIn });
+        });
+
+        // console.log({ USER: authUser });
 
         await firebase.auth().getRedirectResult()
           .then(result => {

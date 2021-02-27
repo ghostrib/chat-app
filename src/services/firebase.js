@@ -1,4 +1,5 @@
-import firebase, { providers } from '../firebase';
+/* eslint-disable node/no-callback-literal */
+import firebase from '../firebase';
 import { createIcon } from './icons';
 import { generateHash } from '../utils/hash';
 
@@ -204,6 +205,32 @@ export const setUserOnline = (uid, callback) => {
 };
 
 
+// export const isAvailable = (username, callback) => {
+//   username = username.trim().toLowerCase();
+//   firebase.database().ref('/users')
+//     .orderByChild('username')
+//     .equalTo(username)
+//     .once('value', data => {
+//       const available = data.val() === null;
+//       callback(available);
+//     });
+// };
+
+
+export const isValidUsername = (name, callback) => {
+  name = name.trim().toLowerCase();
+  firebase.database().ref('/users')
+    .orderByChild('username')
+    .equalTo(name)
+    .once('value', snapshot => {
+      snapshot.val() === null ? callback(true) : callback(false);
+    })
+    .catch(error => {
+      callback(JSON.stringify(error));
+    });
+};
+
+
 // export const getMessages = () => {
 //   const db = firebase.database().ref('/messages');
 //   db.limitToLast(10)
@@ -263,3 +290,4 @@ window.getUsersOnline = getUsersOnline;
 window.getUserInfo = getUserInfo;
 window.getMessages = getMessages;
 window.isNewUser = isNewUser;
+window.isValidUsername = isValidUsername;

@@ -1,160 +1,261 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import s from './signup.module.scss';
-// import GoogleButton from '../Modal/Login/GoogleButton';
-// import FacebookButton from '../Modal/Login/FacebookButton';
-// import TwitterButton from '../Modal/Login/TwitterButton';
+import firebase from '../../firebase';
+import services from '../../services';
+import React from 'react';
+import Tooltip from 'react-tooltip-lite';
+
+class Signup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      isValid: null,
+      email: '',
+      password: '',
+      confirmPassword: '',
+      tooltip: false,
+    };
+
+    this.usernameRef = React.createRef();
+    this.passwordRef = React.createRef();
+    this.confirmRef = React.createRef();
+    this.tooltipRef = React.createRef();
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
+    this.handleConfirmUsername = this.handleConfirmUsername.bind(this);
+    this.handleInputFocus = this.handleInputFocus.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
+  }
+
+  handleInputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  handleConfirmPassword(e) {
+    const current = e.target.value;
+    const password = this.state.password;
+    if (current !== password && password.length) {
+      this.confirmRef.current.className = s.error;
+      if (current.length === password.length) {
+        this.passwordRef.current.className = s.error;
+      }
+      else {
+        this.passwordRef.current.className = s.password;
+      }
+    }
+    else if (current === password) {
+      this.passwordRef.current.className = s.success;
+      this.confirmRef.current.className = s.success;
+    }
+  }
+
+  handleInputFocus() {
+    this.setState({ isValid: null });
+  }
+
+  handleConfirmUsername() {
+    const username = this.state.username;
+    if (username.length >= 6) {
+      services.isValidUsername(username, (isValid) =>
+        this.setState({ isValid })
+      );
+    }
+    else {
+      this.setState({ isValid: false });
+    }
+  }
+
+  handleRegister(e) {
+    e.preventDefault();
+    const { email, password } = this.state;
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+      // Signed in
+        const user = userCredential.user;
+        console.log({ user });
+
+        const userData = {
+          name: this.state.username,
+          email: user.email,
+          uid: user.uid,
+          image: '',
+          online: true
+        };
 
 
-const Signup = ({ select }) => {
-  const { showLogin, toggleModal } = select;
-  return (
-    <div className={s.modal}>
-      <div className={s.overlay}></div>
+        services.createUserAccount(userData, response => {
+          user.updateProfile({
+            displayName: response.name,
+            photoURL: response.image,
+            uid: user.uid,
+            email: user.email
+          });
+        });
+      })
+      .then(() => this.props.select.toggleModal())
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log({ errorCode, errorMessage });
+        // ..
+      });
+  }
 
-      <form className={s.form} onSubmit={e => e.preventDefault()}>
+  render() {
+    const { toggleModal, showLogin } = this.props.select;
+    const { username, email, password, confirmPassword, isValid } = this.state;
 
-        <header className={s.header}>
-          <h4 className={s.title}>SIGN UP
+    const {
+      handleInputChange,
+      handleRegister,
+      handleConfirmPassword,
+      handleConfirmUsername,
+      handleInputFocus,
+    } = this;
+    return (
+      <div className={s.modal}>
+        <div className={s.overlay}></div>
 
-            <span onClick={toggleModal} className={s.close}>&times;</span>
-          </h4>
-        </header>
+        <form className={s.form} onSubmit={handleRegister}>
+          <header className={s.header}>
+            <h4 className={s.title}>
+              SIGN UP
+              <span onClick={toggleModal} className={s.close}>
+                &times;
+              </span>
+            </h4>
+          </header>
 
+          <section className={s.inputs}>
+            <input
+              type="text"
+              name="username"
+              placeholder="What should we call you?"
+              id="username"
+              value={username}
+              onFocus={handleInputFocus}
+              onChange={handleInputChange}
+              onBlur={handleConfirmUsername}
+              minLength="6"
+              maxLength="30"
+              className={
+                isValid === true
+                  ? s.success
+                  : isValid === false
+                  ? s.error
+                  : s.username
+              }
+              ref={this.usernameRef}
+            />
 
-        <section className={s.inputs}>
-          <input type="text" name="username" placeholder="What should we call you?" id="username" value="" className={s.username} />
-          <input type="email" name="email" placeholder="Enter your email address" id="email" value="" className={s.email} />
-          <input type="password" name="password" placeholder="Enter a password" id="password" value="" className={s.password} />
-          <input type="password" name="confirm" placeholder="Confirm your password" id="confirm" value="" className={s.confirm} />
-          <input type="submit" name="register" id="register" value="REGISTER" className={s.register} />
-        </section>
+            <Tooltip
+              content={'6 - 30 characters'}
+              tagName="span"
+              color="white"
+              background="#191919"
+              arrow={false}
+              ref={this.tooltipRef}
+              isOpen={isValid === true ? false : isValid === false}
+            >
+              <label htmlFor="username" className={s.label__username}></label>
+            </Tooltip>
 
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email address"
+              id="email"
+              value={email}
+              onChange={handleInputChange}
+              className={s.email}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter a password"
+              id="password"
+              value={password}
+              onChange={handleInputChange}
+              className={s.password}
+              ref={this.passwordRef}
+            />
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm your password"
+              id="confirm"
+              value={confirmPassword}
+              onChange={handleInputChange}
+              onKeyUp={handleConfirmPassword}
+              className={s.confirm}
+              ref={this.confirmRef}
+            />
+            <input
+              type="submit"
+              name="register"
+              id="register"
+              value="REGISTER"
+              className={s.register}
+              onClick={handleRegister}
+            />
+          </section>
 
-        {/* <section className={s.divider}>
-          <div className={s.divider__container}>
-            <span className={s.divider__container__line}></span>
-            <span className={s.divider__container__text}>Or</span>
-            <span className={s.divider__container__line}></span>
-          </div>
-        </section>
-
-
-        <section className={s.buttons}>
-          <GoogleButton />
-          <FacebookButton />
-          <TwitterButton />
-        </section> */}
-
-        {/* <div className={s.spacer}>
-          <p>or login with...</p>
-        </div>
-
-        <section className={s.buttons}>
-          <button className={s.button}>
-            <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" className="svg-inline--fa fa-google fa-w-16 button_icon__1n2QM" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
-          </button>
-          <button className={s.button}>
-            <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f" className="svg-inline--fa fa-facebook-f fa-w-10 button_icon__1n2QM" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path></svg>
-          </button>
-          <button className={s.button}>
-            <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter" className="svg-inline--fa fa-twitter fa-w-16 button_icon__1n2QM" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path></svg>
-          </button>
-        </section> */}
-
-        {/* <footer className={s.footer}>
-          <p>Already have an account?</p>
-          <button className={s.login}>Log in</button>
-        </footer> */}
-
-
-        <footer className={s.footer}>
-          <p>Already have an account?</p>
-          <a href="#" onClick={showLogin}>Log in</a>
-        </footer>
-
-      </form>
-
-    </div>
-
-  );
-};
-
-
-// const Signup = () => {
-//   return (
-//     <div className={s.isVisible}>
-//       {/* <div className={s.overlay}></div> */}
-//       <div className={s.modal}>
-//         <form className={s.signup}>
-
-// <header className={s.header}>
-//   <h4 className={s.title}>SIGN UP</h4>
-//   <div className={s.close}>&times;</div>
-// </header>
-
-
-// <section className={s.inputs}>
-//   <input type="text" name="username" placeholder="What should we call you?" id="username" value="" className={s.username} />
-//   <input type="email" name="email" placeholder="Enter your email address" id="email" value="" className={s.email} />
-//   <input type="password" name="password" placeholder="Enter a password" id="password" value="" className={s.password} />
-//   <input type="password" name="confirm" placeholder="Confirm your password" id="confirm" value="" className={s.confirm} />
-//   <input type="submit" name="register" id="register" value="REGISTER" className={s.register} />
-// </section>
-
-// <div className={s.spacer}>
-//   <p>or login with...</p>
-// </div>
-
-// <section className={s.buttons}>
-//   <button className={s.button}>
-//     <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" className="svg-inline--fa fa-google fa-w-16 button_icon__1n2QM" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
-//   </button>
-//   <button className={s.button}>
-//     <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f" className="svg-inline--fa fa-facebook-f fa-w-10 button_icon__1n2QM" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path></svg>
-//   </button>
-//   <button className={s.button}>
-//     <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter" className="svg-inline--fa fa-twitter fa-w-16 button_icon__1n2QM" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path></svg>
-//   </button>
-// </section>
-
-// <footer className={s.footer}>
-//   <p>Already have an account?</p>
-//   <button className={s.login}>Log in</button>
-// </footer>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-
+          <footer className={s.footer}>
+            <p>Already have an account?</p>
+            <a href="#" onClick={showLogin}>
+              Log in
+            </a>
+          </footer>
+        </form>
+      </div>
+    );
+  }
+}
 export default Signup;
 
+// const { showLogin, toggleModal } = select;
+// const passwordRef = useRef(null);
+// const confirmRef = useRef(null);
+// const usernameRef = useRef(null);
 
-// eslint-disable-next-line no-lone-blocks
-{ /* <span className={s.icon}>
-<svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" className="svg-inline--fa fa-google fa-w-16 button_icon__1n2QM" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
-</span>
-<span className={s.brand}>
-<span>Login with Google</span>
-</span>
+// const [ username, setUsername ] = useState('');
+// const [ email, setEmail ] = useState('');
+// const [ password, setPassword ] = useState('');
+// const [ confirm, setConfirm ] = useState('');
+// const [ isAvailable, setIsAvailable ] = useState(null);
 
+// const handleRegister = (e) => {
+//   e.preventDefault();
 
-              <span className={s.icon}>
-              </span>
-              <span className={s.brand}>
-                <span>Login with Facebook</span>
-              </span>
+//   console.log({ password, confirm });
 
+//   // setIsError(true);
+//   passwordRef.current.className = password !== confirm ? s.error : s.password;
 
- <span className={s.icon}>
-              </span>
-              <span className={s.brand}>
-                <span>Login with Twitter</span>
-              </span>
+//   services.isValidUsername(username, (response) => setIsAvailable(response));
+//   if (!isAvailable) {
+//     // username is already taken
+//     console.log('username not available');
+//   }
+// };
 
+// const handleUsernameInput = (e) => {
+//   setUsername(e.target.value);
+//   usernameRef.current.className = s.username;
+// };
 
-*/
+// const handleConfirmPassword = (e) => {
+//   const current = e.target.value;
+//   confirmRef.current.className =
+//     current === password
+//       ? s.success
+//       : current !== password && current.length === password.length
+//       ? s.error
+//       : s.confirm;
 
-
-}
+//   passwordRef.current.className = confirmRef.current.className;
+// };

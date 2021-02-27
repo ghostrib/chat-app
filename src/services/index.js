@@ -6,8 +6,11 @@ import {
   loginWith,
   isNewUser,
   setUserOnline,
+  isValidUsername,
 } from './firebase';
 
+
+import { createIcon } from './icons';
 
 const services = {
   getUsersOnline,
@@ -16,7 +19,9 @@ const services = {
   createUserAccount,
   loginWith,
   isNewUser,
-  setUserOnline
+  setUserOnline,
+  isValidUsername,
+  createIcon
 };
 
 export default services;

@@ -1,10 +1,13 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/analytics';
 
 import firebaseConfig from '../config';
 
 firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const facebookProvider = new firebase.auth.FacebookAuthProvider();
