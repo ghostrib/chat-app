@@ -1,32 +1,43 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import s from './signup.module.scss';
-import firebase from '../../firebase';
+import s from './signup.module.css';
 import services from '../../services';
+import utils from '../../utils';
 import React from 'react';
-import Tooltip from 'react-tooltip-lite';
+// import Tooltip from 'react-tooltip-lite';
 
 class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
-      isValid: null,
       email: '',
       password: '',
       confirmPassword: '',
       tooltip: false,
+      isValidEmail: null,
+      isValidUsername: null,
+      isValidPassword: null,
+      isConfirmed: null,
     };
 
     this.usernameRef = React.createRef();
+    this.emailRef = React.createRef();
     this.passwordRef = React.createRef();
     this.confirmRef = React.createRef();
     this.tooltipRef = React.createRef();
+    this.buttonRef = React.createRef();
 
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
-    this.handleConfirmUsername = this.handleConfirmUsername.bind(this);
+    this.handlePasswordValidation = this.handlePasswordValidation.bind(this);
+    this.handleUsernameValidation = this.handleUsernameValidation.bind(this);
     this.handleInputFocus = this.handleInputFocus.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
+    this.handleEmailValidation = this.handleEmailValidation.bind(this);
+    this.handleInputValidation = this.handleInputValidation.bind(this);
+    this.setUsernameClass = this.setUsernameClass.bind(this);
+    // this.setEmailClass = this.setEmailClass.bind(this);
+    this.setPasswordClass = this.setPasswordClass.bind(this);
+    this.setButtonStatus = this.setButtonStatus.bind(this);
   }
 
   handleInputChange(e) {
@@ -35,86 +46,152 @@ class Signup extends React.Component {
     });
   }
 
-  handleConfirmPassword(e) {
+  handleInputValidation(e) {
+    switch (e.target.name) {
+      case 'confirmPassword':
+        this.handlePasswordValidation(e);
+        break;
+      case 'password':
+        this.handlePasswordValidation(e);
+        break;
+      case 'email':
+        this.handleEmailValidation(e);
+        break;
+      case 'username':
+        this.handleUsernameValidation(e);
+        break;
+      default:
+        this.setButtonStatus();
+    }
+  }
+
+  handleUsernameValidation() {
+    const username = this.state.username;
+    if (username.length >= 6) {
+      services.isValidUsername(username, (isValid) =>
+        this.setState({ isValidUsername: isValid })
+      );
+    }
+    else if (username.length === 0) {
+      this.setState({ isValidUsername: null });
+    }
+    else {
+      this.setState({ isValidUsername: false });
+    }
+  }
+
+  setUsernameClass() {
+    const { isValidUsername } = this.state;
+    return isValidUsername === true
+      ? s.success
+      : isValidUsername === false
+      ? s.error
+      : s.username;
+  }
+
+  // setEmailClass() {
+  //   const { isValidEmail } = this.state;
+  //   return isValidEmail === true
+  //     ? s.success
+  //     : isValidEmail === false
+  //     ? s.error
+  //     : s.email;
+  // }
+
+  setPasswordClass() {
+    const { isValidPassword } = this.state;
+    return isValidPassword === true
+      ? s.success
+      : isValidPassword === false
+      ? s.error
+      : s.confirm;
+  }
+
+  setButtonStatus() {
+    const { isValidUsername, isValidEmail, isValidPassword, isConfirmed } = this.state;
+    const status = isValidUsername && isValidEmail && isValidPassword && isConfirmed;
+    // // const disabled = !enabled;
+    this.buttonRef.current.disabled = !status;
+    return !status;
+  }
+
+
+  handleEmailValidation(e) {
+    const email = e.target.value;
+    if (email.length === 0) {
+      this.emailRef.current.className = s.email;
+      this.setState({ isValidEmail: null });
+    }
+    else if (utils.validateEmail(email)) {
+      this.emailRef.current.className = s.success;
+      this.setState({ isValidEmail: true });
+    }
+    else {
+      this.emailRef.current.className = s.error;
+      this.setState({ isValidEmail: false });
+    }
+  }
+
+  handlePasswordValidation(e) {
     const current = e.target.value;
     const password = this.state.password;
-    if (current !== password && password.length) {
+    console.log({ current, password });
+    if (current !== password && password.length && current.length) {
+      this.setState({ isValidPassword: false, isConfirmed: false });
       this.confirmRef.current.className = s.error;
-      if (current.length === password.length) {
+      if (current.length >= password.length) {
+        this.setState({ isValidPassword: false, isConfirmed: false });
         this.passwordRef.current.className = s.error;
+        this.confirmRef.current.className = s.error;
       }
       else {
+        this.setState({ isValidPassword: null, isConfirmed: null });
         this.passwordRef.current.className = s.password;
       }
     }
-    else if (current === password) {
+    else if (current === password && password.length > 6) {
+      this.setState({ isValidPassword: true, isConfirmed: true });
       this.passwordRef.current.className = s.success;
       this.confirmRef.current.className = s.success;
     }
   }
 
-  handleInputFocus() {
-    this.setState({ isValid: null });
+  handleInputFocus(e) {
+    this.setState({ isValid: { [e.target.name]: null } });
   }
 
-  handleConfirmUsername() {
-    const username = this.state.username;
-    if (username.length >= 6) {
-      services.isValidUsername(username, (isValid) =>
-        this.setState({ isValid })
-      );
-    }
-    else {
-      this.setState({ isValid: false });
-    }
-  }
-
-  handleRegister(e) {
+  async handleRegister(e) {
     e.preventDefault();
-    const { email, password } = this.state;
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-      // Signed in
-        const user = userCredential.user;
-        console.log({ user });
+    const { email, password, username } = this.state;
+    await services.signupWithEmail(username, email, password);
+    this.props.select.toggleModal();
+  }
 
-        const userData = {
-          name: this.state.username,
-          email: user.email,
-          uid: user.uid,
-          image: '',
-          online: true
-        };
-
-
-        services.createUserAccount(userData, response => {
-          user.updateProfile({
-            displayName: response.name,
-            photoURL: response.image,
-            uid: user.uid,
-            email: user.email
-          });
-        });
-      })
-      .then(() => this.props.select.toggleModal())
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log({ errorCode, errorMessage });
-        // ..
-      });
+  componentDidUpdate() {
+    console.log('updating');
+    this.setButtonStatus();
   }
 
   render() {
     const { toggleModal, showLogin } = this.props.select;
-    const { username, email, password, confirmPassword, isValid } = this.state;
+    const {
+      username,
+      email,
+      password,
+      confirmPassword,
+      // isValidUsername,
+    } = this.state;
 
     const {
       handleInputChange,
       handleRegister,
-      handleConfirmPassword,
-      handleConfirmUsername,
       handleInputFocus,
+      handleInputValidation,
+      setUsernameClass,
+      setButtonStatus,
+      // setPasswordClass,
+      // setEmailClass,
+      // setPasswordClass
     } = this;
     return (
       <div className={s.modal}>
@@ -139,20 +216,15 @@ class Signup extends React.Component {
               value={username}
               onFocus={handleInputFocus}
               onChange={handleInputChange}
-              onBlur={handleConfirmUsername}
+              onBlur={handleInputValidation}
+              autoFocus={true}
               minLength="6"
               maxLength="30"
-              className={
-                isValid === true
-                  ? s.success
-                  : isValid === false
-                  ? s.error
-                  : s.username
-              }
+              className={setUsernameClass()}
               ref={this.usernameRef}
             />
 
-            <Tooltip
+            {/* <Tooltip
               content={'6 - 30 characters'}
               tagName="span"
               color="white"
@@ -162,7 +234,7 @@ class Signup extends React.Component {
               isOpen={isValid === true ? false : isValid === false}
             >
               <label htmlFor="username" className={s.label__username}></label>
-            </Tooltip>
+            </Tooltip> */}
 
             <input
               type="email"
@@ -171,7 +243,10 @@ class Signup extends React.Component {
               id="email"
               value={email}
               onChange={handleInputChange}
+              onBlur={handleInputValidation}
+              onFocus={handleInputFocus}
               className={s.email}
+              ref={this.emailRef}
             />
             <input
               type="password"
@@ -180,6 +255,8 @@ class Signup extends React.Component {
               id="password"
               value={password}
               onChange={handleInputChange}
+              onFocus={handleInputFocus}
+              onBlur={handleInputValidation}
               className={s.password}
               ref={this.passwordRef}
             />
@@ -190,18 +267,24 @@ class Signup extends React.Component {
               id="confirm"
               value={confirmPassword}
               onChange={handleInputChange}
-              onKeyUp={handleConfirmPassword}
+              onKeyUp={handleInputValidation}
+              onFocus={handleInputFocus}
+              // onBlur={handleInputValidation}
               className={s.confirm}
               ref={this.confirmRef}
             />
-            <input
+            <button
               type="submit"
               name="register"
               id="register"
-              value="REGISTER"
-              className={s.register}
+              className={s.button}
               onClick={handleRegister}
-            />
+              disabled={true}
+              ref={this.buttonRef}
+
+            >
+              Create your account
+            </button>
           </section>
 
           <footer className={s.footer}>
@@ -248,7 +331,7 @@ export default Signup;
 //   usernameRef.current.className = s.username;
 // };
 
-// const handleConfirmPassword = (e) => {
+// const handlePasswordValidation = (e) => {
 //   const current = e.target.value;
 //   confirmRef.current.className =
 //     current === password
@@ -259,3 +342,31 @@ export default Signup;
 
 //   passwordRef.current.className = confirmRef.current.className;
 // };
+
+// firebase.auth().createUserWithEmailAndPassword(email, password)
+//   .then((userCredential) => {
+//     const user = userCredential.user;
+//     const userData = {
+//       name: this.state.username,
+//       email: user.email,
+//       uid: user.uid,
+//       image: '',
+//       online: true
+//     };
+
+//     services.createUserAccount(userData, response => {
+//       user.updateProfile({
+//         displayName: response.name,
+//         photoURL: response.image,
+//         uid: user.uid,
+//         email: user.email
+//       });
+//     });
+//   })
+//   .then(() => this.props.select.toggleModal())
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     console.log({ errorCode, errorMessage });
+//     // ..
+//   });
