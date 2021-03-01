@@ -389,12 +389,11 @@ class Signup extends React.Component {
 
           {/* <section> */}
           <button
-            type="submit"
             name="register"
             id="register"
             className={s.button}
             onClick={handleRegister}
-            disabled={true}
+            // disabled={true}
             ref={this.buttonRef}
           >
             Create your account
