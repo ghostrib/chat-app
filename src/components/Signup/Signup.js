@@ -224,18 +224,6 @@ class Signup extends React.Component {
               ref={this.usernameRef}
             />
 
-            {/* <Tooltip
-              content={'6 - 30 characters'}
-              tagName="span"
-              color="white"
-              background="#191919"
-              arrow={false}
-              ref={this.tooltipRef}
-              isOpen={isValid === true ? false : isValid === false}
-            >
-              <label htmlFor="username" className={s.label__username}></label>
-            </Tooltip> */}
-
             <input
               type="email"
               name="email"
@@ -273,19 +261,23 @@ class Signup extends React.Component {
               className={s.confirm}
               ref={this.confirmRef}
             />
-            <button
-              type="submit"
-              name="register"
-              id="register"
-              className={s.button}
-              onClick={handleRegister}
-              disabled={true}
-              ref={this.buttonRef}
 
-            >
-              Create your account
-            </button>
           </section>
+
+          {/* <section> */}
+          <button
+            type="submit"
+            name="register"
+            id="register"
+            className={s.button}
+            onClick={handleRegister}
+            disabled={true}
+            ref={this.buttonRef}
+
+          >
+              Create your account
+          </button>
+          {/* </section> */}
 
           <footer className={s.footer}>
             <p>Already have an account?</p>
