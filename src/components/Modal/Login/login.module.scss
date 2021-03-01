@@ -172,8 +172,7 @@ $max-vw: 1200px;
     justify-content: center;
     .divider__container__line {
       width: calc((var(--media-button-width) / 2) - 20px);
-      height: 1px;
-      background: black;
+      border-top: 1px solid black;
     }
     .divider__container__text {
       padding: 0 10px;
