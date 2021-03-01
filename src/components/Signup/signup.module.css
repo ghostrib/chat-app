@@ -83,6 +83,19 @@
   cursor: pointer;
 }
 
+.container {
+  width: 100%;
+
+}
+
+.label {
+  width: 100%;
+}
+
+
+
+
+
 .username,
 .email,
 .password,
