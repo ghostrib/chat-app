@@ -8,7 +8,7 @@
   /* leading grows along with font, */
   /* with an additional 0.1em + 0.5px per 100px of the viewport */
   font-size: calc(1em + 0.5vw);
-  line-height: calc(1.1em + 0.5vw);
+  /* line-height: calc(1.1em + 0.5vw); */
   --ratio: 2 / 1;
 }
 
@@ -375,8 +375,9 @@ label.placeholder {
   height: 70%;
   /* background: red; */
   color: darkred;
-  font-size: 0.8rem;
+  font-size: 12px;
   padding: 16px 0;
+  line-height: unset;
 
 }
 

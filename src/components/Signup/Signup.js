@@ -18,7 +18,17 @@ class Signup extends React.Component {
       isValidUsername: null,
       isValidPassword: null,
       isConfirmed: null,
-      errors: {},
+      errors: {
+        tooShort: {
+          error: false,
+          message: [ 'Password should be at least 6 characters long' ]
+        },
+        weakPass: {
+          error: false,
+          // message: 'Password should have at least:',
+          message: [ 'Password should have at least:', '1 uppercase letter', '1 lowercase letter', '1 number' ]
+        }
+      },
     };
 
     this.usernameRef = React.createRef();
@@ -56,20 +66,20 @@ class Signup extends React.Component {
 
   checkPassword(e) {
     const password = e.target.value;
-    const errors = {};
+    const errors = { ...this.state.errors };
     if (!utils.validatePassword(password)) {
       if (password.length && password.length < 8) {
-        errors.weakPass = true;
-        errors.tooShort = true;
+        errors.weakPass.error = true;
+        errors.tooShort.error = true;
       }
       else if (password.length && password.length >= 8) {
-        errors.tooShort = false;
-        errors.weakPass = true;
+        errors.tooShort.error = false;
+        errors.weakPass.error = true;
       }
     }
     else {
-      errors.weakPass = false;
-      errors.tooShort = false;
+      errors.weakPass.error = false;
+      errors.tooShort.error = false;
     }
 
     this.setState((prevState) => ({ ...prevState, errors }));
@@ -276,7 +286,7 @@ class Signup extends React.Component {
       setUsernameClass,
       checkPassword,
       // setButtonStatus,
-      handleInputBlur,
+
       // setPasswordClass,
       // setEmailClass,
       // setPasswordClass
@@ -386,11 +396,13 @@ class Signup extends React.Component {
 
           <section className={s.errors}>
             <ul className={s.errors__list} htmlFor="">
-              {Object.entries(this.state.errors)
-                .filter((error) => error[1] === true)
-                .map((error) => (
-                  <li>{error[0]}</li>
-                ))}
+              {
+                Object.entries(this.state.errors)
+                  .filter(err => err[1].error)
+                  .map(err => err[1].message)
+                  .flat(Infinity)
+                  .map(error => <li>{error}</li>)
+              }
             </ul>
           </section>
 
