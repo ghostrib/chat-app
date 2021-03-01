@@ -58,8 +58,8 @@
 .form {
   position: fixed;
   background: #e6e6e6;
-  width: 60vw;
-  height: 85vh;
+  width: 70vw;
+  height: 90vh;
   /* min-height: 600px; */
 
   /* max-height: 680px; */
@@ -72,11 +72,13 @@
   margin: auto;
 
   display: grid;
-  grid-template-rows: 15% 50% 20% 15%;
+  /* grid-template-rows: 15% 50% 10% 10% 15%; */
+  grid-template-rows: 12.5% 40% 10% 25% 12.5%;
   grid-template-columns: 1fr;
   grid-template-areas:
     "header"
     "inputs"
+    "errors"
     "button"
     "footer";
 }
@@ -248,7 +250,7 @@ button:disabled:hover {
   background: #2c3849;
   justify-content: center;
   align-items: center;
-  font-size: 3vh;
+  font-size: 1.5rem;
   color: whitesmoke;
 }
 
@@ -364,6 +366,19 @@ label.placeholder {
 
 
 
+.errors {
+  /* padding: 1rem 0; */
+
+  width: 90%;
+  justify-self: center;
+  /* align-self: center; */
+  height: 70%;
+  /* background: red; */
+  color: darkred;
+  font-size: 0.8rem;
+  padding: 16px 0;
+
+}
 
 
 

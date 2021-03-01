@@ -80,13 +80,7 @@ class Signup extends React.Component {
     return (
       <div className={s.status}>
         <div className={s.container}>
-          <label className={s.label} htmlFor="">
-            {Object.entries(this.state.errors)
-              .filter((error) => error[1] === true)
-              .map((error) => (
-                <li>{error[0]}</li>
-              ))}
-          </label>
+
         </div>
       </div>
     );
@@ -138,17 +132,17 @@ class Signup extends React.Component {
 
   handleInputValidation(e) {
     switch (e.target.name) {
-      case 'confirmPassword':
-        this.handlePasswordValidation(e);
-        break;
       case 'password':
         this.handlePasswordValidation(e);
+        this.handleInputBlur(e);
         break;
       case 'email':
         this.handleEmailValidation(e);
+        this.handleInputBlur(e);
         break;
       case 'username':
         this.handleUsernameValidation(e);
+        this.handleInputBlur(e);
         break;
       default:
         this.setButtonStatus();
@@ -227,17 +221,18 @@ class Signup extends React.Component {
     }
   }
 
+
   handlePasswordValidation(e) {
     const current = e.target.value;
     const password = this.state.password;
     console.log({ current, password });
     if (current !== password && password.length && current.length) {
       this.setState({ isValidPassword: false, isConfirmed: false });
-      this.confirmRef.current.className = s.error;
+      // this.confirmRef.current.className = s.error;
       if (current.length >= password.length) {
         this.setState({ isValidPassword: false, isConfirmed: false });
         this.passwordRef.current.className = s.error;
-        this.confirmRef.current.className = s.error;
+        // this.confirmRef.current.className = s.error;
       }
       else {
         this.setState({ isValidPassword: null, isConfirmed: null });
@@ -247,7 +242,7 @@ class Signup extends React.Component {
     else if (current === password && password.length > 6) {
       this.setState({ isValidPassword: true, isConfirmed: true });
       this.passwordRef.current.className = s.success;
-      this.confirmRef.current.className = s.success;
+      // this.confirmRef.current.className = s.success;
     }
   }
 
@@ -277,8 +272,9 @@ class Signup extends React.Component {
       handleInputChange,
       handleRegister,
       handleInputFocus,
-      // handleInputValidation,
+      handleInputValidation,
       setUsernameClass,
+      checkPassword,
       // setButtonStatus,
       handleInputBlur,
       // setPasswordClass,
@@ -321,7 +317,7 @@ class Signup extends React.Component {
                 value={username}
                 onFocus={handleInputFocus}
                 onChange={handleInputChange}
-                onBlur={handleInputBlur}
+                onBlur={handleInputValidation}
                 autoFocus={true}
                 minLength="6"
                 maxLength="30"
@@ -352,7 +348,7 @@ class Signup extends React.Component {
                 id="email"
                 value={email}
                 onChange={handleInputChange}
-                onBlur={handleInputBlur}
+                onBlur={handleInputValidation}
                 onFocus={handleInputFocus}
                 className={s.email}
                 ref={this.emailRef}
@@ -380,12 +376,24 @@ class Signup extends React.Component {
                 value={password}
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
-                onBlur={handleInputBlur}
+                onBlur={handleInputValidation}
+                onKeyUp={checkPassword}
                 className={s.password}
                 ref={this.passwordRef}
               />
             </div>
           </section>
+
+          <section className={s.errors}>
+            <ul className={s.errors__list} htmlFor="">
+              {Object.entries(this.state.errors)
+                .filter((error) => error[1] === true)
+                .map((error) => (
+                  <li>{error[0]}</li>
+                ))}
+            </ul>
+          </section>
+
 
           {/* <section> */}
           <button
