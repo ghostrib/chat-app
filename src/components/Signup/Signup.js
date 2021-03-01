@@ -32,10 +32,8 @@ class Signup extends React.Component {
     this.emailLabelRef = React.createRef();
     this.passwordLabelRef = React.createRef();
 
-
     this.passwordErrorsRef = React.createRef();
     this.passwordWrapper = React.createRef();
-
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handlePasswordValidation = this.handlePasswordValidation.bind(this);
@@ -55,7 +53,6 @@ class Signup extends React.Component {
     this.checkPassword = this.checkPassword.bind(this);
     this.displayErrors = this.displayErrors.bind(this);
   }
-
 
   checkPassword(e) {
     const password = e.target.value;
@@ -82,22 +79,18 @@ class Signup extends React.Component {
   displayErrors() {
     return (
       <div className={s.status}>
-
         <div className={s.container}>
           <label className={s.label} htmlFor="">
-            {
-              Object.entries(this.state.errors)
-                .filter((error) => error[1] === true)
-                .map((error) => <li>{error[0]}</li>)
-            }
-
+            {Object.entries(this.state.errors)
+              .filter((error) => error[1] === true)
+              .map((error) => (
+                <li>{error[0]}</li>
+              ))}
           </label>
-
         </div>
       </div>
     );
   }
-
 
   handleInputFocus(e) {
     let ref;
@@ -113,8 +106,8 @@ class Signup extends React.Component {
     else {
       return null;
     }
-    ref.className = s.active;
     console.log(ref);
+    ref.className = s.label__focused;
   }
 
   handleInputBlur(e) {
@@ -132,11 +125,10 @@ class Signup extends React.Component {
       return null;
     }
     if (e.target.value.length === 0) {
-      ref.className = s.placeholder;
+      ref.className = s.label__blur;
     }
     console.log(ref);
   }
-
 
   handleInputChange(e) {
     this.setState({
@@ -163,14 +155,13 @@ class Signup extends React.Component {
     }
   }
 
-
   setUsernameClass() {
     const { isValidUsername } = this.state;
     return isValidUsername === true
       ? s.success
       : isValidUsername === false
-      ? s.error
-      : s.username;
+        ? s.error
+        : s.username;
   }
 
   // setEmailClass() {
@@ -187,18 +178,23 @@ class Signup extends React.Component {
     return isValidPassword === true
       ? s.success
       : isValidPassword === false
-      ? s.error
-      : s.confirm;
+        ? s.error
+        : s.confirm;
   }
 
   setButtonStatus() {
-    const { isValidUsername, isValidEmail, isValidPassword, isConfirmed } = this.state;
-    const status = isValidUsername && isValidEmail && isValidPassword && isConfirmed;
+    const {
+      isValidUsername,
+      isValidEmail,
+      isValidPassword,
+      isConfirmed,
+    } = this.state;
+    const status =
+      isValidUsername && isValidEmail && isValidPassword && isConfirmed;
     // // const disabled = !enabled;
     this.buttonRef.current.disabled = !status;
     return !status;
   }
-
 
   handleUsernameValidation() {
     const username = this.state.username;
@@ -214,7 +210,6 @@ class Signup extends React.Component {
       this.setState({ isValidUsername: false });
     }
   }
-
 
   handleEmailValidation(e) {
     const email = e.target.value;
@@ -256,7 +251,6 @@ class Signup extends React.Component {
     }
   }
 
-
   async handleRegister(e) {
     e.preventDefault();
     const { email, password, username } = this.state;
@@ -275,7 +269,7 @@ class Signup extends React.Component {
       username,
       email,
       password,
-      confirmPassword,
+      // confirmPassword,
       // isValidUsername,
     } = this.state;
 
@@ -283,9 +277,10 @@ class Signup extends React.Component {
       handleInputChange,
       handleRegister,
       handleInputFocus,
-      handleInputValidation,
+      // handleInputValidation,
       setUsernameClass,
-      setButtonStatus,
+      // setButtonStatus,
+      handleInputBlur,
       // setPasswordClass,
       // setEmailClass,
       // setPasswordClass
@@ -305,78 +300,123 @@ class Signup extends React.Component {
           </header>
 
           <section className={s.inputs}>
-            <div className={s.container}>
-              <div className={s.label}>
-                <label htmlFor="username">
-                  <span className={s.placeholder} ref={this.usernameLabelRef}>Username</span>
 
-                  <input
-                    type="text"
-                    name="username"
-                    placeholder="What should we call you?"
-                    id="username"
-                    value={username}
-                    onFocus={handleInputFocus}
-                    onChange={handleInputChange}
-                    onBlur={handleInputValidation}
-                    autoFocus={true}
-                    minLength="6"
-                    maxLength="30"
-                    className={setUsernameClass()}
-                    ref={this.usernameRef}
-                  />
-
-                </label>
+            <label className={s.label} htmlFor="username">
+              <div className={s.label__text}>
+                <div className={s.label__blur} ref={this.usernameLabelRef}>
+                  Username
+                </div>
               </div>
+            </label>
+
+
+            <div className={s.container}>
+              {/* <div className={s.placeholder}></div> */}
+
+              <input
+                type="text"
+                name="username"
+                // placeholder="What should we call you?"
+                id="username"
+                value={username}
+                onFocus={handleInputFocus}
+                onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                autoFocus={true}
+                minLength="6"
+                maxLength="30"
+                className={setUsernameClass()}
+                ref={this.usernameRef}
+              />
             </div>
 
-            <div className={s.container}>
-              <div className={s.label}>
-                <label htmlFor="email">
-                  <span className={s.placeholder} ref={this.emailLabelRef}>Email</span>
 
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter your email address"
-                    id="email"
-                    value={email}
-                    onChange={handleInputChange}
-                    onBlur={handleInputValidation}
-                    onFocus={handleInputFocus}
-                    className={s.email}
-                    ref={this.emailRef}
-                  />
+            {/* <label className={s.label} htmlFor="email" ref={this.emailLabelRef}>Email</label> */}
 
-                </label>
+            <label className={s.label} htmlFor="username">
+              <div className={s.label__text}>
+                <div className={s.label__blur} ref={this.emailLabelRef}>
+                  Email
+                </div>
               </div>
+            </label>
+
+
+            <div className={s.container}>
+              {/* <span className={s.placeholder}></span> */}
+
+              <input
+                type="email"
+                name="email"
+                // placeholder="Enter your email address"
+                id="email"
+                value={email}
+                onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                onFocus={handleInputFocus}
+                className={s.email}
+                ref={this.emailRef}
+              />
             </div>
 
-            <div className={s.container}>
-              <div className={s.label}>
-                <label htmlFor="password">
-                  <span className={s.placeholder} ref={this.passwordLabelRef}>Password</span>
 
-
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter a password"
-                    id="password"
-                    value={password}
-                    onChange={handleInputChange}
-                    onFocus={handleInputFocus}
-                    onBlur={handleInputValidation}
-                    className={s.password}
-                    ref={this.passwordRef}
-                  />
-
-
-                </label>
+            <label className={s.label} htmlFor="username">
+              <div className={s.label__text}>
+                <div className={s.label__blur} ref={this.passwordLabelRef}>
+                  Password
+                </div>
               </div>
-            </div>
+            </label>
 
+            {/* <label className={s.label} htmlFor="password" ref={this.passwordLabelRef}>Password</label> */}
             <div className={s.container}>
+              {/* <span className={s.placeholder}></span> */}
+
+              <input
+                type="password"
+                name="password"
+                // placeholder="Enter a password"
+                id="password"
+                value={password}
+                onChange={handleInputChange}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
+                className={s.password}
+                ref={this.passwordRef}
+              />
+            </div>
+          </section>
+
+          {/* <section> */}
+          <button
+            type="submit"
+            name="register"
+            id="register"
+            className={s.button}
+            onClick={handleRegister}
+            disabled={true}
+            ref={this.buttonRef}
+          >
+            Create your account
+          </button>
+          {/* </section> */}
+
+          <footer className={s.footer}>
+            <p>Already have an account?</p>
+            <a href="#" onClick={showLogin}>
+              Log in
+            </a>
+          </footer>
+        </form>
+      </div>
+    );
+  }
+}
+export default Signup;
+
+// eslint-disable-next-line no-lone-blocks
+{
+  /* <div className={s.container}>
               <div className={s.label}>
                 <label htmlFor="confirm">
                   <span>Confirm password</span>
@@ -398,35 +438,5 @@ class Signup extends React.Component {
 
                 </label>
               </div>
-            </div>
-
-
-          </section>
-
-          {/* <section> */}
-          <button
-            type="submit"
-            name="register"
-            id="register"
-            className={s.button}
-            onClick={handleRegister}
-            disabled={true}
-            ref={this.buttonRef}
-
-          >
-              Create your account
-          </button>
-          {/* </section> */}
-
-          <footer className={s.footer}>
-            <p>Already have an account?</p>
-            <a href="#" onClick={showLogin}>
-              Log in
-            </a>
-          </footer>
-        </form>
-      </div>
-    );
-  }
+            </div> */
 }
-export default Signup;
