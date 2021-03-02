@@ -7,6 +7,7 @@ import {
   isNewUser,
   setUserOnline,
   isValidUsername,
+  signupWithEmail
 } from './firebase';
 
 
@@ -21,7 +22,8 @@ const services = {
   isNewUser,
   setUserOnline,
   isValidUsername,
-  createIcon
+  createIcon,
+  signupWithEmail
 };
 
 export default services;

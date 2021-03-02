@@ -192,16 +192,16 @@ export const getMessages = (callback) => {
     });
 };
 
-export const setUserOnline = (uid, callback) => {
+export const setUserOnline = async (uid, callback) => {
   const userRef = firebase.database().ref(`/users/${uid}`);
-  userRef.update({ online: true });
-  userRef.get().then(data => {
-    if (data.val()) {
-      const { name, image, userId } = data.val();
-      const userData = { name, image, userId };
-      callback(userData);
-    }
-  });
+  await userRef.update({ online: true });
+  const data = await userRef.get();
+  if (data.val()) {
+    console.log(data.val());
+    const { name, image, userId } = data.val();
+    const userData = { name, image, userId };
+    callback(userData);
+  }
 };
 
 
@@ -285,6 +285,30 @@ export const createUserAccount = async (userData, callback) => {
     })
     .catch(console.error);
 };
+
+export const signupWithEmail = (name, email, password) => {
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      const uid = user.uid;
+      const userData = { name, email, uid };
+
+      createUserAccount(userData, response => {
+        user.updateProfile({
+          displayName: response.name,
+          photoURL: response.image,
+          uid: user.uid,
+          email: user.email
+        });
+      });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log({ errorCode, errorMessage });
+    });
+};
+
 
 window.getUsersOnline = getUsersOnline;
 window.getUserInfo = getUserInfo;

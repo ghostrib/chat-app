@@ -9,7 +9,10 @@
   /* with an additional 0.1em + 0.5px per 100px of the viewport */
   font-size: calc(1em + 0.5vw);
   /* line-height: calc(1.1em + 0.5vw); */
-  --ratio: 2 / 1;
+  /* --ratio: 2 / 1; */
+
+
+  
 }
 
 .full-width {
@@ -141,6 +144,10 @@
   );
 } */
 
+.container {
+  width: 100%;
+}
+
 .inputs {
   grid-area: inputs;
   background: #e6e6e6;
@@ -149,6 +156,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  /* width: 100%; */
   /* margin-top: 1em; */
 }
 
@@ -181,18 +189,6 @@
 .button {
   /* padding: 0 5%; */
   grid-area: button;
-  /* margin: clamp(
-      calc(2 * var(--unit-height)),
-      calc(3 * var(--unit-height)),
-      calc(4 * var(--unit-height))
-    )
-    0; */
-  /* height: clamp(8vh, 9vh, 10vh); */
-
-  /* height: clamp(7.5vh, 8.5vh, 9.5vh); */
-  /* height: 9vh;
-  min-height: 32px;
-  max-height: 60px; */
 
   font-weight: 600;
   color: white;
@@ -202,29 +198,17 @@
 
   background: hsl(211, 36%, 42%);
   letter-spacing: 0.1em;
-  /* font-size: clamp(90%, 1rem + 1vw, 16px); */
   border-radius: 4px;
-
-  /* width: 90%; */
   align-self: center;
   justify-self: center;
-  /* border-radius: 2px; */
-  /* border: none; */
-  /* outline: none; */
+
   box-shadow: 0 0 0 1px #303e4d;
   font-family: "Montserrat", sans-serif;
   height: 4.5rem;
   width: 90%;
 
-
-  /* --container-width: 100%; */
-  
-  /* height: calc(10vw * var(--ratio)); */
-  /* max-height: calc(var(--container-width) * var(--ratio)); */
-  /* max-height: 72px; */
-
-  /* width: 90%; */
-  /* max-width: var(--container-width);   */
+  place-content: center;
+  place-items: center;
 
 }
 
@@ -262,74 +246,15 @@ a:hover {
   color: hsl(211, 80%, 60%);
 }
 
-/* :root {
-  --x: calc(1.2em - 1vw);
-  --y: calc(1.2em + 3vh);
-} */
-
-
-.container {
-  width: 100%;
-}
-
-/* .label {
-  width: 100%;
-  transform: translate(5%, 175%);
-  font-size: 0.9em;
-  color:hsla(0, 0%, 30%, 0.8);
-  font-weight: 300;
-  cursor:text;
-
-} */
-
-/* .label__active {
-  
-  transform: translate(-224px, 0%);
-  font-size: 12px;
-  color: blue;
-  font-weight: 600;
-
-
-} */
 
 
 
-/* label {
-  width: 100%;
-  font-family: "Montserrat";
-} */
-/* span {
-    position: absolute;
-    transform: translate(1em* 1.14, 1em* 1.04);
-    color: hsla(0, 0%, 37%, 0.8);
-    font-family: "Montserrat";
-    font-size: 19px;
-    letter-spacing: 0.035em;
-  } */
-/* 
-label.active {
-  transform: translate(1em, 2em);
-  font-family: "Montserrat";
-  color: darkblue;
-  font-weight: 600;
-  padding: 10px 0 0 10px;
-  font-size: 12px;
-  transition: all 0.2s;
-}
 
-label.placeholder {
-  /* position: absolute; */
-  /* float: left; */
-  /* top: 20;
-  transform: translate(1em, 2em);
-  color: hsla(0, 0%, 37%, 0.8);
-  font-family: "Montserrat";
-  font-size: 1em;
-  letter-spacing: 0.035em; */
 
-  /* visibility: hidden; */
-  /* transition: all 0.2s; */
-/* }  */
+
+
+
+
 
 
 
@@ -337,11 +262,9 @@ label.placeholder {
   display:block;
   width: 100%;
   height: 50px;
-  /* background: red; */
 }
 
 .label__text {
-
   position: relative;
 }
 
@@ -385,105 +308,9 @@ label.placeholder {
 
 
 
-
-
-/* #### Mobile Phones Portrait or Landscape #### */
-@media screen and (max-device-width: 640px) {
+@media (hover: none) {
   .form {
     width: 100%;
     height: 100%;
   }
 }
-
-/* #### iPhone 4+ Portrait or Landscape #### */
-@media screen and (min-device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
-  .form {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-/* #### iPhone 5 Portrait or Landscape #### */
-@media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
-  .form {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-/* #### iPhone 6 and 6 plus Portrait or Landscape #### */
-@media (min-device-height: 667px) and (min-device-width: 375px) and (-webkit-min-device-pixel-ratio: 3) {
-  .form {
-    width: 100%;
-    height: 100%;
-  }
-  .form,
-  input {
-    font-size: 18px;
-  }
-  input:focus {
-    font-size: 22px;
-  }
-  button {
-    font-size: 20px;
-  }
-}
-
-/* #### Tablets Portrait or Landscape #### */
-/* @media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  .form {
-    width: 100%;
-    height: 100%;
-  }
-  .form,
-  input {
-    font-size: 30px;
-  }
-  input:focus {
-    font-size: 36px;
-  }
-  button {
-    font-size: 32px;
-  }
-} */
-
-/* ----------- iPad Pro ----------- */
-/* Portrait and Landscape */
-/* @media only screen and (min-width: 1024px) and (max-height: 1366px) and (-webkit-min-device-pixel-ratio: 1.5) {
-  .form {
-    height: 100vh;
-    width: 100vw;
-  }
-  .form,
-  input {
-    font-size: 2.5vw;
-  }
-  input:focus {
-    font-size: 42px;
-  }
-  button {
-    font-size: 34px;
-  }
-} */
-
-/* 
-@media only screen and (min-height: 1366px) {
-  .form {
-    height: 100vh;
-    width: 100vw;
-  }
-  .form,
-  input {
-    font-size: 3vh;
-    margin: 0 0
-      clamp(
-        calc(3 * var(--unit-height)),
-        calc(4 * var(--unit-height)),
-        calc(5 * var(--unit-height))
-      )
-      0;
-  }
-  input:focus {
-    font-size: 38px;
-  }
-} */

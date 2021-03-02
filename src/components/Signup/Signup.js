@@ -3,7 +3,6 @@ import s from './signup.module.css';
 import services from '../../services';
 import utils from '../../utils';
 import React from 'react';
-// import Tooltip from 'react-tooltip-lite';
 
 class Signup extends React.Component {
   constructor(props) {
@@ -25,7 +24,6 @@ class Signup extends React.Component {
         },
         weakPass: {
           error: false,
-          // message: 'Password should have at least:',
           message: [ 'Password should have at least:', '1 uppercase letter', '1 lowercase letter', '1 number' ]
         }
       },
@@ -34,16 +32,13 @@ class Signup extends React.Component {
     this.usernameRef = React.createRef();
     this.emailRef = React.createRef();
     this.passwordRef = React.createRef();
-    this.confirmRef = React.createRef();
-    this.tooltipRef = React.createRef();
+
     this.buttonRef = React.createRef();
 
     this.usernameLabelRef = React.createRef();
     this.emailLabelRef = React.createRef();
     this.passwordLabelRef = React.createRef();
 
-    this.passwordErrorsRef = React.createRef();
-    this.passwordWrapper = React.createRef();
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handlePasswordValidation = this.handlePasswordValidation.bind(this);
@@ -56,45 +51,10 @@ class Signup extends React.Component {
     this.handleEmailValidation = this.handleEmailValidation.bind(this);
     this.handleInputValidation = this.handleInputValidation.bind(this);
     this.setUsernameClass = this.setUsernameClass.bind(this);
-    // this.setEmailClass = this.setEmailClass.bind(this);
-    this.setPasswordClass = this.setPasswordClass.bind(this);
+    // this.setPasswordClass = this.setPasswordClass.bind(this);
     this.setButtonStatus = this.setButtonStatus.bind(this);
-
-    this.checkPassword = this.checkPassword.bind(this);
-    this.displayErrors = this.displayErrors.bind(this);
   }
 
-  checkPassword(e) {
-    const password = e.target.value;
-    const errors = { ...this.state.errors };
-    if (!utils.validatePassword(password)) {
-      if (password.length && password.length < 8) {
-        errors.weakPass.error = true;
-        errors.tooShort.error = true;
-      }
-      else if (password.length && password.length >= 8) {
-        errors.tooShort.error = false;
-        errors.weakPass.error = true;
-      }
-    }
-    else {
-      errors.weakPass.error = false;
-      errors.tooShort.error = false;
-    }
-
-    this.setState((prevState) => ({ ...prevState, errors }));
-    console.log({ state: this.state });
-  }
-
-  displayErrors() {
-    return (
-      <div className={s.status}>
-        <div className={s.container}>
-
-        </div>
-      </div>
-    );
-  }
 
   handleInputFocus(e) {
     let ref;
@@ -110,7 +70,6 @@ class Signup extends React.Component {
     else {
       return null;
     }
-    console.log(ref);
     ref.className = s.label__focused;
   }
 
@@ -131,7 +90,6 @@ class Signup extends React.Component {
     if (e.target.value.length === 0) {
       ref.className = s.label__blur;
     }
-    console.log(ref);
   }
 
   handleInputChange(e) {
@@ -143,7 +101,6 @@ class Signup extends React.Component {
   handleInputValidation(e) {
     switch (e.target.name) {
       case 'password':
-        this.handlePasswordValidation(e);
         this.handleInputBlur(e);
         break;
       case 'email':
@@ -164,45 +121,26 @@ class Signup extends React.Component {
     return isValidUsername === true
       ? s.success
       : isValidUsername === false
-        ? s.error
-        : s.username;
+      ? s.error
+      : s.username;
   }
 
-  // setEmailClass() {
-  //   const { isValidEmail } = this.state;
-  //   return isValidEmail === true
-  //     ? s.success
-  //     : isValidEmail === false
-  //     ? s.error
-  //     : s.email;
-  // }
-
-  setPasswordClass() {
-    const { isValidPassword } = this.state;
-    return isValidPassword === true
-      ? s.success
-      : isValidPassword === false
-        ? s.error
-        : s.confirm;
-  }
 
   setButtonStatus() {
     const {
       isValidUsername,
       isValidEmail,
       isValidPassword,
-      isConfirmed,
     } = this.state;
     const status =
-      isValidUsername && isValidEmail && isValidPassword && isConfirmed;
-    // // const disabled = !enabled;
+      isValidUsername && isValidEmail && isValidPassword;
     this.buttonRef.current.disabled = !status;
     return !status;
   }
 
   handleUsernameValidation() {
     const username = this.state.username;
-    if (username.length >= 6) {
+    if (username.length >= 2) {
       services.isValidUsername(username, (isValid) =>
         this.setState({ isValidUsername: isValid })
       );
@@ -233,50 +171,55 @@ class Signup extends React.Component {
 
 
   handlePasswordValidation(e) {
-    const current = e.target.value;
-    const password = this.state.password;
-    console.log({ current, password });
-    if (current !== password && password.length && current.length) {
-      this.setState({ isValidPassword: false, isConfirmed: false });
-      // this.confirmRef.current.className = s.error;
-      if (current.length >= password.length) {
-        this.setState({ isValidPassword: false, isConfirmed: false });
+    const password = e.target.value;
+    const errors = { ...this.state.errors };
+    let isValidPassword = this.state.isValidPassword;
+    if (!utils.validatePassword(password)) {
+      if (password.length && password.length < 8) {
+        errors.weakPass.error = true;
+        errors.tooShort.error = true;
         this.passwordRef.current.className = s.error;
-        // this.confirmRef.current.className = s.error;
       }
-      else {
-        this.setState({ isValidPassword: null, isConfirmed: null });
-        this.passwordRef.current.className = s.password;
+      else if (password.length && password.length >= 8) {
+        errors.tooShort.error = false;
+        errors.weakPass.error = true;
+        this.passwordRef.current.className = s.error;
       }
     }
-    else if (current === password && password.length > 6) {
-      this.setState({ isValidPassword: true, isConfirmed: true });
+    else {
+      errors.weakPass.error = false;
+      errors.tooShort.error = false;
       this.passwordRef.current.className = s.success;
-      // this.confirmRef.current.className = s.success;
+
+      isValidPassword = true;
     }
+
+    this.setState((prevState) => ({ ...prevState, errors, isValidPassword }));
+    console.log({ state: this.state });
   }
+
 
   async handleRegister(e) {
     e.preventDefault();
     const { email, password, username } = this.state;
-    await services.signupWithEmail(username, email, password);
-    this.props.select.toggleModal();
+    try {
+      await services.signupWithEmail(username, email, password);
+    }
+    catch (error) {
+      console.error(error);
+    }
+    finally {
+      this.props.select.toggleModal();
+    }
   }
 
   componentDidUpdate() {
-    console.log('updating');
     this.setButtonStatus();
   }
 
   render() {
     const { toggleModal, showLogin } = this.props.select;
-    const {
-      username,
-      email,
-      password,
-      // confirmPassword,
-      // isValidUsername,
-    } = this.state;
+    const { username, email, password } = this.state;
 
     const {
       handleInputChange,
@@ -284,12 +227,7 @@ class Signup extends React.Component {
       handleInputFocus,
       handleInputValidation,
       setUsernameClass,
-      checkPassword,
-      // setButtonStatus,
-
-      // setPasswordClass,
-      // setEmailClass,
-      // setPasswordClass
+      handlePasswordValidation
     } = this;
     return (
       <div className={s.modal}>
@@ -317,27 +255,22 @@ class Signup extends React.Component {
 
 
             <div className={s.container}>
-              {/* <div className={s.placeholder}></div> */}
 
               <input
                 type="text"
                 name="username"
-                // placeholder="What should we call you?"
                 id="username"
                 value={username}
                 onFocus={handleInputFocus}
                 onChange={handleInputChange}
                 onBlur={handleInputValidation}
+                className={setUsernameClass()}
                 autoFocus={true}
                 minLength="6"
                 maxLength="30"
-                className={setUsernameClass()}
-                ref={this.usernameRef}
               />
             </div>
 
-
-            {/* <label className={s.label} htmlFor="email" ref={this.emailLabelRef}>Email</label> */}
 
             <label className={s.label} htmlFor="username">
               <div className={s.label__text}>
@@ -349,12 +282,10 @@ class Signup extends React.Component {
 
 
             <div className={s.container}>
-              {/* <span className={s.placeholder}></span> */}
 
               <input
                 type="email"
                 name="email"
-                // placeholder="Enter your email address"
                 id="email"
                 value={email}
                 onChange={handleInputChange}
@@ -374,20 +305,17 @@ class Signup extends React.Component {
               </div>
             </label>
 
-            {/* <label className={s.label} htmlFor="password" ref={this.passwordLabelRef}>Password</label> */}
             <div className={s.container}>
-              {/* <span className={s.placeholder}></span> */}
 
               <input
                 type="password"
                 name="password"
-                // placeholder="Enter a password"
                 id="password"
                 value={password}
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
                 onBlur={handleInputValidation}
-                onKeyUp={checkPassword}
+                onKeyUp={handlePasswordValidation}
                 className={s.password}
                 ref={this.passwordRef}
               />
@@ -406,19 +334,15 @@ class Signup extends React.Component {
             </ul>
           </section>
 
-
-          {/* <section> */}
           <button
             name="register"
             id="register"
             className={s.button}
             onClick={handleRegister}
-            // disabled={true}
             ref={this.buttonRef}
           >
-            Create your account
+            <span> Create your account</span>
           </button>
-          {/* </section> */}
 
           <footer className={s.footer}>
             <p>Already have an account?</p>
@@ -433,29 +357,3 @@ class Signup extends React.Component {
 }
 export default Signup;
 
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <div className={s.container}>
-              <div className={s.label}>
-                <label htmlFor="confirm">
-                  <span>Confirm password</span>
-
-
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm your password"
-                    id="confirm"
-                    value={confirmPassword}
-                    onChange={handleInputChange}
-                    onKeyUp={handleInputValidation}
-                    onFocus={handleInputFocus}
-                    // onBlur={handleInputValidation}
-                    className={s.confirm}
-                    ref={this.confirmRef}
-                  />
-
-                </label>
-              </div>
-            </div> */
-}
