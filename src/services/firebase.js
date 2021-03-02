@@ -277,6 +277,7 @@ export const createUserAccount = async (userData, callback) => {
     const image = createIcon(hashedValue, color);
     userData.image = image;
     userData.userId = hashedValue;
+    userData.online = true;
   });
   await firebase.database().ref(`/users/${userData.uid}`).set(userData)
     .then(() => {

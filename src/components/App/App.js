@@ -129,7 +129,6 @@ class App extends Component {
 
     firebase.auth().onAuthStateChanged(async authUser => {
       const isSignedIn = authUser !== null;
-
       if (isSignedIn) {
         document.cookie = `login=${Date.now()}`;
 
@@ -171,7 +170,10 @@ class App extends Component {
                     online: true
                   };
                   services.createUserAccount(userData, (response) => {
-                    this.setState({ user: { name: response.name, image: response.image, userId: response.userId }, isSignedIn: true });
+                    const name = response.name;
+                    const image = response.image;
+                    const userId = response.userId;
+                    this.setState({ user: { name, image, userId }, isSignedIn: true });
                   });
                 }
                 else {
