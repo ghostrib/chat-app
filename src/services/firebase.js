@@ -1,5 +1,5 @@
 /* eslint-disable node/no-callback-literal */
-import firebase from '../firebase';
+import firebase, { providers } from '../firebase';
 import { createIcon } from './icons';
 import { generateHash } from '../utils/hash';
 
@@ -317,3 +317,95 @@ window.getMessages = getMessages;
 window.isNewUser = isNewUser;
 window.isValidUsername = isValidUsername;
 window.loginWith = loginWith;
+
+
+const handleAccountLinking = async (auth) => {
+  if (sessionStorage.getItem('credential')) {
+    const savedItem = sessionStorage.getItem('credential');
+    const credential = firebase.auth.FacebookAuthProvider.credential(
+      firebase.auth.AuthCredential.fromJSON(savedItem)
+    );
+
+    sessionStorage.removeItem('credential');
+    return await auth.user.linkWithCredential(credential);
+  }
+  return auth;
+};
+
+
+export const handleAuthStateChanged = async (callback) => {
+  try {
+    const auth = await firebase.auth().getRedirectResult();
+    handleAccountLinking(auth);
+
+    if (auth.user) {
+      console.log({ OPERATION_TYPE: auth.operationType });
+      if (auth.operationType === 'signIn') {
+        if (auth.additionalUserInfo.isNewUser) {
+          const userData = {
+            name: auth.user.displayName,
+            image: auth.user.photoURL,
+            email: auth.user.email,
+            uid: auth.user.uid,
+            online: true
+          };
+
+          createUserAccount(userData, (response) => {
+            const name = response.name;
+            const image = response.image;
+            const userId = response.userId;
+            callback({ user: { name, image, userId }, isSignedIn: true });
+          });
+        }
+        else {
+          // returning user.....
+          setUserOnline(auth.user.uid, (user) => this.setState({ user, isSignedIn: true }));
+        }
+      }
+      else if (auth.operationType === 'link') {
+        // accounts are linked
+        console.log('trying to link accounts');
+      }
+    }
+    else {
+      const usersOnline = this.state.usersOnline.filter(user => {
+        return user.userId !== this.state.user.userId;
+      });
+      this.setState({ isSignedIn: false, usersOnline, user: {} });
+    }
+  }
+  catch (error) {
+    handleAuthError(error);
+  }
+};
+
+
+//   const isSignedIn = authUser !== null;
+
+
+//   if (isSignedIn) {
+//     document.cookie = `login=${Date.now()}`;
+//     services.setUserOnline(authUser.uid, (user) => this.setState({ user, isSignedIn }));
+//   }
+//   else {
+//     console.log('WE ARE ABOUT TO SET THE USER OFFLINE IN STATE');
+
+//   }
+// };
+
+
+const handleAuthError = async (error) => {
+  if (error.email && error.credential && error.code === 'auth/account-exists-with-different-credential') {
+    firebase.auth().fetchSignInMethodsForEmail(error.email).then(async signInMethods => {
+      const providerKey = signInMethods[0].split('.')[0];
+      const provider = providers[providerKey];
+
+      sessionStorage.setItem('credential', JSON.stringify(error.credential));
+
+      firebase.auth().signInWithRedirect(provider);
+    });
+  }
+  else {
+    // other errors
+  }
+};

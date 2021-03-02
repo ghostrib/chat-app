@@ -1,4 +1,5 @@
 import * as jdenticon from 'jdenticon';
+import { convertHslToHex } from './colors';
 
 function removeHash(str) {
   return str.charAt(0) === '#' ? str.slice(1) : str;
@@ -60,11 +61,24 @@ function hex2hsl(str) {
   return hsl;
 }
 
+const keepHueInRange = (hue) => {
+  hue = Number(hue);
+  while (hue >= 360 || hue < 0) {
+    hue = hue >= 360 ? hue - 360 : hue < 0 ? hue + 360 : hue;
+  }
+  return hue;
+};
+
 
 export const createIcon = (hash, color, config) => {
-  hash = hash || Date.now().toString();
+  hash = hash || Date.now().toString(17);
   const size = 40;
   const { hue } = hex2hsl(color);
+
+
+  // const hueRotated = keepHueInRange(hue + 150);
+  // const background = convertHslToHex({ h: hueRotated, s: saturation, l: lightness });
+
   console.log({ color, hue });
 
   config = config || {
@@ -77,8 +91,8 @@ export const createIcon = (hash, color, config) => {
       color: 1,
       grayscale: 1,
     },
-    // backColor: '#e6e6e6',
-    // backColor: background, // + '80',
+    backColor: '#e6e6e6',
+    // backColor: background + '80',
     padding: 0.06,
   };
   return jdenticon.toSvg(hash, size, config);
