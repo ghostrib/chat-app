@@ -140,7 +140,7 @@ class Signup extends React.Component {
 
   handleUsernameValidation() {
     const username = this.state.username;
-    if (username.length >= 2) {
+    if (username.length >= 3) {
       services.isValidUsername(username, (isValid) =>
         this.setState({ isValidUsername: isValid })
       );
@@ -266,7 +266,7 @@ class Signup extends React.Component {
                 onBlur={handleInputValidation}
                 className={setUsernameClass()}
                 autoFocus={true}
-                minLength="6"
+                minLength="3"
                 maxLength="30"
               />
             </div>

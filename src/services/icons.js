@@ -1,30 +1,74 @@
 import * as jdenticon from 'jdenticon';
-// import { convertHslToHex, keepHueInRange } from './colors';
 
-// const random = (n) => {
-//   return Math.floor(Math.random() * (n + 1));
-// };
+function removeHash(str) {
+  return str.charAt(0) === '#' ? str.slice(1) : str;
+}
 
-// const getRandomColorPalette = () => {
-//   const primary = random(360);
-//   const shiftBy = keepHueInRange(primary - 150);
-//   const hsl = { h: shiftBy, s: 29, l: 65 };
-//   const background = convertHslToHex(hsl);
-//   return { primary, background };
-// };
+function toFloat(n) {
+  return Number(n.toFixed(2));
+}
+
+function hex2rgb(str) {
+  str = removeHash(str);
+  const r = parseInt(str.substring(0, 2), 16);
+  const g = parseInt(str.substring(2, 4), 16);
+  const b = parseInt(str.substring(4, 6), 16);
+  return { r, g, b };
+}
 
 
-// const defaultConfig = {};
+function rgb2hsl({ r, g, b }) {
+  const [ R, G, B ] = [ r, g, b ].map((n) => (n /= 255));
+  const max = Math.max(R, G, B);
+  const min = Math.min(R, G, B);
+  let h;
+  let s;
+  let l = (max + min) / 2;
+
+  if (max === min) {
+    h = 0;
+    s = 0;
+  }
+  else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    // eslint-disable-next-line default-case
+    switch (max) {
+      case R:
+        h = (G - B) / d + (G < B ? 6 : 0);
+        break;
+      case G:
+        h = (B - R) / d + 2;
+        break;
+      case B:
+        h = (R - G) / d + 4;
+        break;
+    }
+  }
+  h /= 6;
+
+  h = toFloat(h * 360);
+  s = toFloat(s * 100);
+  l = toFloat(l * 100);
+
+  return { hue: h, saturation: s, lightness: l };
+}
+
+function hex2hsl(str) {
+  const rgb = hex2rgb(str);
+  const hsl = rgb2hsl(rgb);
+  return hsl;
+}
 
 
 export const createIcon = (hash, color, config) => {
   hash = hash || Date.now().toString();
-  // const { primary } = getRandomColorPalette();
   const size = 40;
-  console.log({ color });
+  const { hue } = hex2hsl(color);
+  console.log({ color, hue });
 
   config = config || {
-    hues: [ color ],
+    hues: [ hue ],
     lightness: {
       color: [ 0.15, 0.4 ],
       grayscale: [ 0.15, 0.4 ],
@@ -33,7 +77,7 @@ export const createIcon = (hash, color, config) => {
       color: 1,
       grayscale: 1,
     },
-    backColor: '#e6e6e6',
+    // backColor: '#e6e6e6',
     // backColor: background, // + '80',
     padding: 0.06,
   };
@@ -42,32 +86,3 @@ export const createIcon = (hash, color, config) => {
 
 window.createIcon = createIcon;
 
-
-// const renderIcon = (id, svgString) => {
-//   const doc = new DOMParser().parseFromString(svgString, "application/xml");
-//   const div = document.getElementById(id);
-//   div.appendChild(document.adoptNode(doc.documentElement));
-
-//   //div.replaceWith(div.ownerDocument.importNode(doc.documentElement, true));
-//   // div.appendChild(div.ownerDocument.importNode(doc.documentElement, true));
-// };
-
-// var interval = setInterval(() => {
-
-//   const div = document.getElementById("box");
-
-//   renderIcon("box", icon);
-// }, 1000);
-
-// clearInterval(interval);
-// // const icon = jdenticon.toSvg(Date.now().toString(), 200, config);
-// // renderIcon("box", icon);
-
-// for (const key in map) {
-//   const svgString = jdenticon.toSvg(map[key], 100, config);
-//   const doc = new DOMParser().parseFromString(svgString, 'application/xml');
-//   const grid = document.querySelector('.grid');
-//   grid.appendChild(grid.ownerDocument.importNode(doc.documentElement, true));
-//   // grid.appendChild(div)
-// }
-;
