@@ -1,5 +1,5 @@
 import * as jdenticon from 'jdenticon';
-import { convertHslToHex } from './colors';
+// import { convertHslToHex } from './colors';
 
 function removeHash(str) {
   return str.charAt(0) === '#' ? str.slice(1) : str;
@@ -61,13 +61,13 @@ function hex2hsl(str) {
   return hsl;
 }
 
-const keepHueInRange = (hue) => {
-  hue = Number(hue);
-  while (hue >= 360 || hue < 0) {
-    hue = hue >= 360 ? hue - 360 : hue < 0 ? hue + 360 : hue;
-  }
-  return hue;
-};
+// const keepHueInRange = (hue) => {
+//   hue = Number(hue);
+//   while (hue >= 360 || hue < 0) {
+//     hue = hue >= 360 ? hue - 360 : hue < 0 ? hue + 360 : hue;
+//   }
+//   return hue;
+// };
 
 
 export const createIcon = (hash, color, config) => {
