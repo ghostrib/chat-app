@@ -316,3 +316,4 @@ window.getUserInfo = getUserInfo;
 window.getMessages = getMessages;
 window.isNewUser = isNewUser;
 window.isValidUsername = isValidUsername;
+window.loginWith = loginWith;

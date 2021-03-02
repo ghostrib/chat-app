@@ -52,29 +52,44 @@ class App extends Component {
   async handleAuthError(error) {
     if (error.email && error.credential && error.code === 'auth/account-exists-with-different-credential') {
       firebase.auth().fetchSignInMethodsForEmail(error.email).then(async signInMethods => {
-        console.log({ signInMethods });
-
         const providerKey = signInMethods[0].split('.')[0];
         const provider = providers[providerKey];
 
-        console.log({ provider });
+        // provider.setCustomParameters({ login_hint: error.email });
 
-        provider.setCustomParameters({ login_hint: error.email });
 
-        const result = await firebase.auth().signInWithPopup(provider);
-        result.user.linkWithCredential(error.credential).then(data => {
-          console.log({ DATA: data });
-          const info = data.additionalUserInfo;
-          const credential = data.credential;
-          const operationType = data.operationType;
-          const user = data.user;
+        // firebase.auth.FacebookAuthProvider.credential(firebase.auth().currentUser.idToken);
 
-          console.log({ info, credential, operationType, user });
+        // const thing = firebase.auth.AuthCredential.toString();
+        // console.log({ thing });
+        sessionStorage.setItem('credential', JSON.stringify(error.credential));
 
-          return data;
-        }).catch(error => {
-          console.log({ AN_ERROR: error });
+        firebase.auth().signInWithRedirect(provider).then(result => {
+          console.log({ ERROR_CREDENTIAL: error.credential });
+          result.user.linkWithCredential(error.credential).then(data => {
+            console.log({ DATA: data });
+            const info = data.additionalUserInfo;
+            const credential = data.credential;
+            const operationType = data.operationType;
+            const user = data.user;
+            console.log({ info, credential, user, operationType });
+          });
         });
+
+        // const result = await firebase.auth().signInWithPopup(provider);
+        // result.user.linkWithCredential(error.credential).then(data => {
+        //   console.log({ DATA: data });
+        //   const info = data.additionalUserInfo;
+        //   const credential = data.credential;
+        //   const operationType = data.operationType;
+        //   const user = data.user;
+
+        //   console.log({ info, credential, operationType, user });
+
+        //   return data;
+        // }).catch(error => {
+        //   console.log({ AN_ERROR: error });
+        // });
       });
     }
   }
@@ -128,82 +143,85 @@ class App extends Component {
     services.getMessages((messages) => this.setState({ messages }));
 
     firebase.auth().onAuthStateChanged(async authUser => {
-      const isSignedIn = authUser !== null;
-      if (isSignedIn) {
-        document.cookie = `login=${Date.now()}`;
+      await firebase.auth().getRedirectResult()
+        .then(result => {
+          console.log({ REDIRECT_RESULT: result });
 
-        services.setUserOnline(authUser.uid, (userData) => {
-          console.log({ authUser });
-          console.log({ userData });
+          if (result.user) {
+            if (sessionStorage.getItem('credential')) {
+              const savedItem = sessionStorage.getItem('credential');
+              const creds = firebase.auth.AuthCredential.fromJSON(savedItem);
+              console.log({ creds });
+              console.log(savedItem);
+              console.log(JSON.parse(savedItem));
+              const oAuthToken = JSON.parse(savedItem);
+              console.log({ oAuthToken });
+              const credential = firebase.auth.FacebookAuthProvider.credential(creds);
 
-          firebase.database().ref(`/users/${authUser.uid}`).get()
-            .then(data => {
-              const { name, image, userId } = data.val();
-              const user = { name, image, userId };
-              this.setState({ user, isSignedIn });
-            });
+              console.log(credential);
+              result.user.linkWithCredential(credential);
+              // result.user.linkWithCredential(ballsack.accessToken).then(console.log).catch(error => console.error(error.message));
+              // console.log({ ballsack });
+            }
 
-          // const user = { name: authUser.displayName, image: authUser.photoURL, }
-          // this.setState({ user, isSignedIn });
+
+            console.log({ OPERATION_TYPE: result.operationType });
+
+            if (result.operationType === 'signIn') {
+            // user just signed in
+              console.log({ NEW_SIGN_IN: result.user });
+              console.log(result.additionalUserInfo);
+              if (result.additionalUserInfo.isNewUser) {
+              // a new user
+              // create user profile and save to database
+                const userData = {
+                  name: result.user.displayName,
+                  image: result.user.photoURL,
+                  email: result.user.email,
+                  uid: result.user.uid,
+                  online: true
+                };
+                services.createUserAccount(userData, (response) => {
+                  const name = response.name;
+                  const image = response.image;
+                  const userId = response.userId;
+                  this.setState({ user: { name, image, userId }, isSignedIn: true });
+                });
+              }
+            // else {
+            // returning user
+            // console.log({ RETURNING_USER: authUser });
+            // services.setUserOnline(authUser.uid, (user) => this.setState({ user, isSignedIn }));
+            // }
+            }
+
+            if (result.operationType === 'link') {
+            // accounts are linked
+              console.log('trying to link accounts');
+            }
+          }
+          return result;
+        })
+        .catch(error => {
+          console.log({ REDIRECT_ERROR: error });
+          this.handleAuthError(error);
         });
 
-        // console.log({ USER: authUser });
 
-        await firebase.auth().getRedirectResult()
-          .then(result => {
-            console.log({ REDIRECT_RESULT: result });
-            if (result.user) {
-              console.log({ OPERATION_TYPE: result.operationType });
+      const isSignedIn = authUser !== null;
 
-              if (result.operationType === 'signIn') {
-                // user just signed in
-                console.log({ NEW_SIGN_IN: result.user });
-                console.log(result.additionalUserInfo);
-                if (result.additionalUserInfo.isNewUser) {
-                  // a new user
-                  // create user profile and save to database
-                  const userData = {
-                    name: result.user.displayName,
-                    image: result.user.photoURL,
-                    email: result.user.email,
-                    uid: result.user.uid,
-                    online: true
-                  };
-                  services.createUserAccount(userData, (response) => {
-                    const name = response.name;
-                    const image = response.image;
-                    const userId = response.userId;
-                    this.setState({ user: { name, image, userId }, isSignedIn: true });
-                  });
-                }
-                else {
-                  // returning user
-                  console.log({ RETURNING_USER: authUser });
-                  services.setUserOnline(authUser.uid, (user) => this.setState({ user, isSignedIn }));
-                }
-              }
 
-              if (result.operationType === 'link') {
-                // accounts are linked
-              }
-            }
-            return result;
-          })
-          .catch(error => {
-            console.log({ REDIRECT_ERROR: error });
-            this.handleAuthError(error);
-          });
+      if (isSignedIn) {
+        document.cookie = `login=${Date.now()}`;
+        services.setUserOnline(authUser.uid, (user) => this.setState({ user, isSignedIn }));
       }
       else {
-        await firebase.auth().getRedirectResult().catch(this.handleAuthError);
+        console.log('WE ARE ABOUT TO SET THE USER OFFLINE IN STATE');
+        const usersOnline = this.state.usersOnline.filter(user => {
+          return user.userId !== this.state.user.userId;
+        });
+        this.setState({ isSignedIn: false, usersOnline, user: {} });
       }
-      console.log('SIGNED OUT');
-      // user is null
-      // not authenticated
-      const usersOnline = this.state.usersOnline.filter(user => {
-        return user.userId !== this.state.user.userId;
-      });
-      this.setState({ isSignedIn: false, usersOnline, user: {} });
     });
   }
 
