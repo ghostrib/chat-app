@@ -9,6 +9,7 @@ const config = {
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
   facebookSecret: process.env.REACT_APP_FIREBASE_FACEBOOK_SECRET,
   facebookAppId: process.env.REACT_APP_FIREBASE_FACEBOOK_APP_ID,
+  giphyApiKey: process.env.REACT_APP_GIPHY_API_KEY
 };
 
 export default config;
