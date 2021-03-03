@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import s from './modal.module.scss';
 
 import LoginForm from './Login/Login';
-import Signup from '../Signup/Signup';
+import Signup from './Signup/Signup';
 // import { useState } from 'react';
 
 const Modal = ({ isModalVisible, isLoginForm, isSignupForm, select }) => {
