@@ -1,5 +1,6 @@
 .button {
-  width: var(--media-button-width);
+  // width: var(--media-button-width);
+  width: 240px;
   height: var(--media-button-height);
   background: linear-gradient(90deg, white 0px, white var(--media-button-height), #5770a5 var(--media-button-height));
 
@@ -10,7 +11,8 @@
   grid-template-areas: 'logo text';
   align-items: center;
 
-  border-radius: 6px;
+  // border-radius: 6px;
+  border-radius: 2px;
   border: none;
   outline: none;
   box-shadow: 0 0 0 1px hsl(221, 41%, 54%);
@@ -52,16 +54,26 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
 }
 
 .button__text {
-  margin: 0 0 0 16px;
+  // margin: 0 0 0 16px;
+  // color: white;
+  // font-weight: 600;
+  // font-size: 14px;
+  // // text-shadow: 1px 1px 2px black;
+  // font-family: 'Montserrat';
+  // letter-spacing: 1px;
+  position: absolute;
+  left: 1rem;
+
+  // right: 0;
   color: white;
-  font-weight: 600;
-  font-size: 14px;
-  // text-shadow: 1px 1px 2px black;
-  font-family: 'Montserrat';
-  letter-spacing: 1px;
+  font-weight: bold;
+  font-size: 1rem;
+  text-shadow: 1px 1px 2px black;
+  font-family: 'Arial';
 }
 
 .button__logo {
