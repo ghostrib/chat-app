@@ -16,8 +16,6 @@ const Login = ({ select }) => {
   const [ isDisabled, setIsDisabled ] = useState(true);
 
 
-  const [ errorEmail, setErrorEmail ] = useState('');
-
   const emailLabelRef = useRef(null);
   const passwordLabelRef = useRef(null);
   const buttonRef = useRef(null);
@@ -86,15 +84,12 @@ const Login = ({ select }) => {
         // no email provider found
         emailRef.current.className = s.error;
         setIsValidEmail(false);
-        throw new Error(`No registered user found for ${email}`);
       }
     }
     else {
       // email address is malformed
       emailRef.current.className = s.error;
       setIsValidEmail(false);
-      setErrorEmail(`${email} is not a valid email address`);
-      // throw new Error(`${email} is not a valid email address`);
     }
   };
 
@@ -107,7 +102,15 @@ const Login = ({ select }) => {
       await select.toggleModal();
     }
     catch (error) {
-      console.error(error);
+      console.log({ error });
+      if (error.code === 'auth/invalid-email') {
+        // malformed email
+        // inform user
+      }
+      if (error.code === 'auth/user-not-found') {
+        // user not found
+        // inform user
+      }
     }
   };
 
@@ -206,8 +209,9 @@ const Login = ({ select }) => {
             className={s.button}
             onClick={handleLogin}
             ref={buttonRef}
+            disabled={true}
           >
-            <span>Login to chat</span>
+            <span>Join the room</span>
           </button>
 
           {/* <span className={s.remember}> */}
