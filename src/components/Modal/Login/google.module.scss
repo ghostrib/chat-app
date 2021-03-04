@@ -1,23 +1,19 @@
-// $font-size: calc(1rem + 0.10vw); 
-
 .button {
-  // $size: 40%;
-
-
   // width: var(--media-button-width);
   width: 240px;
-  // min-width: 250px;
-  // max-width: 250px;
   height: var(--media-button-height);
-  // height: 510px;
-  
-  background: linear-gradient(90deg, white 0px, white var(--media-button-height), #4082ed var(--media-button-height));
+  background: linear-gradient(
+    90deg,
+    white 0px,
+    white var(--media-button-height),
+    #4082ed var(--media-button-height)
+  );
 
   display: grid;
   grid-template-columns: var(--media-button-height) var(--media-button-diff);
   grid-template-rows: var(--media-button-height);
 
-  grid-template-areas: 'logo text';
+  grid-template-areas: "logo text";
   align-items: center;
 
   border-radius: 2px;
@@ -27,16 +23,25 @@
 }
 
 .button:hover {
-  background: linear-gradient(90deg, white 0px, white var(--media-button-height), #0061eb var(--media-button-height));
   color: white;
+  background: linear-gradient(
+    90deg,
+    white 0px,
+    white var(--media-button-height),
+    #0061eb var(--media-button-height)
+  );
 }
 
 .button:active {
-  background: linear-gradient(90deg, white 0px, white var(--media-button-height), hsl(215, 100%, 25%) var(--media-button-height));
+  background: linear-gradient(
+    90deg,
+    white 0px,
+    white var(--media-button-height),
+    hsl(215, 100%, 25%) var(--media-button-height)
+  );
 }
 
 .button__anchor {
-  // color: #39a2f2;
   grid-area: logo;
   display: flex;
   justify-content: center;
@@ -71,7 +76,7 @@
   font-weight: bold;
   font-size: 1rem;
   text-shadow: 1px 1px 2px black;
-  font-family: 'Arial';
+  font-family: "Arial";
   // letter-spacing: 1px;
   // justify-items: center;
   // margin: auto;

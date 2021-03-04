@@ -233,12 +233,12 @@ $max-vw: 1200px;
   box-shadow: 0 0 0 1px #303e4d;
   font-family: "Montserrat", sans-serif;
   height: 4.5rem;
-  width: 90%;
+  width: 80%;
 
   place-content: center;
   place-items: center;
 
-  font-size: 1.2em;
+  font-size: 1.2rem;
 
 }
 
@@ -285,12 +285,16 @@ button:disabled:hover {
 .buttons {
   grid-area: buttons;
   display: flex;
-  flex-direction: row;
-  justify-content:space-evenly;
+  // flex-direction: row;
+  justify-content:center;
   align-items: center;
   // background: #e6e6;
+  flex-flow: row wrap;
   width: 100%;
  
+  button {
+    margin: 0.5em 1em;
+  }
   
 
   img {
@@ -434,6 +438,11 @@ button:disabled:hover {
 
 .label__text {
   position: relative;
+  display: flex;
+  font-size: 0.7em;
+  flex-direction: row-reverse;
+  background: red;
+  cursor:text;
 }
 
 .label__blur{
@@ -442,7 +451,10 @@ button:disabled:hover {
   left: 1rem;
   transition: all ease-in-out 0.2s;
   color: hsla(0, 0%, 37%, 0.8);
+  width: 100%;
 }
+
+
 
 .label__focused {
   position: absolute;
@@ -452,7 +464,24 @@ button:disabled:hover {
   font-size: 12px;
   font-weight: 600;
   transition: all ease-in-out 0.2s;
+  width: 100%;
 }
+
+.label__title {
+  width: 0;
+}
+
+
+.error__message {
+  color: darkred;
+  float: right;
+  white-space: nowrap;
+  // margin: 0 0 0 1em;
+  // display: flex;
+  // justify-content: flex-end;
+
+}
+
 
 
 .error {
@@ -473,7 +502,7 @@ button:disabled:hover {
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 600px) {
   .buttons {
     // grid-area: buttons;
     // display: flex;

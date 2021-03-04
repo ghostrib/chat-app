@@ -2,16 +2,20 @@
   // width: var(--media-button-width);
   width: 240px;
   height: var(--media-button-height);
-  background: linear-gradient(90deg, white 0px, white var(--media-button-height), #5770a5 var(--media-button-height));
+  background: linear-gradient(
+    90deg,
+    white 0px,
+    white var(--media-button-height),
+    hsl(221, 31%, 49%) var(--media-button-height)
+  );
 
   display: grid;
   grid-template-columns: var(--media-button-height) var(--media-button-diff);
   grid-template-rows: var(--media-button-height);
 
-  grid-template-areas: 'logo text';
+  grid-template-areas: "logo text";
   align-items: center;
 
-  // border-radius: 6px;
   border-radius: 2px;
   border: none;
   outline: none;
@@ -20,31 +24,40 @@
 
 .button:hover {
   color: white;
-  background: linear-gradient(90deg, white 0px, white var(--media-button-height), #0061eb var(--media-button-height));
+  background: linear-gradient(
+    90deg,
+    white 0px,
+    white var(--media-button-height),
+    hsl(221, 31%, 39%) var(--media-button-height)
+  );
 
-  .button__anchor {
-    color: #0061eb;
-  }
 }
 
 .button:active {
-  background: linear-gradient(90deg, white 0px, white var(--media-button-height), hsl(215, 100%, 25%) var(--media-button-height));
+  background: linear-gradient(
+    90deg,
+    white 0px,
+    white var(--media-button-height),
+    hsl(215, 100%, 25%) var(--media-button-height)
+  );
 }
 
 .button__anchor {
   grid-area: logo;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  
   color: #5770a5;
   :hover {
-    color: #0061eb;
+    color: #000;
   }
 
   &:active,
   &:focus {
     color: hsl(221, 48%, 49%);
   }
-  display: flex;
-  justify-content: center;
-  text-align: center;
+
 }
 
 .text__background {
@@ -73,10 +86,9 @@
   font-weight: bold;
   font-size: 1rem;
   text-shadow: 1px 1px 2px black;
-  font-family: 'Arial';
+  font-family: "Arial";
 }
 
 .button__logo {
   height: calc(var(--media-button-height) - 15px);
 }
-

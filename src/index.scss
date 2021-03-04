@@ -51,6 +51,9 @@
   --sidebar-width: 200px;
   --footer-height: 80px;
 
+
+
+
   --grid-header: header;
   --grid-sidebar: sidebar;
   --grid-main: main;
@@ -98,10 +101,31 @@
   --media-button-logo-height: calc(var(--media-button-height) / 2);
 
 
+
+
+
+
   --login-form-min-width: 320px;
   --login-form-max-width: 800px;
   --login-form-width: 60vw;
   --login-form-background: #e7e7e7;
+
+
+  @media (hover: none) {
+    --header-height: 80px;
+    --main-height: 75vh;
+    --message-form-height: 10vh;
+    --sidebar-width: 0;
+    // --message-footer: 10vh;
+  
+  }
+
+
+
+
+
+
+
 
   --facebook-primary: hsl(221, 31%, 49%);
   --facebook-outline: hsl(221, 41%, 54%);

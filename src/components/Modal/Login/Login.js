@@ -10,86 +10,79 @@ import utils from '../../../utils';
 const Login = ({ select }) => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
-
-  const [ isValidEmail, setIsValidEmail ] = useState(null);
-  const [ isValidPassword, setIsValidPassword ] = useState(null);
   const [ isDisabled, setIsDisabled ] = useState(true);
-
+  const [ error, setError ] = useState({ email: '', password: '' });
 
   const emailLabelRef = useRef(null);
   const passwordLabelRef = useRef(null);
   const buttonRef = useRef(null);
-
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
   const handleInputChange = (e) => {
-    if (e.target.name === 'email') {
-      setEmail(e.target.value);
-    }
-    else if (e.target.name === 'password') {
-      setPassword(e.target.value);
+    const value = e.target.value;
+    setError({ [e.target.name]: '' });
+    switch (e.target.name) {
+      case 'email': return setEmail(value);
+      case 'password': return setPassword(value);
+      default: break;
     }
   };
 
-
-  const handleInputFocus = (e) => {
+  const handleFocusChange = (e) => {
+    const type = e.type;
+    const name = e.target.name;
+    const value = e.target.value;
     let ref;
 
-    if (e.target.name === 'email') {
+    if (name === 'email') {
       ref = emailLabelRef.current;
+      emailRef.current.className = s.email;
     }
-    else if (e.target.name === 'password') {
+    if (name === 'password') {
       ref = passwordLabelRef.current;
-    }
-    else {
-      return null;
-    }
-    ref.className = s.label__focused;
-  };
-
-  const handleInputBlur = (e) => {
-    const target = e.target.name;
-    let ref;
-    if (target === 'email') {
-      ref = emailLabelRef.current;
-    }
-    else if (target === 'password') {
-      ref = passwordLabelRef.current;
-    }
-    else {
-      return null;
+      passwordRef.current.className = s.password;
     }
 
-    if (e.target.value.length === 0) {
-      ref.className = s.label__blur;
-    }
+    ref.className =
+      type === 'focus'
+      ? s.label__focused
+      : type === 'blur' && !value.length
+      ? s.label__blur
+      : ref.className;
+
+    setIsDisabled(password.length === 0 || email.length === 0);
   };
 
 
   const handleEmailValidation = async () => {
-    // const email = e.target.value;
     if (email.length === 0) {
       emailRef.current.className = s.email;
-      setIsValidEmail(null);
     }
     else if (utils.validateEmail(email)) {
       const methods = await firebase.auth().fetchSignInMethodsForEmail(email);
       if (methods.length) {
         // email provider found for user email
-        emailRef.current.className = s.success;
-        setIsValidEmail(true);
+        if (methods.includes('password')) {
+          // user has previously set a password
+          emailRef.current.className = s.success;
+        }
+        else {
+          // user is registered but has not set a password
+          emailRef.current.className = s.error;
+          setError({ email: 'A password has not been set for this account' });
+        }
       }
       else {
         // no email provider found
         emailRef.current.className = s.error;
-        setIsValidEmail(false);
+        setError({ email: 'There is no account registered with this email' });
       }
     }
     else {
       // email address is malformed
       emailRef.current.className = s.error;
-      setIsValidEmail(false);
+      setError({ email: 'Email address is not valid. Please double check you entered it correctly' });
     }
   };
 
@@ -105,21 +98,22 @@ const Login = ({ select }) => {
       console.log({ error });
       if (error.code === 'auth/invalid-email') {
         // malformed email
-        // inform user
+        emailRef.current.className = s.error;
+        setError({ email: 'Email address is not valid. Please double check you entered it correctly' });
       }
       if (error.code === 'auth/user-not-found') {
-        // user not found
-        // inform user
+        emailRef.current.className = s.error;
+        setError({ email: 'There is no account registered with this email' });
+      }
+      if (error.code === 'auth/wrong-password') {
+        passwordRef.current.className = s.error;
+        setError({ password: 'Incorrect password' });
+      }
+      if (error.code === 'auth/too-many-requests') {
+        setError({ password: 'Fuck off' });
+        firebase.auth().sendPasswordResetEmail(email);
       }
     }
-  };
-
-  const setEmailClass = () => {
-    return isValidEmail === true
-      ? s.success
-      : isValidEmail === false
-      ? s.error
-      : s.email;
   };
 
 
@@ -139,10 +133,13 @@ const Login = ({ select }) => {
         </header>
 
         <section className={s.inputs}>
-          <label className={s.label} htmlFor="email">
-            <div className={s.label__text}>
-              <div className={s.label__blur} ref={emailLabelRef}>
-                Email
+
+
+          <label className={s.label} htmlFor="email" onClick={e => emailRef.current.focus()}>
+            <div className={s.label__text} >
+              <div className={s.label__blur} ref={emailLabelRef} >
+                  Email
+                <span className={s.error__message}>{error.email}</span>
               </div>
             </div>
           </label>
@@ -151,11 +148,10 @@ const Login = ({ select }) => {
             <input
               type="email"
               name="email"
-              // placeholder="Email"
-              className={setEmailClass()}
+              className={s.email}
               onChange={handleInputChange}
-              onBlur={handleEmailValidation}
-              onFocus={e => handleInputFocus(e)}
+              onBlur={handleFocusChange}
+              onFocus={handleFocusChange}
               value={email}
               required={true}
 
@@ -163,10 +159,11 @@ const Login = ({ select }) => {
             />
           </div>
 
-          <label className={s.label} htmlFor="password">
+          <label className={s.label} htmlFor="password" name="password" onClick={e => passwordRef.current.focus()}>
             <div className={s.label__text}>
               <div className={s.label__blur} ref={passwordLabelRef}>
                 Password
+                <span className={s.error__message}>{error.password}</span>
               </div>
             </div>
           </label>
@@ -175,12 +172,10 @@ const Login = ({ select }) => {
             <input
               type="password"
               name="password"
-              // placeholder="Password"
               className={s.password}
               onChange={handleInputChange}
-              onBlur={handleInputBlur}
-              onFocus={handleInputFocus}
-
+              onBlur={handleFocusChange}
+              onFocus={handleFocusChange}
               value={password}
               required={true}
               ref={passwordRef}
@@ -209,17 +204,11 @@ const Login = ({ select }) => {
             className={s.button}
             onClick={handleLogin}
             ref={buttonRef}
-            disabled={true}
+            disabled={isDisabled}
           >
             <span>Join the room</span>
           </button>
 
-          {/* <span className={s.remember}> */}
-
-          {/* <label htmlFor="remember" className={s.remember}> */}
-          {/* remember me */}
-          {/* </label> */}
-          {/* </span> */}
         </section>
 
         <section className={s.divider}>

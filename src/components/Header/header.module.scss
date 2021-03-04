@@ -189,3 +189,25 @@
     white-space: nowrap;
   }
 }
+
+
+@media (hover: none) {
+  .login__button {
+    display: none;
+  }
+
+  .logo {
+    margin: 0 10%;
+    text-align: center;
+  }
+  
+  .logo__name {
+    font-family: "Amatic SC";
+    font-weight: 700;
+    letter-spacing: 4px;
+    font-size: 40px;
+    text-shadow: 1px 1px 2px black;
+    filter: drop-shadow(0px 2px 2px #000);
+    white-space: nowrap;
+  }
+}

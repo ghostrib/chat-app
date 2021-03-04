@@ -1,7 +1,6 @@
 import React from 'react';
 import facebookLogo from '../../../assets/facebook.png';
 import s from './facebook.module.scss';
-// import { facebookProvider } from '../../../firebase';
 import { providers } from '../../../firebase';
 import services from '../../../services';
 
