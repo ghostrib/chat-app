@@ -1,102 +1,67 @@
 import * as jdenticon from 'jdenticon';
-// import { convertHslToHex } from './colors';
-
-function removeHash(str) {
-  return str.charAt(0) === '#' ? str.slice(1) : str;
-}
-
-function toFloat(n) {
-  return Number(n.toFixed(2));
-}
-
-function hex2rgb(str) {
-  str = removeHash(str);
-  const r = parseInt(str.substring(0, 2), 16);
-  const g = parseInt(str.substring(2, 4), 16);
-  const b = parseInt(str.substring(4, 6), 16);
-  return { r, g, b };
-}
+import { convertHslToHex, keepHueInRange, convertHextoHsl, keepPercentinRange } from './colors';
 
 
-function rgb2hsl({ r, g, b }) {
-  const [ R, G, B ] = [ r, g, b ].map((n) => (n /= 255));
-  const max = Math.max(R, G, B);
-  const min = Math.min(R, G, B);
-  let h;
-  let s;
-  let l = (max + min) / 2;
+const randomColor = () => {
+  return `#${Math.random().toString(16).slice(2, 8)}`;
+};
 
-  if (max === min) {
-    h = 0;
-    s = 0;
-  }
-  else {
-    const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    // eslint-disable-next-line default-case
-    switch (max) {
-      case R:
-        h = (G - B) / d + (G < B ? 6 : 0);
-        break;
-      case G:
-        h = (B - R) / d + 2;
-        break;
-      case B:
-        h = (R - G) / d + 4;
-        break;
-    }
-  }
-  h /= 6;
+// const getRandomColors = () => {
+//   return Array.from({ length: 4 }, () => randomColor());
+// };
 
-  h = toFloat(h * 360);
-  s = toFloat(s * 100);
-  l = toFloat(l * 100);
+const groupColors = (color) => {
+  let { h } = convertHextoHsl(color);
+  h = h <= 75 || h >= 165 ? h : keepHueInRange(h + h);
+  // trying to avoid a wash of green
 
-  return { hue: h, saturation: s, lightness: l };
-}
+  const hue1 = keepHueInRange(h + 45);
+  const hue2 = keepHueInRange(h - 45);
+  const sat1 = keepPercentinRange(90, 100);
+  const sat2 = keepPercentinRange(90, 100);
+  const light1 = keepPercentinRange(70, 80);
+  const light2 = keepPercentinRange(70, 80);
 
-function hex2hsl(str) {
-  const rgb = hex2rgb(str);
-  const hsl = rgb2hsl(rgb);
-  return hsl;
-}
+  const hue = h;
+  const sat = keepPercentinRange(90, 100);
+  const light = keepPercentinRange(60, 80);
 
-// const keepHueInRange = (hue) => {
-//   hue = Number(hue);
-//   while (hue >= 360 || hue < 0) {
-//     hue = hue >= 360 ? hue - 360 : hue < 0 ? hue + 360 : hue;
+  const main = convertHslToHex({ h: hue, s: sat, l: light });
+  const alt1 = convertHslToHex({ h: hue1, s: sat1, l: light1 });
+  const alt2 = convertHslToHex({ h: hue2, s: sat2, l: light2 });
+
+  const colors = [ main, alt2, alt1 ];
+  return colors;
+};
+
+
+// const fillMissing = (colors) => {
+//   const n = 4 - colors.length;
+//   for (let i = 0; i < n; i++) {
+//     const color = randomColor();
+//     let { h, s, l } = convertHextoHsl(color);
+//     if (l < 55) l = 55;
+
+//     colors.unshift(convertHslToHex({ h, s, l }));
 //   }
-//   return hue;
+//   return colors;
 // };
 
 
-export const createIcon = (hash, color, config) => {
-  hash = hash || Date.now().toString(17);
-  const size = 40;
-  const { hue } = hex2hsl(color);
-
-
-  // const hueRotated = keepHueInRange(hue + 150);
-  // const background = convertHslToHex({ h: hueRotated, s: saturation, l: lightness });
-
-  console.log({ color, hue });
-
-  config = config || {
-    hues: [ hue ],
-    lightness: {
-      color: [ 0.15, 0.4 ],
-      grayscale: [ 0.15, 0.4 ],
-    },
-    saturation: {
-      color: 1,
-      grayscale: 1,
-    },
-    backColor: '#e6e6e6',
-    // backColor: background + '80',
-    padding: 0.06,
-  };
-  return jdenticon.toSvg(hash, size, config);
+export const createIcon = (hash, background = '#191919', size = 100) => {
+  // if (!colors || !colors.length) {
+  //   getRandomColors();
+  // }
+  // colors.length >= 4 || fillMissing(colors);
+  const colors = groupColors(randomColor());
+  colors.push(background);
+  let icon = jdenticon.toSvg(hash, size, { backColor: '#ffffff' });
+  icon.match(/#[a-fA-F0-9]{6}/g).forEach((match) => {
+    icon = icon.replace(match, colors[colors.length - 1]);
+    colors.pop();
+  });
+  return icon;
 };
 
 window.createIcon = createIcon;
-
+window.groupColors = groupColors;

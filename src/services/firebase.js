@@ -273,8 +273,8 @@ export const getUserInfo = (user) => {
 export const createUserAccount = async (userData, callback) => {
   console.log(userData.uid);
   await generateHash(userData.uid).then(hashedValue => {
-    const color = hashedValue.slice(0, 6);
-    const image = createIcon(hashedValue, color);
+    // const color = hashedValue.slice(0, 6);
+    const image = createIcon(hashedValue, '#191919');
     userData.image = image;
     userData.userId = hashedValue;
     userData.online = true;

@@ -60,58 +60,72 @@ const Login = ({ select }) => {
       emailRef.current.className = s.email;
     }
     else if (utils.validateEmail(email)) {
-      const methods = await firebase.auth().fetchSignInMethodsForEmail(email);
-      if (methods.length) {
-        // email provider found for user email
-        if (methods.includes('password')) {
-          // user has previously set a password
-          emailRef.current.className = s.success;
-        }
-        else {
-          // user is registered but has not set a password
-          emailRef.current.className = s.error;
-          setError({ email: 'A password has not been set for this account' });
-        }
-      }
-      else {
-        // no email provider found
-        emailRef.current.className = s.error;
-        setError({ email: 'There is no account registered with this email' });
-      }
+      emailRef.current.className = s.success;
     }
     else {
-      // email address is malformed
       emailRef.current.className = s.error;
-      setError({ email: 'Email address is not valid. Please double check you entered it correctly' });
+      throw new Error({
+        code: 'wrong',
+        message: 'so you did something wrong...'
+      });
     }
+    //   const methods = await firebase.auth().fetchSignInMethodsForEmail(email);
+    //   if (methods.length) {
+    //     // email provider found for user email
+    //     if (methods.includes('password')) {
+    //       // user has previously set a password
+    //       emailRef.current.className = s.success;
+    //     }
+    //     else {
+    //       // user is registered but has not set a password
+    //       emailRef.current.className = s.error;
+    //       setError({ email: 'A password has not been set for this account' });
+    //     }
+    //   }
+    //   else {
+    //     // no email provider found
+    //     emailRef.current.className = s.error;
+    //     setError({ email: 'There is no account registered with this email' });
+    //   }
+    // }
+    // else {
+    //   // email address is malformed
+    //   emailRef.current.className = s.error;
+    //   setError({ email: 'Email address is not valid. Please double check you entered it correctly' });
+    // }
   };
 
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await handleEmailValidation();
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-      await select.toggleModal();
+      if (email.length && password.length) {
+        await handleEmailValidation();
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        await select.toggleModal();
+      }
     }
     catch (error) {
       console.log({ error });
       if (error.code === 'auth/invalid-email') {
         // malformed email
         emailRef.current.className = s.error;
-        setError({ email: 'Email address is not valid. Please double check you entered it correctly' });
+        setError({ email: 'Invalid email address' });
       }
       if (error.code === 'auth/user-not-found') {
         emailRef.current.className = s.error;
-        setError({ email: 'There is no account registered with this email' });
+        setError({ email: 'No account found' });
       }
       if (error.code === 'auth/wrong-password') {
         passwordRef.current.className = s.error;
         setError({ password: 'Incorrect password' });
       }
       if (error.code === 'auth/too-many-requests') {
-        setError({ password: 'Fuck off' });
+        setError({ password: 'Account locked' });
         firebase.auth().sendPasswordResetEmail(email);
+      }
+      if (error.code === 'wrong') {
+        setError({ email: 'go home, you\'re obviously drunk' });
       }
     }
   };
@@ -153,7 +167,7 @@ const Login = ({ select }) => {
               onBlur={handleFocusChange}
               onFocus={handleFocusChange}
               value={email}
-              required={true}
+              // required={true}
 
               ref={emailRef}
             />
@@ -177,7 +191,7 @@ const Login = ({ select }) => {
               onBlur={handleFocusChange}
               onFocus={handleFocusChange}
               value={password}
-              required={true}
+              // required={true}
               ref={passwordRef}
             />
           </div>

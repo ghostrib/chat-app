@@ -1,6 +1,6 @@
 .sidebar {
-  background: #303e4d;
-  // background: var(--sidebar-bg);
+  // background: #627f9d; // #303e4d;
+  background: var(--sidebar-bg);
   grid-area: sidebar;
   height: calc(100vh - var(--header-height));
   overflow-y: auto;
@@ -34,4 +34,11 @@
   max-width: 30px;
   min-height: inherit;
   max-height: inherit;
+}
+
+
+@media (hover: none) {
+  .sidebar {
+    display: none;
+  }
 }

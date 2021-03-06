@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 // @function strip-unit($value) {
@@ -38,6 +39,7 @@
 // html {
 //   @include fluid-type($min_width, $max_width, $min_font, $max_font);
 // }
+
 
 
 
@@ -82,8 +84,8 @@
 
 
 
-  
-  --sidebar-bg: #313f4e;
+  // --sidebar-bg: #313f4e;
+  --sidebar-bg:#303e4d;
 
 
 
@@ -112,9 +114,11 @@
 
 
   @media (hover: none) {
-    --header-height: 80px;
+    --header-height: 60px;
     --main-height: 75vh;
     --message-form-height: 10vh;
+    --footer-height: 0vh;
+    --footer-height: calc(100vh - var(--main-height) - var(--message-form-height) - var(--header-height));
     --sidebar-width: 0;
     // --message-footer: 10vh;
   
@@ -170,10 +174,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
+
 }
 
 #root {
   height: inherit;
+
 }
 
 code {

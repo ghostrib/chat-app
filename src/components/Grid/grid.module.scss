@@ -12,3 +12,20 @@
     'sidebar message'
     'sidebar footer';
 }
+
+
+@media (hover: none) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows:
+    var(--header-height)
+    auto 
+    var(--message-form-height)
+    var(--footer-height);
+  grid-template-areas:
+    'header'
+    'main'
+    'message'
+    'footer';
+  }
+}

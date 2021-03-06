@@ -9,7 +9,7 @@ const Message = ({ name, image, message }) => {
     <li className={s.container__user}>
       <div className={s.user}>
         <div className={s.image}>
-          <SVG className={s.svg} src={image} width={44} height={44} />
+          <SVG className={s.svg} src={image} width={40} height={40} />
           {/* <img src={image} alt="avatar" className={s.user__image} /> */}
         </div>
         <div className={s.user__name}>{name}</div>

@@ -46,11 +46,71 @@ const rgb2hex = ({ r, g, b }) => {
   return `#${h}${e}${x}`;
 };
 
-export const convertHslToHex = ({ h, s, l }) => {
-  const { r, g, b } = hsl2rgb({ h, s, l });
-  const hex = rgb2hex({ r, g, b });
-  return hex;
+
+const removeHash = (str) => {
+  return str.charAt(0) === '#' ? str.slice(1) : str;
 };
+
+const toFloat = (n) => {
+  return Number(n.toFixed(2));
+};
+
+
+const hex2rgb = (str) => {
+  str = removeHash(str);
+  const r = parseInt(str.substring(0, 2), 16);
+  const g = parseInt(str.substring(2, 4), 16);
+  const b = parseInt(str.substring(4, 6), 16);
+  return { r, g, b };
+};
+
+
+const rgb2hsl = ({ r, g, b }) => {
+  const [ R, G, B ] = [ r, g, b ].map((n) => (n /= 255));
+  const max = Math.max(R, G, B);
+  const min = Math.min(R, G, B);
+  let h;
+  let s;
+  let l = (max + min) / 2;
+
+  if (max === min) {
+    h = 0;
+    s = 0;
+  }
+  else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    // eslint-disable-next-line default-case
+    switch (max) {
+      case R:
+        h = (G - B) / d + (G < B ? 6 : 0);
+        break;
+      case G:
+        h = (B - R) / d + 2;
+        break;
+      case B:
+        h = (R - G) / d + 4;
+        break;
+    }
+  }
+  h /= 6;
+
+  h = toFloat(h * 360);
+  s = toFloat(s * 100);
+  l = toFloat(l * 100);
+
+  return { h, s, l };
+};
+
+
+export const convertHslToHex = (hsl) => {
+  return rgb2hex(hsl2rgb(hsl));
+};
+
+export const convertHextoHsl = (str) => {
+  return rgb2hsl(hex2rgb(str));
+};
+
 
 export const keepHueInRange = (hue) => {
   hue = Number(hue);
@@ -59,3 +119,13 @@ export const keepHueInRange = (hue) => {
   }
   return hue;
 };
+
+export const keepPercentinRange = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+
+window.convertHextoHsl = convertHextoHsl;
+window.convertHslToHex = convertHslToHex;
