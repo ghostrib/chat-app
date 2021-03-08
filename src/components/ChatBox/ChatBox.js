@@ -3,6 +3,7 @@ import Message from './Message/Message';
 import PropTypes from 'prop-types';
 import s from './chatbox.module.scss';
 
+/** https://stackoverflow.com/a/61266099 */
 const AlwaysScrollToBottom = () => {
   const elementRef = useRef();
   useEffect(() => elementRef.current.scrollIntoView());
