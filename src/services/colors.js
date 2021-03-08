@@ -127,5 +127,5 @@ export const keepPercentinRange = (min, max) => {
 };
 
 
-window.convertHextoHsl = convertHextoHsl;
-window.convertHslToHex = convertHslToHex;
+// window.convertHextoHsl = convertHextoHsl;
+// window.convertHslToHex = convertHslToHex;

@@ -32,6 +32,6 @@ export { providers };
 
 // export { googleProvider, facebookProvider, twitterProvider };
 
-window.firebase = firebase;
+// window.firebase = firebase;
 
 export default firebase;

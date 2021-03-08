@@ -12,4 +12,4 @@ export const generateHash = filename => {
 };
 
 
-window.generateHash = generateHash;
+// window.generateHash = generateHash;

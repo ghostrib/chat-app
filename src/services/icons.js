@@ -63,5 +63,5 @@ export const createIcon = (hash, background = '#191919', size = 100) => {
   return icon;
 };
 
-window.createIcon = createIcon;
-window.groupColors = groupColors;
+// window.createIcon = createIcon;
+// window.groupColors = groupColors;

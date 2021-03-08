@@ -20,21 +20,17 @@ export const parseCookies = () => {
   }, {});
 };
 
+/** https://stackoverflow.com/a/14344716/5904552 */
 export const checkCookies = function () {
   let firstCookie = document.cookie;
   return function () {
     const currentCookie = document.cookie;
 
     if (firstCookie !== currentCookie) {
-      if (Object.values(parseCookies()).length) {
-        console.log('User refreshed or did something but is still signed in');
-      }
-      else {
-        console.log('User has cleared cookies so we should sign out');
+      if (!Object.values(parseCookies()).length) {
         const user = firebase.auth().currentUser;
         if (user) {
           services.setOnlineStatus(false);
-          // firebase.database().ref(`/users/${user.uid}`).update({ online: false });
         }
         firebase.auth().signOut();
       }

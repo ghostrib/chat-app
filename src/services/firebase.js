@@ -128,9 +128,9 @@ export const isEmailAvailable = async (email) => {
 };
 
 
-window.getUsersOnline = getUsersOnline;
-window.getMessages = getMessages;
-window.isValidUsername = isValidUsername;
-window.loginWith = loginWith;
-window.isEmailAvailable = isEmailAvailable;
+// window.getUsersOnline = getUsersOnline;
+// window.getMessages = getMessages;
+// window.isValidUsername = isValidUsername;
+// window.loginWith = loginWith;
+// window.isEmailAvailable = isEmailAvailable;
 
