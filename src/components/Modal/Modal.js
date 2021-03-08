@@ -5,7 +5,7 @@ import LoginForm from './Login/Login';
 import Signup from './Signup/Signup';
 // import { useState } from 'react';
 
-const Modal = ({ isModalVisible, isLoginForm, isSignupForm, select }) => {
+const Modal = ({ isModalVisible, isLoginForm, isSignupForm, app }) => {
   const className = isModalVisible ? s.visible : s.hidden;
 
   const showLogin = isModalVisible && isLoginForm; ;
@@ -14,7 +14,7 @@ const Modal = ({ isModalVisible, isLoginForm, isSignupForm, select }) => {
   return (
     <div className={className}>
       {
-       showLogin ? <LoginForm select={select}/> : showSignup ? <Signup select={select} /> : null
+       showLogin ? <LoginForm app={app}/> : showSignup ? <Signup app={app} /> : null
       }
 
     </div>
@@ -22,8 +22,10 @@ const Modal = ({ isModalVisible, isLoginForm, isSignupForm, select }) => {
 };
 
 Modal.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
   isModalVisible: PropTypes.bool.isRequired,
+  isLoginForm: PropTypes.bool.isRequired,
+  isSignupForm: PropTypes.bool.isRequired,
+  app: PropTypes.object.isRequired
 };
 
 export default Modal;

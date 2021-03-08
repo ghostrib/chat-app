@@ -11,13 +11,10 @@ class Signup extends React.Component {
       username: '',
       email: '',
       password: '',
-      confirmPassword: '',
-      tooltip: false,
       isValidEmail: null,
       isValidUsername: null,
       isValidPassword: null,
-      isConfirmed: null,
-      errors: {
+      passwordErrors: {
         tooShort: {
           error: false,
           message: [ 'Password should be at least 6 characters long' ]
@@ -27,6 +24,16 @@ class Signup extends React.Component {
           message: [ 'Password should have at least:', '1 uppercase letter', '1 lowercase letter', '1 number' ]
         }
       },
+      emailErrors: {
+        malformed: {
+          error: false,
+          message: [ 'Not a valid email address' ]
+        },
+        unavailable: {
+          error: false,
+          message: [ 'An account with this email address already exists' ]
+        }
+      }
     };
 
     this.usernameRef = React.createRef();
@@ -153,63 +160,85 @@ class Signup extends React.Component {
     }
   }
 
-  handleEmailValidation(e) {
+  async handleEmailValidation(e) {
     const email = e.target.value;
+    const errors = { ...this.state.emailErrors };
+    let isValidEmail = this.state.isValidEmail;
     if (email.length === 0) {
       this.emailRef.current.className = s.email;
-      this.setState({ isValidEmail: null });
+      isValidEmail = null;
     }
     else if (utils.validateEmail(email)) {
-      this.emailRef.current.className = s.success;
-      this.setState({ isValidEmail: true });
+      const isAvailable = await services.isEmailAvailable(email);
+      errors.malformed.error = false;
+      if (isAvailable) {
+        this.emailRef.current.className = s.success;
+        errors.unavailable.error = false;
+        isValidEmail = true;
+      }
+      else {
+        this.emailRef.current.className = s.error;
+        errors.unavailable.error = true;
+        isValidEmail = false;
+      }
     }
     else {
       this.emailRef.current.className = s.error;
-      this.setState({ isValidEmail: false });
+      errors.malformed.error = true;
+      isValidEmail = false;
     }
+    this.setState((state) => ({ ...state, errors, isValidEmail }));
   }
 
 
   handlePasswordValidation(e) {
     const password = e.target.value;
-    const errors = { ...this.state.errors };
+    const errors = { ...this.state.passwordErrors };
     let isValidPassword = this.state.isValidPassword;
-    if (!utils.validatePassword(password)) {
-      if (password.length && password.length < 8) {
-        errors.weakPass.error = true;
-        errors.tooShort.error = true;
-        this.passwordRef.current.className = s.error;
-      }
-      else if (password.length && password.length >= 8) {
-        errors.tooShort.error = false;
-        errors.weakPass.error = true;
-        this.passwordRef.current.className = s.error;
-      }
+    if (!password.length) {
+      this.passwordRef.current.className = s.password;
+      isValidPassword = false;
     }
-    else {
-      errors.weakPass.error = false;
-      errors.tooShort.error = false;
-      this.passwordRef.current.className = s.success;
-
-      isValidPassword = true;
+    else if (password.length) {
+      if (!utils.validatePassword(password)) {
+        isValidPassword = false;
+        if (password.length < 5) {
+          errors.weakPass.error = true;
+          errors.tooShort.error = true;
+          this.passwordRef.current.className = s.error;
+        }
+        else if (password.length >= 5) {
+          errors.tooShort.error = false;
+          errors.weakPass.error = true;
+          this.passwordRef.current.className = s.error;
+        }
+      }
+      else {
+        errors.weakPass.error = false;
+        errors.tooShort.error = false;
+        this.passwordRef.current.className = s.success;
+        isValidPassword = true;
+      }
     }
 
     this.setState((prevState) => ({ ...prevState, errors, isValidPassword }));
-    console.log({ state: this.state });
   }
 
 
   async handleRegister(e) {
     e.preventDefault();
     const { email, password, username } = this.state;
+    const { setUser } = this.props.app;
     try {
-      await services.signupWithEmail(username, email, password);
+      const user = await services.signupWithEmail(username, email, password);
+      return setUser(user);
+      // return user;
     }
     catch (error) {
       console.error(error);
     }
     finally {
-      this.props.select.toggleModal();
+      this.props.app.toggleModal();
     }
   }
 
@@ -218,7 +247,7 @@ class Signup extends React.Component {
   }
 
   render() {
-    const { toggleModal, showLogin } = this.props.select;
+    const { toggleModal, showLogin } = this.props.app;
     const { username, email, password } = this.state;
 
     const {
@@ -323,13 +352,25 @@ class Signup extends React.Component {
           </section>
 
           <section className={s.errors}>
-            <ul className={s.errors__list} htmlFor="">
+            <ul className={s.errors__list}>
+
               {
-                Object.entries(this.state.errors)
+                Object.entries(this.state.emailErrors)
                   .filter(err => err[1].error)
                   .map(err => err[1].message)
                   .flat(Infinity)
-                  .map(error => <li>{error}</li>)
+                  .map(error => <li key={Math.random()}>{error}</li>)
+              }
+
+            </ul>
+            <br/>
+            <ul className={s.errors__list} htmlFor="">
+              {
+                Object.entries(this.state.passwordErrors)
+                  .filter(err => err[1].error)
+                  .map(err => err[1].message)
+                  .flat(Infinity)
+                  .map(error => <li key={Math.random()}>{error}</li>)
               }
             </ul>
           </section>

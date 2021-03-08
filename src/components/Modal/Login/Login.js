@@ -7,17 +7,20 @@ import firebase from '../../../firebase';
 import utils from '../../../utils';
 // import TwitterButton from './TwitterButton';
 
-const Login = ({ select }) => {
+const Login = ({ app }) => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ isDisabled, setIsDisabled ] = useState(true);
+  const [ isChecked, setIsChecked ] = useState(true);
   const [ error, setError ] = useState({ email: '', password: '' });
+
 
   const emailLabelRef = useRef(null);
   const passwordLabelRef = useRef(null);
   const buttonRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -60,7 +63,7 @@ const Login = ({ select }) => {
       emailRef.current.className = s.email;
     }
     else if (utils.validateEmail(email)) {
-      emailRef.current.className = s.success;
+      // emailRef.current.className = s.success;
     }
     else {
       emailRef.current.className = s.error;
@@ -69,30 +72,6 @@ const Login = ({ select }) => {
         message: 'so you did something wrong...'
       });
     }
-    //   const methods = await firebase.auth().fetchSignInMethodsForEmail(email);
-    //   if (methods.length) {
-    //     // email provider found for user email
-    //     if (methods.includes('password')) {
-    //       // user has previously set a password
-    //       emailRef.current.className = s.success;
-    //     }
-    //     else {
-    //       // user is registered but has not set a password
-    //       emailRef.current.className = s.error;
-    //       setError({ email: 'A password has not been set for this account' });
-    //     }
-    //   }
-    //   else {
-    //     // no email provider found
-    //     emailRef.current.className = s.error;
-    //     setError({ email: 'There is no account registered with this email' });
-    //   }
-    // }
-    // else {
-    //   // email address is malformed
-    //   emailRef.current.className = s.error;
-    //   setError({ email: 'Email address is not valid. Please double check you entered it correctly' });
-    // }
   };
 
 
@@ -102,7 +81,7 @@ const Login = ({ select }) => {
       if (email.length && password.length) {
         await handleEmailValidation();
         await firebase.auth().signInWithEmailAndPassword(email, password);
-        await select.toggleModal();
+        await app.toggleModal();
       }
     }
     catch (error) {
@@ -112,26 +91,35 @@ const Login = ({ select }) => {
         emailRef.current.className = s.error;
         setError({ email: 'Invalid email address' });
       }
-      if (error.code === 'auth/user-not-found') {
+      else if (error.code === 'auth/user-not-found') {
         emailRef.current.className = s.error;
         setError({ email: 'No account found' });
       }
-      if (error.code === 'auth/wrong-password') {
-        passwordRef.current.className = s.error;
-        setError({ password: 'Incorrect password' });
-      }
-      if (error.code === 'auth/too-many-requests') {
+      else if (error.code === 'auth/too-many-requests') {
         setError({ password: 'Account locked' });
         firebase.auth().sendPasswordResetEmail(email);
       }
-      if (error.code === 'wrong') {
+      else if (error.code === 'auth/wrong-password') {
+        passwordRef.current.className = s.error;
+        setError({ password: 'Incorrect password' });
+      }
+      else {
         setError({ email: 'go home, you\'re obviously drunk' });
       }
     }
   };
 
 
-  const { showSignup, toggleModal } = select;
+  useEffect(() => {
+    // const updatePersistence = () => {
+    const { NONE, SESSION } = firebase.auth.Auth.Persistence;
+    const persistence = isChecked ? SESSION : NONE;
+    firebase.auth().setPersistence(persistence);
+    // };
+    // updatePersistence();
+  }, [ isChecked ]);
+
+  const { showSignup, toggleModal } = app;
   return (
     <div className={s.modal}>
       <div className={s.overlay}></div>
@@ -204,8 +192,10 @@ const Login = ({ select }) => {
                 name="remember"
                 id="remember"
                 className={s.checkbox}
+                checked={isChecked}
+                onChange={(e) => setIsChecked(!isChecked)}
               />
-              <label htmlFor="remember">Remember me</label>
+              <label htmlFor="remember">Keep me signed in</label>
 
             </div>
           </div>
@@ -250,3 +240,29 @@ const Login = ({ select }) => {
 };
 
 export default Login;
+
+
+//   const methods = await firebase.auth().fetchSignInMethodsForEmail(email);
+//   if (methods.length) {
+//     // email provider found for user email
+//     if (methods.includes('password')) {
+//       // user has previously set a password
+//       emailRef.current.className = s.success;
+//     }
+//     else {
+//       // user is registered but has not set a password
+//       emailRef.current.className = s.error;
+//       setError({ email: 'A password has not been set for this account' });
+//     }
+//   }
+//   else {
+//     // no email provider found
+//     emailRef.current.className = s.error;
+//     setError({ email: 'There is no account registered with this email' });
+//   }
+// }
+// else {
+//   // email address is malformed
+//   emailRef.current.className = s.error;
+//   setError({ email: 'Email address is not valid. Please double check you entered it correctly' });
+// }

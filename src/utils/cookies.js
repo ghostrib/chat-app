@@ -1,4 +1,5 @@
 import firebase from '../firebase';
+import services from '../services';
 
 export const parseCookies = () => {
   return document.cookie.split(/; */).reduce((obj, str) => {
@@ -19,20 +20,6 @@ export const parseCookies = () => {
   }, {});
 };
 
-// export const checkCookies = () => {
-//   let original = document.cookie;
-//   return function() {
-//     const current = document.cookie;
-//     if (original !== current) {
-//       if (Object.values(parseCookies()).length === 0) {
-//         firebase.auth().signOut();
-//       }
-//       original = current;
-//     }
-//   };
-// };
-
-
 export const checkCookies = function () {
   let firstCookie = document.cookie;
   return function () {
@@ -46,7 +33,8 @@ export const checkCookies = function () {
         console.log('User has cleared cookies so we should sign out');
         const user = firebase.auth().currentUser;
         if (user) {
-          firebase.database().ref(`/users/${user.uid}`).update({ online: false });
+          services.setOnlineStatus(false);
+          // firebase.database().ref(`/users/${user.uid}`).update({ online: false });
         }
         firebase.auth().signOut();
       }

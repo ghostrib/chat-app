@@ -1,13 +1,14 @@
 import {
   getUsersOnline,
   getMessages,
-  getUserInfo,
   createUserAccount,
   loginWith,
-  isNewUser,
-  setUserOnline,
   isValidUsername,
-  signupWithEmail
+  signupWithEmail,
+  setOnlineStatus,
+  getUser,
+  isEmailAvailable,
+
 } from './firebase';
 
 
@@ -16,14 +17,14 @@ import { createIcon } from './icons';
 const services = {
   getUsersOnline,
   getMessages,
-  getUserInfo,
   createUserAccount,
   loginWith,
-  isNewUser,
-  setUserOnline,
   isValidUsername,
   createIcon,
-  signupWithEmail
+  signupWithEmail,
+  setOnlineStatus,
+  getUser,
+  isEmailAvailable
 };
 
 export default services;

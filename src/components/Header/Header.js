@@ -3,14 +3,12 @@ import React, { useState } from 'react';
 import s from './header.module.scss';
 import SVG from 'react-inlinesvg';
 import firebase from '../../firebase';
+import services from '../../services';
 
 
-const signout = () => {
-  const uid = firebase.auth().currentUser.uid;
-  firebase.database().ref(`/users/${uid}`)
-    .update({ online: false })
-    .then(() => firebase.auth().signOut())
-    .catch(console.error);
+const signout = async () => {
+  await services.setOnlineStatus(false);
+  await firebase.auth().signOut();
 };
 
 const SlideOutMenu = ({ name }) => {
@@ -32,7 +30,6 @@ const UserProfile = ({ user }) => {
   const buttonClass = isVisible ? s.visible : s.hidden;
   const nameClass = isVisible ? s.hideName : s.showName;
   return (
-    // <div className={className}>
     <div className={s.user}>
       <strong className={nameClass}>{user.name}</strong>
       <button className={buttonClass} onClick={() => setIsVisible(!isVisible)}>
@@ -45,7 +42,6 @@ const UserProfile = ({ user }) => {
 
       </button>
     </div>
-    // </div>
   );
 };
 
@@ -64,28 +60,26 @@ const LoginButton = ({ showLogin, isSignedIn }) => {
 };
 
 
-const Header = ({ isSignedIn, user, select }) => {
-  const { showLogin } = select;
+const Header = ({ user, app }) => {
+  const { showLogin } = app;
   return (
     <header className={s.header}>
       <div className={s.logo}>
         <div className={s.logo__name}>The Elbow Room</div>
       </div>
-      {isSignedIn ? (
+      {user.isSignedIn
+        ? (
         <UserProfile user={user} />
       ) : (
-        <LoginButton showLogin={showLogin} isSignedIn={isSignedIn} />
+        <LoginButton showLogin={showLogin} isSignedIn={user.isSignedIn} />
       )}
     </header>
   );
 };
 
 Header.propTypes = {
-  toggleModal: PropTypes.func,
-  isSignedIn: PropTypes.bool,
-  name: PropTypes.string,
-  image: PropTypes.string,
   user: PropTypes.object.isRequired,
+  app: PropTypes.object.isRequired
 };
 
 export default Header;

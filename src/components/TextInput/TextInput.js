@@ -15,8 +15,8 @@ class TextInput extends React.Component {
 
   sendMessage(e) {
     e.preventDefault();
-    if (!this.props.state.isSignedIn) {
-      this.props.select.showLogin();
+    if (!this.props.user.isSignedIn) {
+      this.props.app.showLogin();
       return;
     }
     if (this.state.message.length) {
@@ -72,7 +72,7 @@ class TextInput extends React.Component {
 
 TextInput.propTypes = {
   state: PropTypes.object.isRequired,
-  select: PropTypes.object.isRequired
+  app: PropTypes.object.isRequired
 };
 
 export default TextInput;
