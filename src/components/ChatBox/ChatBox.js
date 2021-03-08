@@ -10,7 +10,6 @@ const AlwaysScrollToBottom = () => {
 };
 
 const ChatBox = ({ messages }) => {
-  // console.log({ messages });
   return (
     <main className={s.main}>
       <ul className={s.main__list}>
