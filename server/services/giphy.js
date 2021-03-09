@@ -14,8 +14,7 @@ const buildParams = (query) => {
 };
 
 
-const searchGifs = async (query, res, next) => {
-  console.log('query =', query);
+const searchGifs = async (query) => {
   const params = buildParams(query);
 
   const setup = {
@@ -28,24 +27,11 @@ const searchGifs = async (query, res, next) => {
   try {
     const response = await axios(setup);
     const urls = await response.data.data.map(item => item.embed_url);
-    console.log(urls);
-    return await JSON.stringify(urls);
+    return JSON.stringify(urls);
   }
   catch (error) {
     throw new Error(error);
   }
-
-  // await axios(setup)
-  //   .then(response => {
-  //     return response;
-  //   })
-  //   .then(response => response.data.data.map(item => item.embed_url))
-  //   .then(urls => {
-  //     console.log(urls);
-  //     return urls;
-  //   })
-  //   // .then(urls => res.send(urls))
-  //   .catch(error => console.error(error));
 };
 
 
