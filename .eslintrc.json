@@ -47,7 +47,7 @@
         }
       }
     ],
-    "new-cap": ["error", { "newIsCap": true, "capIsNew": true }],
+    "new-cap": ["error", { "newIsCap": true, "capIsNew": false }],
     "new-parens": "error",
     "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 3 }],
     "no-array-constructor": "error",
