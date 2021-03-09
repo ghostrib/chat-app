@@ -1,5 +1,6 @@
 import * as jdenticon from 'jdenticon';
 import { convertHslToHex, keepHueInRange, convertHextoHsl, keepPercentinRange } from './colors';
+import firebase from '../firebase';
 
 
 const randomColor = () => {
@@ -48,14 +49,15 @@ const groupColors = (color) => {
 // };
 
 
-export const createIcon = (hash, background = '#191919', size = 100) => {
+export const createIcon = (hash, background = '#0000', size = 100) => {
+  console.log({ hash });
   // if (!colors || !colors.length) {
   //   getRandomColors();
   // }
   // colors.length >= 4 || fillMissing(colors);
   const colors = groupColors(randomColor());
   colors.push(background);
-  let icon = jdenticon.toSvg(hash, size, { backColor: '#ffffff' });
+  let icon = jdenticon.toSvg(hash, size, { backColor: '#ffffff', padding: 0.115 });
   icon.match(/#[a-fA-F0-9]{6}/g).forEach((match) => {
     icon = icon.replace(match, colors[colors.length - 1]);
     colors.pop();

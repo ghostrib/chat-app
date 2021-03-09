@@ -5,11 +5,11 @@ import { providers } from '../../../firebase';
 import services from '../../../services';
 
 const { loginWith } = services;
-const { facebook } = providers;
+// const { facebook } = providers;
 
 const FacebookButton = () => {
   return (
-    <button className={s.button} onClick={() => loginWith(facebook)}>
+    <button className={s.button} onClick={() => loginWith(providers.facebook)}>
       <span className={s.button__anchor}>
         <img className={s.button__logo} src={facebookLogo} alt="facebook" />
       </span>

@@ -5,7 +5,9 @@ import LoginForm from './Login/Login';
 import Signup from './Signup/Signup';
 // import { useState } from 'react';
 
-const Modal = ({ isModalVisible, isLoginForm, isSignupForm, app }) => {
+const Modal = ({ forms, app }) => {
+  const { isModalVisible, isLoginForm, isSignupForm } = forms;
+
   const className = isModalVisible ? s.visible : s.hidden;
 
   const showLogin = isModalVisible && isLoginForm; ;
@@ -22,9 +24,7 @@ const Modal = ({ isModalVisible, isLoginForm, isSignupForm, app }) => {
 };
 
 Modal.propTypes = {
-  isModalVisible: PropTypes.bool.isRequired,
-  isLoginForm: PropTypes.bool.isRequired,
-  isSignupForm: PropTypes.bool.isRequired,
+  forms: PropTypes.object.isRequired,
   app: PropTypes.object.isRequired
 };
 

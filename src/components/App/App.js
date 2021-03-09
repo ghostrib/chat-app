@@ -15,9 +15,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModalVisible: false,
-      isLoginForm: false,
-      isSignupForm: false,
+      forms: {
+        isModalVisible: false,
+        isLoginForm: false,
+        isSignupForm: false,
+      },
       messages: [],
       usersOnline: [],
       user: {}
@@ -26,6 +28,8 @@ class App extends Component {
     this.showLogin = this.showLogin.bind(this);
     this.showSignup = this.showSignup.bind(this);
     this.setUser = this.setUser.bind(this);
+    this.setUsersOnline = this.setUsersOnline.bind(this);
+    this.setMessages = this.setMessages.bind(this);
 
     this.app = {
       showLogin: this.showLogin,
@@ -36,19 +40,27 @@ class App extends Component {
   }
 
   toggleModal() {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.setState({ forms: { isModalVisible: !this.state.forms.isModalVisible } });
   }
 
   showLogin() {
-    this.setState({ isModalVisible: true, isLoginForm: true, isSignupForm: false });
+    this.setState({ forms: { isModalVisible: true, isLoginForm: true, isSignupForm: false } });
   }
 
   showSignup() {
-    this.setState({ isModalVisible: true, isLoginForm: false, isSignupForm: true });
+    this.setState({ forms: { isModalVisible: true, isLoginForm: false, isSignupForm: true } });
   }
 
   setUser(user) {
     this.setState({ user });
+  }
+
+  setUsersOnline(usersOnline) {
+    this.setState({ usersOnline });
+  }
+
+  setMessages(messages) {
+    this.setState({ messages });
   }
 
   async handleAuthError(error) {
@@ -123,10 +135,18 @@ class App extends Component {
 
 
   componentDidMount() {
-    setInterval(checkCookies(), 250);
+    const { setUsersOnline, setMessages } = this;
 
-    services.getUsersOnline((usersOnline) => this.setState({ usersOnline }));
-    services.getMessages((messages) => this.setState({ messages }));
+    window.addEventListener('unload', () => {
+      services.setOnlineStatus(false).then(() => {
+        firebase.auth().signOut();
+      });
+    });
+
+
+    setInterval(checkCookies(), 250);
+    services.getUsersOnline(setUsersOnline);
+    services.getMessages(setMessages);
 
     firebase.auth().onAuthStateChanged(authUser => {
       this.handleAuthChange(authUser);
@@ -142,31 +162,16 @@ class App extends Component {
 
 
   render() {
-    const {
-      usersOnline,
-      messages,
-      isModalVisible,
-      isLoginForm,
-      isSignupForm,
-    } = this.state;
+    const { usersOnline, messages, forms, user } = this.state;
     const { state, app } = this;
     return (
       <GridContainer>
-        <Header
-          user={this.state.user}
-          app={app}
-        />
+        <Header user={user} app={app} />
         <SideBar usersOnline={usersOnline} />
         <ChatBox messages={messages} />
-        <TextInput user={this.state.user} state={state} app={app}/>
+        <TextInput user={user} state={state} app={app}/>
         <Footer />
-        <Modal
-
-          isModalVisible={isModalVisible}
-          isLoginForm={isLoginForm}
-          isSignupForm={isSignupForm}
-          app={app}
-        />
+        <Modal forms={forms} app={app} />
       </GridContainer>
     );
   }

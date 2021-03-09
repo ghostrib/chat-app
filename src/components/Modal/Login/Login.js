@@ -112,8 +112,8 @@ const Login = ({ app }) => {
 
   useEffect(() => {
     // const updatePersistence = () => {
-    const { NONE, SESSION } = firebase.auth.Auth.Persistence;
-    const persistence = isChecked ? SESSION : NONE;
+    const { LOCAL, SESSION } = firebase.auth.Auth.Persistence;
+    const persistence = isChecked ? LOCAL : SESSION;
     firebase.auth().setPersistence(persistence);
     // };
     // updatePersistence();
