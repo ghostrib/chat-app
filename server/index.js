@@ -1,18 +1,32 @@
-const express = require('express');
 const path = require('path');
-const port = process.env.PORT || 4444;
+
+const { config } = require('./config');
+const port = config.port || 1337;
+
+const express = require('express');
 const app = express();
 
-// app.use(express.json());
 
+/**
+ * Middleware
+ */
 
-// app.use(cors());
+app.use(require('morgan')('dev'));
+app.use(require('cors')());
+app.use(require('./middleware').handleError);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../build')));
 
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
-});
+/**
+ * Routes
+ */
+
+require('./routes/entry.js')(app);
+require('./routes/search.js')(app);
+
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
