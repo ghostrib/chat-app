@@ -1,10 +1,4 @@
-.modal {
-  /* font-size: calc(1em + 0.5vw);   */
-  /* font-size: inherit; */
-}
-
 .overlay {
-  /* display: flex; */
   position: fixed;
   top: 50%;
   left: 50%;
@@ -15,29 +9,20 @@
   background: black;
 }
 
-
-
 .form {
   position: fixed;
   background: #e6e6e6;
   width: 50vw;
   height: 90vh;
-  /* min-height: 580px; */
-
+  min-width: 280px;
+  min-height: 360px;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
-
   display: grid;
-  /* grid-template-rows: 12.5% 40% 10% 25% 12.5%; */
-  /* grid-template-rows: auto; */
-
-  /* grid-template-rows: 8% 45% 28% 0% 11% 8%; */
-
   grid-template-columns: 1fr;
-  /* grid-template-rows: auto auto minmax(140px, 0.5fr) auto; */
   grid-template-areas:
     "header"
     "inputs"
@@ -45,8 +30,7 @@
     "button"
     "."
     "footer";
-    font-size: calc(0.55em + 0.5vw);  
-
+  font-size: calc(0.55em + 0.5vw);
 }
 
 .form > * {
@@ -61,15 +45,11 @@
   align-items: center;
   color: whitesmoke;
   font-family: "Amatic SC";
-  /* font-size: calc(2em + 0.5vw + 0.5vh); */
   font-size: 1rem;
 
   letter-spacing: 4px;
   font-weight: 700;
   white-space: nowrap;
-  
-
-  /* margin-bottom: 16px; */
 }
 
 .title {
@@ -86,18 +66,13 @@
   cursor: pointer;
 }
 
-
-
-
 .username,
 .email,
 .password {
   width: 100%;
   box-shadow: 0 0 0 1px #303e4d;
   font-family: "Montserrat", sans-serif;
-  /* z-index: 3; */
 }
-
 
 .container {
   width: 100%;
@@ -110,7 +85,6 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  /* align-items: center; */
 }
 
 .inputs input {
@@ -118,34 +92,27 @@
   border: none;
   outline: none;
   font-family: "Montserrat", sans-serif;
-  width: 100%;  
+  width: 100%;
   height: 42px;
   max-height: 72px;
   padding: 0 0 0 1em;
-  /* margin: -0.5rem 0; */
-
   box-shadow: 0 0 0 1px #303e4d;
 }
 
 .inputs input:hover {
   box-shadow: 0 0 0 1px hsl(240, 70%, 50%);
-  /* background: hsl(240, 0%, 95%); */
 }
 
 .inputs input:focus {
   box-shadow: 0 0 0 2px blue;
-  /* font-size: 2px; */
-  /* transition: font-size 0.2s ease-in; */
   background: hsl(240, 5%, 100%);
 }
-
 
 .inputs.password {
   margin-bottom: -1em;
 }
 
 .button {
-  /* padding: 0 5%; */
   grid-area: button;
 
   font-weight: 600;
@@ -161,16 +128,12 @@
   justify-self: center;
 
   box-shadow: 0 0 0 1px #303e4d;
-  /* font-family: "Montserrat", sans-serif; */
-  /* height: 3.5rem; */
   height: 48px;
   width: 65%;
   min-width: 240px;
 
-
   place-content: center;
   place-items: center;
-
 }
 
 .button:hover {
@@ -195,7 +158,6 @@ button:disabled:hover {
   background: #2c3849;
   justify-content: center;
   align-items: center;
-  /* font-size: 1rem; */
   color: whitesmoke;
 }
 
@@ -207,23 +169,10 @@ button:disabled:hover {
   color: hsl(211, 80%, 60%);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 .label {
-  display:block;
+  display: block;
   width: 100%;
 
-  /* height: 50px; */
   height: 1em;
   margin: 16px 0 0 0;
   padding: 16px 0 0 0;
@@ -234,25 +183,20 @@ button:disabled:hover {
   display: flex;
   flex-direction: row-reverse;
   background: red;
-  cursor:text;
-
+  cursor: text;
 }
 
-.label__blur{
+.label__blur {
   position: absolute;
-  /* top: 0.85em; */
   top: 16px;
   left: 1rem;
   transition: all ease-in-out 0.2s;
   color: hsla(0, 0%, 37%, 0.8);
   width: 100%;
-
 }
 
 .label__focused {
   position: absolute;
-  /* top: 1rem;
-  left: 0.5rem; */
   top: -24px;
   left: 0;
   color: blue;
@@ -267,14 +211,11 @@ button:disabled:hover {
   width: 0;
 }
 
-
-
 .error__message {
   color: darkred;
   float: right;
   white-space: nowrap;
 }
-
 
 .error {
   box-shadow: 0px 0px 0px 1px red;
@@ -286,37 +227,18 @@ button:disabled:hover {
   background: hsla(120, 30%, 80%, 0.8);
 }
 
-
 .errors {
-  /* padding: 1rem 0; */
-
   width: 90%;
   justify-self: center;
-  /* align-self: center; */
-  /* height: 50%; */
-  /* background: red; */
-  /* position: relative; */
   bottom: 160px;
   color: darkred;
   font-size: calc(0.65em + 0.25vw);
   min-height: 120px;
   max-height: 120px;
-  /* height: 80%; */
   display: flex;
   flex-direction: column;
-  /* padding: 16px 0; */
   line-height: unset;
-
 }
-
-.errors__list {
-  /* position: absolute; */
-  /* top: 140px; */
-
-  /* margin: auto; */
-}
-
-
 
 @media (hover: none) {
   .form {

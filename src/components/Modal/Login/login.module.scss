@@ -1,9 +1,4 @@
-// .modal {
-//   font-size: calc(1em + 0.5vw);  
-// }
-
 .overlay {
-  // display: flex;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -15,42 +10,35 @@
 }
 
 .form {
-  
   position: fixed;
   background: #e6e6e6;
   width: 50vw;
   height: 90vh;
-  // min-height: 580px;
- 
+  min-width: 280px;
+  min-height: 360px;
+
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
-  
   display: grid;
-  // grid-template-rows: 12.5% 35% 10% 30% 12.5%;
-  // grid-template-rows: 12.5% 30% 20% 2% 28% 12.5%;
-  // grid-template-rows: 12.5% 30% 5% 15% 5% 20% 12.5%;
-  // grid-template-rows: 12.5% 30% 5% 10% 5% 25% 12.5%;
-  // grid-template-rows: 10% auto 0%;
-  grid-template-columns: 1fr;
-  grid-template-areas: 
-    'header'
-    'inputs'
-    '.'
-    'button'
-    'divider'
-    'buttons'
-    'footer';
-    font-size: calc(0.55em + 0.5vw);  
+  grid-template-columns: minmax(280px, 1fr);
+  grid-template-areas:
+    "header"
+    "inputs"
+    "."
+    "button"
+    "divider"
+    "buttons"
+    "footer";
+  font-size: calc(0.55em + 0.5vw);
 }
 
 .form > * {
   display: flex;
   flex-direction: column;
 }
-
 
 .header {
   grid-area: header;
@@ -60,15 +48,10 @@
   color: whitesmoke;
   font-family: "Amatic SC";
   font-size: 1rem;
-  // font-size: clamp(2em, 3em, 4em);
-  // font-size: calc(2em + 0.5vw + 0.5vh);
   letter-spacing: 4px;
   font-weight: 700;
-  // text-shadow: 1px 1px 2px black;
   white-space: nowrap;
 }
-
-
 
 .title {
   text-align: center;
@@ -84,13 +67,11 @@
   cursor: pointer;
 }
 
-
 .email,
 .password {
   width: 100%;
   box-shadow: 0 0 0 1px #303e4d;
   font-family: "Montserrat", sans-serif;
-  // z-index: 3;
 }
 
 .container {
@@ -101,12 +82,9 @@
   display: flex;
   width: 100%;
   grid-template-columns: 80% 2% 18%;
-  // font-size: small;
   margin: 2em 0 0 0;
-
   align-items: center;
   justify-content: space-between;
-  // font-size: small;
   gap: 1em;
   input {
     margin: 0 1em;
@@ -115,10 +93,6 @@
   white-space: nowrap;
 }
 
-
-
-
-
 .inputs {
   grid-area: inputs;
   background: #e6e6e6;
@@ -126,42 +100,29 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  // font-size: calc(0.8em + 0.5vw);  
-  
 }
 
-
-
-
-.inputs input:not([type=checkbox]) {
+.inputs input:not([type="checkbox"]) {
   border-radius: 6px;
   border: none;
   outline: none;
   font-family: "Montserrat", sans-serif;
-  width: 100%;  
+  width: 100%;
   height: 42px;
   max-height: 72px;
   padding: 0 0 0 1em;
-  // margin: -0.5rem 0;
-
   box-shadow: 0 0 0 1px #303e4d;
 }
 
-
-.inputs input:not([type=checkbox]):focus {
+.inputs input:not([type="checkbox"]):focus {
   box-shadow: 0 0 0 1px blue;
-
 }
 
 .login {
   grid-area: button;
 }
 
-
 .button {
-  /* padding: 0 5%; */
-  // grid-area: button;
-
   font-weight: 600;
   color: white;
   outline: none;
@@ -175,17 +136,12 @@
   justify-self: center;
 
   box-shadow: 0 0 0 1px #303e4d;
-  // font-family: "Lato", sans-serif;
-  // height: 3.5rem;
   height: 48px;
   width: 65%;
   min-width: 240px;
 
   place-content: center;
   place-items: center;
-
-  // font-size: 1.2rem;
-
 }
 
 .button:hover {
@@ -205,8 +161,6 @@ button:disabled:hover {
   background: hsla(0, 0%, 54%, 1);
 }
 
-
-
 .divider {
   grid-area: divider;
 
@@ -222,7 +176,6 @@ button:disabled:hover {
     .divider__container__text {
       padding: 0 10px;
       font-weight: 200;
-      // font-size: small;
       color: #494949;
     }
   }
@@ -231,50 +184,34 @@ button:disabled:hover {
 .buttons {
   grid-area: buttons;
   display: flex;
-  // flex-direction: row;
-  justify-content:center;
-  // align-items: center;
-  // background: #e6e6;
+  justify-content: center;
+
   flex-flow: row wrap;
   width: 100%;
- 
+
   button {
     margin: 0.5em 1em;
   }
-  
 
   img {
     height: 45px;
   }
-
 }
-
-
-
-// .buttons > button {
-//   width: 50px;
-//   height: 50px;
-//   margin: 0 1em;
-  
-// }
-
 
 .footer {
   grid-area: footer;
   background: #2c3849;
   justify-content: center;
   align-items: center;
-  // font-size: 1rem;
   color: whitesmoke;
   a {
     font-weight: bold;
-    color:hsl(211, 80%, 70%)
+    color: hsl(211, 80%, 70%);
   }
   a:hover {
-    color:hsl(211, 80%, 60%)
+    color: hsl(211, 80%, 60%);
   }
 }
-
 
 .image__container {
   display: flex;
@@ -284,109 +221,22 @@ button:disabled:hover {
   height: 100%;
 }
 
-
-// input[type=email] {
-//   margin: 3% 0 0 0;
-// }
-
-// input[type=submit] {
-  // font-size: 18px;
-//   font-weight: 600;
-//   background: hsl(211, 50%, 42%);
-//   color: whitesmoke;
-//   outline: none;
-//   border: none;
-//   cursor: pointer;
-// }
-
-
-// input {
-//   height: 3em;
-// }
-
-
-
-// section.buttons {
-//   flex-direction: row;
-//   justify-content: center;
-//   gap: 1em;
-//   background: #e6e6e6;
-
-// }
-
-
-
-
-
-
-
-// .username,
-// .email,
-// .password,
-// .confirm,
-// .login,
-// .register {
-//   width: 100%;
-//   height: 40px;
-//   margin: 8px 0;
-//   border-radius: 2px;
-//   border: none;
-//   outline: none;
-//   box-shadow: 0 0 0 1px #303e4d;
-//   padding: 4px;
-//   font-family: "Montserrat", sans-serif;
-// }
-
-// .username,
-// .email,
-// .password,
-// .confirm {
-//   padding: 0 0 0 16px;
-
-//   &:hover {
-//     box-shadow: 0 0 0 1px blue;
-//   }
-// }
-
-// .login {
-//   font-weight: 600;
-//   color: white;
-//   background: hsl(211, 36%, 42%);
-//   letter-spacing: 0.1em;
-
-//   &:hover {
-//     background: hsl(211, 56%, 42%);
-//     cursor: pointer;
-//   }
-// }
-
 .forgot {
-  // font-size: 14px;
   color: hsl(211, 50%, 40%);
 
   cursor: pointer;
   background: none;
   border: none;
   outline: none;
-
   &:hover {
     color: hsl(211, 70%, 50%);
   }
 }
 
-
-
 .label {
-  display:block;
+  display: block;
   width: 100%;
-  // height: 50px;
-  // height: 3rem;
-  // height: calc(1em + 1.5vh);
-  // height: 24px;
   height: 1em;
-  // background: red;
-  // padding: 0 0;
-  // margin: 1em 0;
   margin: 16px 0 0 0;
   padding: 16px 0 0 0;
 }
@@ -394,60 +244,40 @@ button:disabled:hover {
 .label__text {
   position: relative;
   display: flex;
-  // font-size: 0.75em;
   flex-direction: row-reverse;
   background: red;
-  cursor:text;
+  cursor: text;
 }
 
-.label__blur{
+.label__blur {
   position: absolute;
-  // top: 3.5rem;
-  // left: 1rem;
-  // font-size:16px;
   top: 1em;
   left: 1em;
   transition: all ease-in-out 0.2s;
   color: hsla(0, 0%, 37%, 0.8);
   width: 100%;
-  // font-size: 1em;
 }
-
-
 
 .label__focused {
   position: absolute;
-
-  // top: 1.5rem;
   top: -24px;
   left: 0;
-  // left: 0.5rem;
   color: blue;
-  // font-size: 0.75rem;
   font-weight: 600;
   transition: all ease-in-out 0.2s;
   width: 100%;
   padding-top: 4px;
-  // font-size: small;
-
 }
 
 .label__title {
   width: 0;
 }
 
-
 .error__message {
   color: darkred;
   float: right;
   white-space: nowrap;
-  // margin: 0 0 0 1em;
-  // display: flex;
-  // justify-content: flex-end;
-
 }
-
-
 
 .error {
   box-shadow: 0px 0px 0px 1px red;
@@ -459,7 +289,6 @@ button:disabled:hover {
   background: hsla(120, 30%, 80%, 0.8);
 }
 
-
 @media (hover: none) {
   .form {
     width: 100%;
@@ -469,141 +298,32 @@ button:disabled:hover {
 
 @media (max-width: 600px) {
   .buttons {
-    // grid-area: buttons;
-    // display: flex;
     flex-direction: column;
-
-    // justify-content:space-evenly;
     align-items: center;
-    // background: #e6e6;
-    // width: 100%;
   }
 }
 
-
-// @media (max-height: 480px) {
-//   .
-// }
-
-
-
-// /* #### Mobile Phones Portrait #### */
-// @media screen and (max-device-width: 480px) and (orientation: portrait) {
-//   // .form {
-//   //   background: firebrick;
-//   // }
-// }
-
-// /* #### Mobile Phones Landscape #### */
-// @media screen and (max-device-width: 640px) and (orientation: landscape) {
-//   // .form {
-//   //   background: green;
-//   // }
-// }
-
-/* #### Mobile Phones Portrait or Landscape #### */
-// @media screen and (max-device-width: 640px) {
-//   .form {
-//     width: 100%;
-//     height: 100%;
-//   }
-// }
-
-/* #### iPhone 4+ Portrait or Landscape #### */
-// @media screen and (min-device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
-//   .form {
-//    width: 100%;
-//    height: 100%;
-//   }
-// }
-
-/* #### iPhone 5 Portrait or Landscape #### */
-// @media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
-//   .form {
-//     width: 100%;
-//     height: 100%;
-
-//   }
-// }
-
-/* #### iPhone 6 and 6 plus Portrait or Landscape #### */
-// @media (min-device-height: 667px) and (min-device-width: 375px) and (-webkit-min-device-pixel-ratio: 3) {
-//   .form {
-//     width: 100%;
-//     height: 100%;
-//   }
-// }
-
-/* #### Tablets Portrait or Landscape #### */
-// @media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-//   .form {
-//     width: 100%;
-//     height: 100%;
-//   }
-// }
-
 /* ----------- iPad Pro ----------- */
 /* Portrait and Landscape */
-@media only screen 
-  and (min-width: 1024px) 
-  and (max-height: 1366px) 
-  and (-webkit-min-device-pixel-ratio: 1.5) {
-    .form {
-      width: 70vw;
-      height: 60vh;
-    }
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (-webkit-min-device-pixel-ratio: 1.5) {
+  .form {
+    width: 70vw;
+    height: 60vh;
+  }
 }
 
 /* Portrait */
-@media only screen 
-  and (min-width: 1024px) 
-  and (max-height: 1366px) 
-  and (orientation: portrait) 
-  and (-webkit-min-device-pixel-ratio: 1.5) {
-    .form {
-      width: 70vw;
-      height: 60vh;
-    }
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+  .form {
+    width: 70vw;
+    height: 60vh;
+  }
 }
 
 /* Landscape */
-@media only screen 
-  and (min-width: 1024px) 
-  and (max-height: 1366px) 
-  and (orientation: landscape) 
-  and (-webkit-min-device-pixel-ratio: 1.5) {
-    .form {
-      width: 60vw;
-      height: 80vh;
-    }
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
+  .form {
+    width: 60vw;
+    height: 80vh;
+  }
 }
-
-@media only screen 
- and (width: 640px)
- and (height: 360px) {
-
-
-
- }
-
-/* #### Desktops #### */
-// @media screen and (min-width: 1024px) {
-//   .form {
-    // width: 60vw;
-    // height: 90vh;
-    
-//   }
-// }
-
-
-
-
-
-// @media (max-width: 320px) {
-//   .buttons {
-//     button {
-//       height: 35px;
-//       width: 180px;
-//     }
-//   }
-// }

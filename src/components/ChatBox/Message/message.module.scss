@@ -25,10 +25,9 @@
 
 }
 
-
-
 .image {
-  height: 48px;
+  height: 100%;
+  width: 100%;
   grid-area: image;
 }
 
@@ -38,21 +37,17 @@
 }
 
 .user__name {
-  // font-size: 17px;
-  // font-size: calc(0.75em + 0.5vw);  
-
   font-weight: 800;
   grid-area: name;
 }
 
 .user__message {
   font-family: lato;
-  // font-size: calc(0.65em + 0.5vw);  
-  // font-size: 16px;
   font-weight: 400;
 }
 
 .svg {
-  border-radius: 15%;
-  // box-shadow: 0px 0px 0px 1px #333;
+  width: auto;
+  height: calc(0.5vw + 2vh + 1em);
+  border-radius: 100%;
 }

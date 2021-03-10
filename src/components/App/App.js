@@ -91,10 +91,7 @@ class App extends Component {
       this.setState({ user });
     }
     else {
-      const usersOnline = this.state.usersOnline.filter(user => {
-        return user.userId !== this.state.user.userId;
-      });
-      this.setState({ usersOnline, user: {} });
+      this.setState({ user: {} });
     }
   }
 
