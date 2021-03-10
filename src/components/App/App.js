@@ -135,9 +135,7 @@ class App extends Component {
     const { setUsersOnline, setMessages } = this;
 
     window.addEventListener('unload', () => {
-      services.setOnlineStatus(false).then(() => {
-        firebase.auth().signOut();
-      });
+      services.setOnlineStatus(false);
     });
 
 
