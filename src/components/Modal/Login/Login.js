@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import s from './login.module.scss';
-import GoogleButton from './GoogleButton';
-import FacebookButton from './FacebookButton';
 import { useState, useRef, useEffect } from 'react';
 import firebase from '../../../firebase';
 import utils from '../../../utils';
-// import TwitterButton from './TwitterButton';
+import SocialMediaButton from './SocialMediaButton';
+import googleLogo from '../../../assets/google.png';
+import facebookLogo from '../../../assets/facebook.png';
 
 const Login = ({ app }) => {
   const [ email, setEmail ] = useState('');
@@ -224,8 +224,8 @@ const Login = ({ app }) => {
         </section>
 
         <section className={s.buttons}>
-          <GoogleButton />
-          <FacebookButton />
+          <SocialMediaButton brand={'google'} imageSrc={googleLogo}/>
+          <SocialMediaButton brand={'facebook'} imageSrc={facebookLogo} />
         </section>
 
         <footer className={s.footer}>
