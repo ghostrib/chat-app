@@ -1,15 +1,9 @@
 import * as jdenticon from 'jdenticon';
 import { convertHslToHex, keepHueInRange, convertHextoHsl, keepPercentinRange } from './colors';
-import firebase from '../firebase';
-
 
 const randomColor = () => {
   return `#${Math.random().toString(16).slice(2, 8)}`;
 };
-
-// const getRandomColors = () => {
-//   return Array.from({ length: 4 }, () => randomColor());
-// };
 
 const groupColors = (color) => {
   let { h } = convertHextoHsl(color);
@@ -35,26 +29,7 @@ const groupColors = (color) => {
   return colors;
 };
 
-
-// const fillMissing = (colors) => {
-//   const n = 4 - colors.length;
-//   for (let i = 0; i < n; i++) {
-//     const color = randomColor();
-//     let { h, s, l } = convertHextoHsl(color);
-//     if (l < 55) l = 55;
-
-//     colors.unshift(convertHslToHex({ h, s, l }));
-//   }
-//   return colors;
-// };
-
-
 export const createIcon = (hash, background = '#0000', size = 100) => {
-  console.log({ hash });
-  // if (!colors || !colors.length) {
-  //   getRandomColors();
-  // }
-  // colors.length >= 4 || fillMissing(colors);
   const colors = groupColors(randomColor());
   colors.push(background);
   let icon = jdenticon.toSvg(hash, size, { backColor: '#ffffff', padding: 0.115 });
@@ -65,5 +40,3 @@ export const createIcon = (hash, background = '#0000', size = 100) => {
   return icon;
 };
 
-// window.createIcon = createIcon;
-// window.groupColors = groupColors;
