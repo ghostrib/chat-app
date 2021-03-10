@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import s from './signup.module.css';
+import s from './signup.module.scss';
 import services from '../../../services';
 import utils from '../../../utils';
 import React from 'react';
