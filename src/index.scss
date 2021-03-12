@@ -61,14 +61,21 @@
   --login-form-background: #e7e7e7;
 
   @media (hover: none) {
-    --header-height: 60px;
+    --header-height: clamp(
+      60px, 
+      calc(var(--main-height) - var(--message-form-height) - var(--footer-height)),
+      100px
+    );
     --main-height: 75vh;
     --message-form-height: 10vh;
-    --footer-height: 0vh;
-    --footer-height: calc(
-      100vh - var(--main-height) - var(--message-form-height) -
-        var(--header-height)
-    );
+    --footer-height: 80px;
+    // --footer-height: calc(100vh - var(--main-height) - var(--message-form-height) -10vh);
+    // --footer-height: 0vh;
+    // --footer-height: clamp(
+    //   20px,
+    //   calc(100vh - var(--main-height) - var(--message-form-height) - var(--header-height)),
+    //   60px
+    // );
     --sidebar-width: 0;
     // --message-footer: 10vh;
   }

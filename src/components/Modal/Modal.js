@@ -3,20 +3,22 @@ import s from './modal.module.scss';
 
 import LoginForm from './Login/Login';
 import Signup from './Signup/Signup';
+import Options from './Options/Options';
 // import { useState } from 'react';
 
 const Modal = ({ forms, app }) => {
-  const { isModalVisible, isLoginForm, isSignupForm } = forms;
+  const { isModalVisible, isLoginForm, isSignupForm, isOptionsPage } = forms;
 
   const className = isModalVisible ? s.visible : s.hidden;
 
   const showLogin = isModalVisible && isLoginForm; ;
   const showSignup = isModalVisible && isSignupForm;
+  const showOptions = isModalVisible && isOptionsPage;
 
   return (
     <div className={className}>
       {
-       showLogin ? <LoginForm app={app}/> : showSignup ? <Signup app={app} /> : null
+       showLogin ? <LoginForm app={app}/> : showSignup ? <Signup app={app} /> : showOptions ? <Options app={app}/> : null
       }
 
     </div>

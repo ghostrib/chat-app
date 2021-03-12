@@ -15,12 +15,13 @@
 
 .user {
   display: grid;
-  grid-template-columns: 50px auto;
+  grid-template-columns: calc(3em + 0.5vw) auto;
   grid-template-areas:
     'image name'
     'image message';
   align-items: flex-start;
-  gap: 2px 12px;
+  // gap: 2px 12px;
+  gap: 2px calc(0.5em + 0.5vw);
   font-size: calc(0.65em + 0.5vw);  
 
 }
