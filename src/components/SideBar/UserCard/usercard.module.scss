@@ -13,15 +13,17 @@
 .sidebar__list__item:hover {
   background: #6698c8;
   color: #303e4d;
+  
 }
 
 .name {
   padding: 2px;
 }
 
-.avatar {
+.image {
   max-width: 30px;
   max-height: 30px;
   min-height: inherit;
   max-height: inherit;
+  margin: 0 10px 0 0;
 }

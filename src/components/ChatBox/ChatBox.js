@@ -3,6 +3,7 @@ import Message from './Message/Message';
 import PropTypes from 'prop-types';
 import s from './chatbox.module.scss';
 
+/** https://stackoverflow.com/a/61266099 */
 const AlwaysScrollToBottom = () => {
   const elementRef = useRef();
   useEffect(() => elementRef.current.scrollIntoView());
@@ -16,7 +17,7 @@ const ChatBox = ({ messages }) => {
         {messages.map((messageObject, i) => {
           const { name, message, image } = messageObject;
           return (
-            <Message avatar={image} name={name} message={message} key={i} />
+            <Message image={image} name={name} message={message} key={i} />
           );
         })}
         <AlwaysScrollToBottom />

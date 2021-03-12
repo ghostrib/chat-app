@@ -1,28 +1,34 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import s from './modal.module.scss';
 
-import PropTypes from 'prop-types';
-import GoogleButton from './GoogleButton/GoogleButton';
+import LoginForm from './Login/Login';
+import Signup from './Signup/Signup';
+import Options from './Options/Options';
 
-const Modal = ({ visible, toggleModal }) => {
+const Modal = ({ forms, app }) => {
+  const { isModalVisible, isLoginForm, isSignupForm, isOptionsPage } = forms;
+
+  const className = isModalVisible ? s.visible : s.hidden;
+
+  const showLogin = isModalVisible && isLoginForm; ;
+  const showSignup = isModalVisible && isSignupForm;
+  const showOptions = isModalVisible && isOptionsPage;
+
   return (
-    <>
-      <div className={visible ? s.visible : s.hidden}>
-        <div className={s.modal}></div>
-        <div className={s.modal__window}>
-          <GoogleButton />
-          <span className={s.close}>
-            <button onClick={toggleModal}>X</button>
-          </span>
-        </div>
-      </div>
-    </>
+    <div className={className}>
+      {
+       showLogin ? <LoginForm app={app}/> : showSignup ? <Signup app={app} /> : showOptions ? <Options app={app}/> : null
+      }
+
+    </div>
   );
 };
 
 Modal.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
-  visible: PropTypes.bool.isRequired,
+  forms: PropTypes.object.isRequired,
+  app: PropTypes.object.isRequired
 };
 
 export default Modal;
+
+

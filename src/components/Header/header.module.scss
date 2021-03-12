@@ -1,32 +1,73 @@
 .header {
   background: var(--header-bg);
   color: var(--header-color);
-  border-bottom: 1px solid rgba(222, 222, 222, 0.3);
-  grid-area: header;
-
   display: flex;
-  // justify-content: flex-end;
+  justify-content: center;
+  width: 100vw;
+}
+
+.container {
+  width: 90%;
+  height: 100%;
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  white-space: nowrap;
 }
 
 .logo {
-  margin: 0 0 0 20px;
-}
+  font-family: "Amatic SC";
+  font-size: calc(1em + 1vh + 1.5vw);
 
-.logo__name {
-  // font-family: Lato;
-  font-family: 'Amatic SC';
   font-weight: 700;
-  letter-spacing: 4px;
-  font-size: 40px;
+  letter-spacing: 2px;
   text-shadow: 1px 1px 2px black;
-
+  filter: drop-shadow(0px 2px 2px #000);
 }
 
-.visible {
-  display: block;
-  height: 50%;
-  width: var(--signin-button-width);
-  margin: 0 20px 0 0;
+.login {
+  white-space: nowrap;
 }
+
+.login__button {
+  padding: calc(0.25em + 0.25vw + 0.25vh);
+  font-size: calc(0.75em + 0.25vw);
+  font-weight: bold;
+  color: var(--header-bg);
+  background: var(--header-color);
+  border: none;
+  outline: none;
+  border-radius: 4px;
+}
+
+.optionsButton {
+  height: var(--header-height);
+  display: flex;
+  justify-content: flex-end;
+  height: auto;
+  align-items: center;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  box-shadow: 0px 0px 0px 1px #e6e6e6;
+  white-space: nowrap;
+  color: var(--link-color);
+  &:hover {
+    background: #e6e6e6;
+    box-shadow: 0px 0px 0px 1px blue;
+    color: var(--link-hover);
+  }
+}
+
+
+.profile__image {
+  border-radius: 6px;
+  border:none;
+  outline: none;
+  height: calc(2em + 0.5vw);
+  width: calc(2em + 0.5vw);
+}
+
+
+

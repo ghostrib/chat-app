@@ -6,7 +6,7 @@
   transform: translate(-50%, -50%);
   height: 100%;
   width: 100%;
-  opacity: 90%;
+  opacity: var(--overlay-opacity);
   background: black;
 }
 
@@ -14,72 +14,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 50%;
-  width: 40%;
   opacity: 100%;
-  background: #e7e7e7;
-}
-
-.login__form {
-  height: 80%;
-  width: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.button__google {
-  display: grid;
-  grid-template-columns: 40px 220px;
-  align-items: center;
-  justify-content: center;
-  width: 280px;
-  height: 40px;
-  background: white;
-  border-radius: 4px;
-  border: 1px solid #0061eb;
-  color: #0061eb;
-  font-size: 19px;
-  font-family: Lato;
-  font-weight: 700;
-  outline: none;
-}
-
-.button__google:hover {
-  background: linear-gradient(
-    90deg,
-    white 0px,
-    white 40px,
-    #0061eb 40px
-  );
-  color: white;
-}
-
-.button__google:active {
-  background: linear-gradient(
-    90deg,
-    white 0px,
-    white 40px,
-    hsl(215, 100%, 25%) 40px
-  );
-}
-
-.googleLogo {
-  height: 26px;
-  width: 26px;
-}
-
-.close {
-  justify-self: flex-end;
-  align-self: flex-start;
-  position: absolute;
-  right: 20px;
-  top: 20px;
 }
 
 .hidden {

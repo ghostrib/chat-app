@@ -1,5 +1,5 @@
 .sidebar {
-  background: #303e4d;
+  background: var(--sidebar-bg);
   grid-area: sidebar;
   height: calc(100vh - var(--header-height));
   overflow-y: auto;
@@ -28,8 +28,15 @@
   padding: 2px;
 }
 
-.avatar {
+.image {
   max-width: 30px;
   min-height: inherit;
   max-height: inherit;
+}
+
+
+@media (hover: none) {
+  .sidebar {
+    display: none;
+  }
 }

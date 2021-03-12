@@ -1,120 +1,184 @@
 import React, { Component } from 'react';
-import GridContainer from '../Grid/Grid';
-
-import Header from '../Header/Header';
+import firebase, { providers } from '../../firebase';
+import services from '../../services';
+import { checkCookies } from '../../utils/cookies';
 import ChatBox from '../ChatBox/ChatBox';
+import Footer from '../Footer/Footer';
+import GridContainer from '../Grid/Grid';
+import Header from '../Header/Header';
+import Modal from '../Modal/Modal';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
-import Footer from '../Footer/Footer';
-import Modal from '../Modal/Modal';
 
-import firebase, { provider, db, createNewUserEntry } from '../../firebase';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
-      isSignedIn: null,
+      forms: {
+        isModalVisible: false,
+        isLoginForm: false,
+        isSignupForm: false,
+        isOptionsPage: false,
+      },
       messages: [],
       usersOnline: [],
+      user: {}
     };
     this.toggleModal = this.toggleModal.bind(this);
-    this.handleAuthStateChanged = this.handleAuthStateChanged.bind(this);
+    this.showLogin = this.showLogin.bind(this);
+    this.showSignup = this.showSignup.bind(this);
+    this.showOptions = this.showOptions.bind(this);
+    this.setUser = this.setUser.bind(this);
+    this.setUsersOnline = this.setUsersOnline.bind(this);
+    this.setMessages = this.setMessages.bind(this);
+
+
+    this.app = {
+      showLogin: this.showLogin,
+      showSignup: this.showSignup,
+      showOptions: this.showOptions,
+      toggleModal: this.toggleModal,
+      setUser: this.setUser
+    };
   }
 
   toggleModal() {
-    this.setState({ visible: !this.state.visible });
+    this.setState({ forms: { isModalVisible: !this.state.forms.isModalVisible } });
   }
 
-  handleAuthStateChanged(user) {
-    const isSignedIn = user !== null;
-    let profile = {};
-    if (isSignedIn) {
-      profile = {
-        name: user.displayName,
-        image: user.photoURL,
-        email: user.email,
-        uid: user.uid,
-        visible: false,
-      };
+  showLogin() {
+    this.setState({ forms: { isModalVisible: true, isLoginForm: true, isSignupForm: false, isOptionsPage: false } });
+  }
+
+  showSignup() {
+    this.setState({ forms: { isModalVisible: true, isLoginForm: false, isSignupForm: true, isOptionsPage: false } });
+  }
+
+  showOptions() {
+    this.setState({ forms: { isModalVisible: true, isLoginForm: false, isSignupForm: false, isOptionsPage: true } });
+  }
+
+  setUser(user) {
+    this.setState({ user });
+  }
+
+  setUsersOnline(usersOnline) {
+    this.setState({ usersOnline });
+  }
+
+  setMessages(messages) {
+    this.setState({ messages });
+  }
+
+  async handleAuthError(error) {
+    if (error.email && error.credential && error.code === 'auth/account-exists-with-different-credential') {
+      sessionStorage.setItem('credential', JSON.stringify(error.credential));
+
+      const signInMethods = await firebase.auth().fetchSignInMethodsForEmail(error.email);
+      const providerKey = signInMethods[0].split('.')[0];
+      const provider = providers[providerKey];
+      firebase.auth().signInWithRedirect(provider);
     }
+  }
 
-    profile = { ...profile, isSignedIn };
-    this.setState(profile);
+  handleLinkingAccounts(authUser) {
+    const savedItem = sessionStorage.getItem('credential');
+    const creds = firebase.auth.AuthCredential.fromJSON(savedItem);
+    const credential = firebase.auth.FacebookAuthProvider.credential(creds);
+    sessionStorage.removeItem('credential');
+    authUser.linkWithCredential(credential);
+  }
 
-    const uid = this.state.uid;
-    if (uid) {
-      this.createOrUpdate();
+
+  async handleAuthChange(authUser) {
+    if (authUser) {
+      document.cookie = `login=${Date.now()}`;
+      await services.setOnlineStatus(true);
+      const user = await services.getUser(authUser.uid);
+      this.setState({ user });
+    }
+    else {
+      this.setState({ user: {} });
     }
   }
 
-  getUsersOnline() {
-    const db = firebase.database().ref('/userlist');
-    db.once('value')
-      .then((query) => query.val())
-      .then((data) => Object.values(data))
-      .then((users) => users.filter((user) => user.online))
-      .then((usersOnline) => this.setState({ usersOnline }))
-      .catch(console.error);
 
-    db.on('value', (data) => {
-      const usersOnline = Object.values(data.val()).filter((users) => users.online);
-      this.setState({ usersOnline });
-    });
+  async handleCreatingNewAccount(authUser) {
+    const user = await services.createUserAccount(authUser);
+    this.setState({ user });
   }
 
-  getMessages() {
-    const db = firebase.database().ref('/messages');
-    db.limitToLast(10)
-      .once('value')
-      .then((query) => query.val())
-      .then((data) => Object.values(data))
-      .then((array) => array.sort((a, b) => a.time - b.time))
-      .then((messages) => this.setState({ messages }))
-      .catch(console.error);
 
-    db.on('child_added', (message) => {
-      this.setState({
-        messages: [...this.state.messages, message.val()],
-      });
-    });
-  }
-
-  async createOrUpdate() {
+  async handleRedirect() {
     try {
-      const userStatus = await firebase.database().ref(`/userlist/${this.state.uid}`);
-      const query = await userStatus.get();
-      const values = await query.val();
-
-      values
-        ? userStatus.update({ online: this.state.isSignedIn })
-        : createNewUserEntry(this.state);
-    } catch (error) {
-      console.error(error.message);
+      const result = await firebase.auth().getRedirectResult();
+      if (result.user) {
+        const { operationType, additionalUserInfo } = result;
+        if (operationType === 'signIn') {
+          if (additionalUserInfo.isNewUser) {
+            // first time user
+            this.handleCreatingNewAccount(result.user);
+          }
+          else {
+            // returning user
+            await services.setOnlineStatus(true);
+            const user = await services.getUser(result.user.uid);
+            this.setState({ user });
+          }
+        }
+        if (sessionStorage.getItem('credential')) {
+          this.handleLinkingAccounts(result.user);
+        }
+      }
+      return result;
+    }
+    catch (error) {
+      this.handleAuthError(error);
     }
   }
 
-  async componentDidMount() {
-    this.getUsersOnline();
-    this.getMessages();
-    firebase.auth().onAuthStateChanged(this.handleAuthStateChanged);
+
+  componentDidMount() {
+    const { setUsersOnline, setMessages } = this;
+
+    window.addEventListener('unload', () => {
+      services.setOnlineStatus(false);
+    });
+
+
+    setInterval(checkCookies(), 250);
+    services.getUsersOnline(setUsersOnline);
+    services.getMessages(setMessages);
+
+    firebase.auth().onAuthStateChanged(authUser => {
+      this.handleAuthChange(authUser);
+      this.handleRedirect();
+    });
   }
+
+  componentWillUnmount() {
+    this.setState = (state, callback) => {
+      return null;
+    };
+  }
+
 
   render() {
-    const { isSignedIn, name, image, usersOnline, messages, visible } = this.state;
-    const { toggleModal, state } = this;
+    const { usersOnline, messages, forms, user } = this.state;
+    const { state, app } = this;
     return (
       <GridContainer>
-        <Header toggleModal={toggleModal} isSignedIn={isSignedIn} name={name} image={image} />
+        <Header user={user} app={app} />
         <SideBar usersOnline={usersOnline} />
         <ChatBox messages={messages} />
-        <TextInput state={state} toggleModal={toggleModal} />
+        <TextInput user={user} state={state} app={app}/>
         <Footer />
-        <Modal toggleModal={toggleModal} visible={visible} />
+        <Modal forms={forms} app={app} />
       </GridContainer>
     );
   }
 }
 
 export default App;
+

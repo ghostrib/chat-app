@@ -1,27 +1,31 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/analytics';
 
 import firebaseConfig from '../config';
 
 firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+firebase.analytics();
 
-const createNewUserEntry = (state) => {
-  const { name, image, uid, isSignedIn } = state;
-  const userStatus = firebase.database().ref(`/userlist/${uid}`);
-  userStatus.set({ name, image, online: isSignedIn });
-};
 
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+const facebookProvider = new firebase.auth.FacebookAuthProvider();
+
+googleProvider.setCustomParameters({
   prompt: 'select_account',
   access_type: 'offline',
   display: 'page',
 });
 
-provider.addScope('profile');
+googleProvider.addScope('profile');
+facebookProvider.addScope('public_profile, email');
 
-export { provider, db, createNewUserEntry };
+const providers = {
+  google: googleProvider,
+  facebook: facebookProvider,
+};
+
+export { providers };
 
 export default firebase;
