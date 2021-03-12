@@ -2,11 +2,6 @@ import s from './options.module.scss';
 import services from '../../../services';
 import firebase from '../../../firebase';
 
-// const signOut = async () => {
-//   await services.setOnlineStatus(false);
-//   await firebase.auth().signOut();
-// };
-
 const Header = ({ app }) => {
   const { toggleModal } = app;
   return (

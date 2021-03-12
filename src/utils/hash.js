@@ -10,6 +10,3 @@ export const generateHash = filename => {
     return result;
   });
 };
-
-
-// window.generateHash = generateHash;

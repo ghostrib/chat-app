@@ -65,7 +65,6 @@ export const getUser = async (uid) => {
   uid = uid || firebase.auth().currentUser.uid;
   const data = await firebase.database().ref('/users').child(uid)
     .get();
-  // const userData = await data.val();
   const { name, image, userId, online } = await data.val();
   return { name, image, userId, isSignedIn: online };
 };
@@ -95,8 +94,6 @@ export const createUserAccount = async (authUser) => {
     await firebase.database().ref(`/users/${uid}`).set(userData);
     await setOnlineStatus(true);
     return await getUser(uid);
-    // return { name: displayName, image, userId };
-    // return await callback({ name: displayName, image, userId });
   }
   catch (error) {
     console.error(error);
@@ -127,10 +124,4 @@ export const isEmailAvailable = async (email) => {
   return matches.length === 0;
 };
 
-
-// window.getUsersOnline = getUsersOnline;
-// window.getMessages = getMessages;
-// window.isValidUsername = isValidUsername;
-// window.loginWith = loginWith;
-// window.isEmailAvailable = isEmailAvailable;
 

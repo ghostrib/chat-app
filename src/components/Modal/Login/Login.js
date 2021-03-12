@@ -111,12 +111,9 @@ const Login = ({ app }) => {
 
 
   useEffect(() => {
-    // const updatePersistence = () => {
     const { LOCAL, SESSION } = firebase.auth.Auth.Persistence;
     const persistence = isChecked ? LOCAL : SESSION;
     firebase.auth().setPersistence(persistence);
-    // };
-    // updatePersistence();
   }, [ isChecked ]);
 
   const { showSignup, toggleModal } = app;
@@ -155,7 +152,7 @@ const Login = ({ app }) => {
               onBlur={handleFocusChange}
               onFocus={handleFocusChange}
               value={email}
-              // required={true}
+              required={false}
 
               ref={emailRef}
             />
@@ -241,28 +238,3 @@ const Login = ({ app }) => {
 
 export default Login;
 
-
-//   const methods = await firebase.auth().fetchSignInMethodsForEmail(email);
-//   if (methods.length) {
-//     // email provider found for user email
-//     if (methods.includes('password')) {
-//       // user has previously set a password
-//       emailRef.current.className = s.success;
-//     }
-//     else {
-//       // user is registered but has not set a password
-//       emailRef.current.className = s.error;
-//       setError({ email: 'A password has not been set for this account' });
-//     }
-//   }
-//   else {
-//     // no email provider found
-//     emailRef.current.className = s.error;
-//     setError({ email: 'There is no account registered with this email' });
-//   }
-// }
-// else {
-//   // email address is malformed
-//   emailRef.current.className = s.error;
-//   setError({ email: 'Email address is not valid. Please double check you entered it correctly' });
-// }

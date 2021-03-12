@@ -4,7 +4,6 @@ import s from './modal.module.scss';
 import LoginForm from './Login/Login';
 import Signup from './Signup/Signup';
 import Options from './Options/Options';
-// import { useState } from 'react';
 
 const Modal = ({ forms, app }) => {
   const { isModalVisible, isLoginForm, isSignupForm, isOptionsPage } = forms;

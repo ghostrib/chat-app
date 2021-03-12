@@ -58,7 +58,6 @@ class Signup extends React.Component {
     this.handleEmailValidation = this.handleEmailValidation.bind(this);
     this.handleInputValidation = this.handleInputValidation.bind(this);
     this.setUsernameClass = this.setUsernameClass.bind(this);
-    // this.setPasswordClass = this.setPasswordClass.bind(this);
     this.setButtonStatus = this.setButtonStatus.bind(this);
   }
 
@@ -232,7 +231,6 @@ class Signup extends React.Component {
     try {
       const user = await services.signupWithEmail(username, email, password);
       return setUser(user);
-      // return user;
     }
     catch (error) {
       console.error(error);

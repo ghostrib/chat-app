@@ -1,12 +1,10 @@
 .sidebar {
-  // background: #627f9d; // #303e4d;
   background: var(--sidebar-bg);
   grid-area: sidebar;
   height: calc(100vh - var(--header-height));
   overflow-y: auto;
   border-right: 1px solid #202020;
   color: #c1c6cb;
-  // resize: horizontal;
 }
 
 .sidebar__list__item {
