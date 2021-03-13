@@ -84,8 +84,10 @@ $facebookActive: hsl(221, 30%, 35%);
 .button__anchor {
   grid-area: logo;
   display: flex;
+  // position: absolute;
   justify-content: center;
-  text-align: center;
+
+  // text-align: center;
 }
 
 .text__background {
@@ -105,4 +107,16 @@ $facebookActive: hsl(221, 30%, 35%);
   font-size: 1em;
   text-shadow: 1px 1px 2px black;
   font-family: "Arial";
+}
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) and (max-device-width:1024px) {
+  
+  .button__anchor {
+    position: absolute;
+    transform: translate(-2px, -22px);
+  }
+  .button__text {
+    left: 4rem;
+  }
 }

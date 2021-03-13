@@ -289,6 +289,18 @@ button:disabled:hover {
   background: hsla(120, 30%, 80%, 0.8);
 }
 
+
+@media screen and (-webkit-min-device-pixel-ratio:0) and (max-device-width:1024px) {
+  input[type=text],
+  input[type=email],
+  input[type=password] {
+    font-size: 16px;
+  }
+  .form {
+    overflow: hidden;
+  }
+}
+
 @media (hover: none) {
   .form {
     width: 100%;
