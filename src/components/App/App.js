@@ -146,6 +146,13 @@ class App extends Component {
       services.setOnlineStatus(false);
     });
 
+    const appHeight = () => {
+      const doc = document.documentElement;
+      doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+    };
+    window.addEventListener('resize', appHeight);
+    appHeight();
+
 
     setInterval(checkCookies(), 250);
     services.getUsersOnline(setUsersOnline);

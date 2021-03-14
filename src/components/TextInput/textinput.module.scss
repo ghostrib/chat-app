@@ -1,7 +1,9 @@
 .message {
   border-top: 1px solid #202020;
-  background: var(--footer-bg);
+  // background: var(--footer-bg);
+  background: pink;
   grid-area: message;
+  height: 80px;
 }
 
 .message__form {
@@ -9,6 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: palegoldenrod;
 }
 
 .message__form__text {
@@ -20,6 +23,8 @@
   padding: 0 10px;
   font-size: 18px;
   outline: none;
+  background: orange;
+  // height: 40px;
 }
 
 .message__form__text:hover,
@@ -28,12 +33,12 @@
   outline: 1px solid #0061eb;
 }
 
-.message__form__submit {
-  margin: 0 10px 0 10px;
-  padding: 0 20px;
-  height: 60%;
-  background: darkblue;
-  color: white;
-  border-radius: 4px;
-  border: none;
-}
+// .message__form__submit {
+//   margin: 0 10px 0 10px;
+//   padding: 0 20px;
+//   height: 60%;
+//   background: darkblue;
+//   color: white;
+//   border-radius: 4px;
+//   border: none;
+// }

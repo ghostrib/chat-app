@@ -3,7 +3,7 @@
   grid-template-columns: var(--sidebar-width) auto;
   grid-template-rows:
     var(--header-height)
-    auto 
+    var(--main-height) 
     var(--message-form-height)
     var(--footer-height);
   grid-template-areas:
@@ -17,11 +17,7 @@
 @media (hover: none) {
   .container {
     grid-template-columns: 1fr;
-    grid-template-rows:
-    var(--header-height)
-    auto 
-    var(--message-form-height)
-    var(--footer-height);
+    grid-template-rows:  80px 1fr 80px 1fr;
   grid-template-areas:
     'header'
     'main'
