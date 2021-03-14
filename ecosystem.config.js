@@ -30,7 +30,7 @@ module.exports = {
       'post-deploy':
         'npm install && npm run build && pm2 startOrRestart ecosystem.config.js --env production'
     },
-    dev: {
+    development: {
       user: 'deploy',
       host: '165.232.145.102',
       port: '22',
