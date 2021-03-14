@@ -1,6 +1,7 @@
 module.exports = {
   apps: [ {
     script: './server/index.js',
+    name: 'chat-app',
     watch: '.'
   } ],
 
@@ -13,7 +14,7 @@ module.exports = {
       path: '/var/www/chat-app',
       ssh_options: 'IdentityFile=~/.ssh/mattbrannon',
       'pre-deploy-local': '',
-      'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production',
+      'post-deploy': 'npm install && npm run build && pm2 startOrRestart ecosystem.config.js --env development',
       'pre-setup': ''
     }
   }
