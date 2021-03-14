@@ -58,21 +58,21 @@
   --login-form-width: 60vw;
   --login-form-background: #e7e7e7;
 
-  @media (hover: none) {
-    // --header-height: clamp(
-    //   60px,
-    //   calc(
-    //     var(--main-height) - var(--message-form-height) - var(--footer-height)
-    //   ),
-    //   100px
-    // );
-    --header-height: 80px;
-    --main-height: 72vh;
-    --message-form-height: 40px;
-    --footer-height: 40px//-webkit-fill-available;                                                                                                                                                                                            
-    --sidebar-width: 0;
-    // --message-footer: 10vh;
-  }
+  // @media (hover: none) {
+  //   // --header-height: clamp(
+  //   //   60px,
+  //   //   calc(
+  //   //     var(--main-height) - var(--message-form-height) - var(--footer-height)
+  //   //   ),
+  //   //   100px
+  //   // );
+  //   --header-height: 80px;
+  //   --main-height: 72vh;
+  //   --message-form-height: 40px;
+  //   --footer-height: 40px//-webkit-fill-available;                                                                                                                                                                                            
+  //   --sidebar-width: 0;
+  //   // --message-footer: 10vh;
+  // }
 }
 
 /* width */
@@ -142,7 +142,7 @@ body,
     'main'
     'input'
     'footer';
-  grid-template-rows: 80px 1fr 40px 80px;
+  grid-template-rows: 80px 1fr 40px 180px;
 }
 
 :root {

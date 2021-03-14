@@ -1,9 +1,8 @@
 .message {
   border-top: 1px solid #202020;
-  // background: var(--footer-bg);
-  background: pink;
+  background: var(--footer-bg);
   grid-area: message;
-  height: 80px;
+  // height: 80px;
 }
 
 .message__form {
@@ -11,7 +10,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: palegoldenrod;
 }
 
 .message__form__text {
@@ -23,8 +21,7 @@
   padding: 0 10px;
   font-size: 18px;
   outline: none;
-  background: orange;
-  // height: 40px;
+  height: 40px;
 }
 
 .message__form__text:hover,
