@@ -2,6 +2,11 @@
   border-top: 1px solid #202020;
   background: var(--footer-bg);
   grid-area: message;
+  position: absolute;
+  bottom: 0;
+  left: var(--sidebar-width);
+  width: calc(100vw - var(--sidebar-width));
+  height: 100px
 }
 
 .message__form {
@@ -36,4 +41,19 @@
   color: white;
   border-radius: 4px;
   border: none;
+}
+
+
+@media (hover:none) {
+  .message {
+    border-top: 1px solid #202020;
+    background: var(--footer-bg);
+    grid-area: message;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    // height:
+  }
+  
 }

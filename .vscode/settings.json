@@ -4,8 +4,10 @@
   "eslint.lintTask.enable": true,
   "eslint.format.enable": true,
   "eslint.alwaysShowStatus": true,
+
   "eslint.validate": ["javascript"],
   "eslint.run": "onSave",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.parameterHints.enabled": false,
 
   "editor.codeActionsOnSave": {
@@ -13,5 +15,16 @@
     "source.fixAll.eslint": true
   },
   "editor.tabSize": 2,
-  "files.autoSave": "onFocusChange"
+  "files.autoSave": "onFocusChange",
+  "prettier.enable": false,
+  "html.format.enable": false,
+  "javascript.format.enable": false,
+  "javascript.format.insertSpaceAfterCommaDelimiter": false,
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "javascript.format.insertSpaceBeforeAndAfterBinaryOperators": false,
+  "javascript.format.insertSpaceAfterSemicolonInForStatements": false,
+  "typescript.format.enable": false
 }

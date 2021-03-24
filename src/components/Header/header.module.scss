@@ -4,6 +4,9 @@
   display: flex;
   justify-content: center;
   width: 100vw;
+  position: fixed;
+  height: 60px;
+  top: 0;
 }
 
 .container {
@@ -71,3 +74,15 @@
 
 
 
+
+@media(hover:none) {
+  .header {
+    background: var(--header-bg);
+    color: var(--header-color);
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+  }
+}

@@ -10,7 +10,6 @@ import Modal from '../Modal/Modal';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +22,7 @@ class App extends Component {
       },
       messages: [],
       usersOnline: [],
-      user: {}
+      user: {},
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.showLogin = this.showLogin.bind(this);
@@ -33,30 +32,52 @@ class App extends Component {
     this.setUsersOnline = this.setUsersOnline.bind(this);
     this.setMessages = this.setMessages.bind(this);
 
-
     this.app = {
       showLogin: this.showLogin,
       showSignup: this.showSignup,
       showOptions: this.showOptions,
       toggleModal: this.toggleModal,
-      setUser: this.setUser
+      setUser: this.setUser,
     };
   }
 
   toggleModal() {
-    this.setState({ forms: { isModalVisible: !this.state.forms.isModalVisible } });
+    this.setState({
+      forms: { isModalVisible: !this.state.forms.isModalVisible },
+    });
   }
 
   showLogin() {
-    this.setState({ forms: { isModalVisible: true, isLoginForm: true, isSignupForm: false, isOptionsPage: false } });
+    this.setState({
+      forms: {
+        isModalVisible: true,
+        isLoginForm: true,
+        isSignupForm: false,
+        isOptionsPage: false,
+      },
+    });
   }
 
   showSignup() {
-    this.setState({ forms: { isModalVisible: true, isLoginForm: false, isSignupForm: true, isOptionsPage: false } });
+    this.setState({
+      forms: {
+        isModalVisible: true,
+        isLoginForm: false,
+        isSignupForm: true,
+        isOptionsPage: false,
+      },
+    });
   }
 
   showOptions() {
-    this.setState({ forms: { isModalVisible: true, isLoginForm: false, isSignupForm: false, isOptionsPage: true } });
+    this.setState({
+      forms: {
+        isModalVisible: true,
+        isLoginForm: false,
+        isSignupForm: false,
+        isOptionsPage: true,
+      },
+    });
   }
 
   setUser(user) {
@@ -72,10 +93,16 @@ class App extends Component {
   }
 
   async handleAuthError(error) {
-    if (error.email && error.credential && error.code === 'auth/account-exists-with-different-credential') {
+    if (
+      error.email &&
+      error.credential &&
+      error.code === 'auth/account-exists-with-different-credential'
+    ) {
       sessionStorage.setItem('credential', JSON.stringify(error.credential));
 
-      const signInMethods = await firebase.auth().fetchSignInMethodsForEmail(error.email);
+      const signInMethods = await firebase
+        .auth()
+        .fetchSignInMethodsForEmail(error.email);
       const providerKey = signInMethods[0].split('.')[0];
       const provider = providers[providerKey];
       firebase.auth().signInWithRedirect(provider);
@@ -90,7 +117,6 @@ class App extends Component {
     authUser.linkWithCredential(credential);
   }
 
-
   async handleAuthChange(authUser) {
     if (authUser) {
       document.cookie = `login=${Date.now()}`;
@@ -103,12 +129,10 @@ class App extends Component {
     }
   }
 
-
   async handleCreatingNewAccount(authUser) {
     const user = await services.createUserAccount(authUser);
     this.setState({ user });
   }
-
 
   async handleRedirect() {
     try {
@@ -138,7 +162,6 @@ class App extends Component {
     }
   }
 
-
   componentDidMount() {
     const { setUsersOnline, setMessages } = this;
 
@@ -146,12 +169,11 @@ class App extends Component {
       services.setOnlineStatus(false);
     });
 
-
     setInterval(checkCookies(), 250);
     services.getUsersOnline(setUsersOnline);
     services.getMessages(setMessages);
 
-    firebase.auth().onAuthStateChanged(authUser => {
+    firebase.auth().onAuthStateChanged((authUser) => {
       this.handleAuthChange(authUser);
       this.handleRedirect();
     });
@@ -163,7 +185,6 @@ class App extends Component {
     };
   }
 
-
   render() {
     const { usersOnline, messages, forms, user } = this.state;
     const { state, app } = this;
@@ -172,8 +193,7 @@ class App extends Component {
         <Header user={user} app={app} />
         <SideBar usersOnline={usersOnline} />
         <ChatBox messages={messages} />
-        <TextInput user={user} state={state} app={app}/>
-        <Footer />
+        <TextInput user={user} state={state} app={app} />
         <Modal forms={forms} app={app} />
       </GridContainer>
     );
@@ -181,4 +201,3 @@ class App extends Component {
 }
 
 export default App;
-

@@ -17,3 +17,10 @@
 .user_image {
   max-height: 40px;
 }
+
+
+@media (hover:none) {
+  .main__list {
+    margin-top: 60px;
+  }
+}

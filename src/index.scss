@@ -40,7 +40,7 @@
   --sidebar-bg: #303e4d;
 
   --diff-main: calc(
-    var(--header-height) + var(--footer-height) + var(--message-form-height)
+    var(--header-height) + var(--message-form-height)
   );
   --diff-sidebar: calc(var(--header-height) + var(--footer-height));
 

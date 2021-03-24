@@ -4,13 +4,11 @@
   grid-template-rows:
     var(--header-height)
     auto 
-    var(--message-form-height)
-    var(--footer-height);
+    var(--message-form-height);
   grid-template-areas:
     'header header'
     'sidebar main'
     'sidebar message'
-    'sidebar footer';
 }
 
 
@@ -20,12 +18,10 @@
     grid-template-rows:
     var(--header-height)
     auto 
-    var(--message-form-height)
-    var(--footer-height);
+    var(--message-form-height);
   grid-template-areas:
     'header'
     'main'
     'message'
-    'footer';
   }
 }
