@@ -58,20 +58,21 @@
   --login-form-width: 60vw;
   --login-form-background: #e7e7e7;
 
-  @media (hover: none) {
-    --header-height: clamp(
-      60px,
-      calc(
-        var(--main-height) - var(--message-form-height) - var(--footer-height)
-      ),
-      100px
-    );
-    --main-height: 75vh;
-    --message-form-height: 10vh;
-    --footer-height: 80px;
-    --sidebar-width: 0;
-    // --message-footer: 10vh;
-  }
+  // @media (hover: none) {
+  //   // --header-height: clamp(
+  //   //   60px,
+  //   //   calc(
+  //   //     var(--main-height) - var(--message-form-height) - var(--footer-height)
+  //   //   ),
+  //   //   100px
+  //   // );
+  //   --header-height: 80px;
+  //   --main-height: 72vh;
+  //   --message-form-height: 40px;
+  //   --footer-height: 40px//-webkit-fill-available;                                                                                                                                                                                            
+  //   --sidebar-width: 0;
+  //   // --message-footer: 10vh;
+  // }
 }
 
 /* width */
@@ -101,12 +102,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
+  // height: 100vh;
+  // overflow-y: hidden;
 }
 
-#root {
-  height: inherit;
-}
+// #root {
+//   height: inherit;
+// }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -123,3 +125,36 @@ $borderRadius: 1rem / 3;
 $topEdge: $borderRadius / 2;
 
 $white: hsl(0, 0%, 95%);
+
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'header'
+    'main'
+    'input'
+    'footer';
+  grid-template-rows: 80px 1fr 0px 80px;
+}
+
+:root {
+  --app-height: 100%;
+}
+
+html,
+body {
+   padding: 0;
+   margin: 0;
+   overflow: hidden;
+   width: 100vw;
+   height: 100vh;
+   height: var(--app-height);
+}

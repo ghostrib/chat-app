@@ -3,7 +3,7 @@ import firebase, { providers } from '../../firebase';
 import services from '../../services';
 import { checkCookies } from '../../utils/cookies';
 import ChatBox from '../ChatBox/ChatBox';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import GridContainer from '../Grid/Grid';
 import Header from '../Header/Header';
 import Modal from '../Modal/Modal';
