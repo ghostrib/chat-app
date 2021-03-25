@@ -91,25 +91,31 @@ $text-column: auto;
   height: $icon-height;
 }
 
+// .btn__text {
+//   grid-area: text;
+//   color: #f5f5f5;
+//   margin: auto;
+//   font-size: calc(var(--media-button-width) * 0.065);
+//   // letter-spacing: 0.2px;
+//   z-index: 1;
+//   font-family: "Roboto";
+// }
+
+
 .btn__text {
   grid-area: text;
   color: #f5f5f5;
   margin: auto;
   font-size: calc(var(--media-button-width) * 0.065);
-  // letter-spacing: 0.2px;
   z-index: 1;
   font-family: "Roboto";
+  // text-align: center;
+ 
 }
 
-// .strong {
-//   color: white;
-//   font-size: 24px;
-
-// }
 
 @media (hover:none) {
-  .btn_text {
-    // z-index: 9;
-    color: red;
+  .btn__text {
+    transform: translate(1.5rem, -2rem);
   }
 }
