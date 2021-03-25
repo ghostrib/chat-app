@@ -3,7 +3,10 @@ import s from './login.module.scss';
 import { useState, useRef, useEffect } from 'react';
 import firebase from '../../../firebase';
 import utils from '../../../utils';
-import SocialMediaButton from './SocialMediaButton';
+// import SocialMediaButton from './SocialMediaButton';
+import SocialMediaButton from './Button/SocialMedia';
+
+
 import googleLogo from '../../../assets/google.png';
 import facebookLogo from '../../../assets/facebook.png';
 
