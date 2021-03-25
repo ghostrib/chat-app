@@ -1,27 +1,20 @@
 .main {
-  background: #ebebeb;
-  grid-area: main;
-  height: var(--main-height);
-  overflow-y: auto;
+  position: absolute;
+  top: var(--header-height);
+  left: var(--sidebar-width);
+  z-index: -1;
+  border-top: 2px solid #191919;
 }
 
 .main__list {
-  display: flex;
-  flex-direction: column;
-}
-
-.main__list__item {
-  padding: 10px;
-}
-
-.user_image {
-  max-height: 40px;
+  position: relative;
+  height: calc(100vh - var(--header-height) - var(--input-height));
+  overflow-y: scroll;
 }
 
 
 @media (hover:none) {
-  .main__list {
-    margin-top: 60px;
-    margin-bottom: 60px;
+  .main {
+    left: 0;
   }
 }

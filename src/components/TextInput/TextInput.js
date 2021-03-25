@@ -59,7 +59,7 @@ class TextInput extends React.Component {
           <input
             onChange={updateMessage}
             type="text"
-            className={s.message__form__text}
+            className={s.message__form__input}
             placeholder="Say hi..."
             name="message"
             value={message}

@@ -1,13 +1,12 @@
 .header {
   background: var(--header-bg);
-  color: var(--header-color);
+  height: var(--header-height);
+  position: fixed;
+  width: 100vw;
   display: flex;
   justify-content: center;
-  width: 100vw;
-  position: fixed;
-  height: 60px;
-  top: 0;
 }
+
 
 .container {
   width: 90%;
@@ -20,13 +19,18 @@
 }
 
 .logo {
-  font-family: "Amatic SC";
-  font-size: calc(1em + 1vh + 1.5vw);
+  
+  font-size: calc(1.5em + 1vh + 0.75vw);
 
   font-weight: 700;
   letter-spacing: 2px;
   text-shadow: 1px 1px 2px black;
   filter: drop-shadow(0px 2px 2px #000);
+}
+
+.logo__name {
+  font-family: "Amatic SC";
+  color: var(--header-color);
 }
 
 .login {
@@ -71,19 +75,4 @@
   outline: none;
   height: calc(2em + 0.5vw);
   width: calc(2em + 0.5vw);
-}
-
-
-
-
-@media(hover:none) {
-  .header {
-    background: var(--header-bg);
-    color: var(--header-color);
-    display: flex;
-    justify-content: center;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-  }
 }

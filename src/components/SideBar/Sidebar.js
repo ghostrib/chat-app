@@ -7,13 +7,17 @@ import UserCard from './UserCard/UserCard';
 const SideBar = ({ usersOnline }) => {
   return (
     <aside className={s.sidebar}>
-      <ul className={s.sidebar__list}>
-        {usersOnline.map((user, i) => {
-          return (
-            <UserCard key={(i + 1) * Math.random()} name={user.name} image={user.image} />
-          );
-        })}
-      </ul>
+      <div className={s.container}>
+
+
+        <ul className={s.list}>
+          {usersOnline.map((user, i) => {
+            return (
+              <UserCard key={(i + 1) * Math.random()} name={user.name} image={user.image} />
+            );
+          })}
+        </ul>
+      </div>
     </aside>
   );
 };

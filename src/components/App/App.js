@@ -9,6 +9,7 @@ import Header from '../Header/Header';
 import Modal from '../Modal/Modal';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
+import s from './app.module.scss';
 
 class App extends Component {
   constructor(props) {
@@ -189,13 +190,16 @@ class App extends Component {
     const { usersOnline, messages, forms, user } = this.state;
     const { state, app } = this;
     return (
-      <GridContainer>
-        <Header user={user} app={app} />
-        <SideBar usersOnline={usersOnline} />
-        <ChatBox messages={messages} />
-        <TextInput user={user} state={state} app={app} />
-        <Modal forms={forms} app={app} />
-      </GridContainer>
+      <div className={s.app}>
+        <GridContainer>
+          <Header user={user} app={app} />
+          <SideBar usersOnline={usersOnline} />
+          <ChatBox messages={messages} />
+          <TextInput user={user} state={state} app={app} />
+          <Modal forms={forms} app={app} />
+        </GridContainer>
+      </div>
+
     );
   }
 }
