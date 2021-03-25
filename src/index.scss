@@ -9,8 +9,9 @@
 }
 
 :root {
-  --header-height: 80px;
+  --header-height: 60px;
   --input-height: 80px;
+  // --input-padding-bottom: 32px;
 
   --main-height: calc(100vh - var(--header-height) - var(--input-height));
   --sidebar-height: calc(100vh - var(--header-height));
@@ -23,8 +24,38 @@
   --media-button-height: 48px;
   --media-button-width: 224px;
 
+  --overlay-opacity: 0.9;
+
 }
+
+
+
 
 html {
   height: 100vh;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background:transparent;
+  // border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(215, 25%, 33%);
+  width: 12px;
+
 }
