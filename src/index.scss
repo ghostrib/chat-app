@@ -9,17 +9,20 @@
 }
 
 :root {
-  --header-height: 60px;
-  --input-height: 80px;
-  // --input-padding-bottom: 32px;
-
-  --main-height: calc(100vh - var(--header-height) - var(--input-height));
-  --sidebar-height: calc(100vh - var(--header-height));
-
-  --sidebar-width: 200px;
-
   --header-bg: #2c3849;
   --header-color: #e6e6e6;
+  --header-height: 60px;
+  
+  --input-height: 80px;
+  --input-padding-bottom: 64px;
+
+  
+  --main-height: calc(100vh - var(--header-height) - var(--input-height) - var(--input-padding-bottom));
+  
+  --sidebar-height: calc(100vh - var(--header-height));
+  --sidebar-width: 200px;
+
+
 
   --media-button-height: 48px;
   --media-button-width: 224px;

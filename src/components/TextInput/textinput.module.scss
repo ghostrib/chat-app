@@ -2,14 +2,14 @@
   background: #b3b3b3;
   border-top: 1px solid #191919;
 
-  height: calc(var(--input-height)); 
+  height: calc(var(--input-height) + var(--input-padding-bottom)); 
   // height: calc(var(--input-height) + var(--input-padding-bottom)); 
 
   position: fixed;
   bottom: 0;
   left: var(--sidebar-width);
   width: calc(100vw - var(--sidebar-width));
-  // padding-bottom: var(--input-padding-bottom);
+  padding-bottom: var(--input-padding-bottom);
 
 }
 

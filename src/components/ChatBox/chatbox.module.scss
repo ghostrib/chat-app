@@ -8,8 +8,8 @@
 
 .main__list {
   position: relative;
-  height: calc(100vh - var(--header-height) - var(--input-height));
-  // height: calc(100vh - var(--header-height) - var(--input-height) - var(--input-padding-bottom));
+  // height: calc(100vh - var(--header-height) - var(--input-height));
+  height: var(--main-height);
 
   overflow-y: scroll;
 }
@@ -18,5 +18,8 @@
 @media (hover:none) {
   .main {
     left: 0;
+  }
+  .main__list {
+    height: calc(var(--main-height) + var(--input-padding-bottom));
   }
 }
