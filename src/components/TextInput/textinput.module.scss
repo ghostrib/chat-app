@@ -22,7 +22,7 @@
   left: var(--sidebar-width);
   padding-bottom: var(--input-padding-bottom);
   grid-area: footer;
-  width: calc(100% - var(--sidebar-width));
+  width: calc(100vw - var(--sidebar-width));
 }
 
 .message:focus {
@@ -84,7 +84,7 @@
 //   }
 // }
 
-@media screen {
+@media screen and (max-width: 768px) {
   .message {
     position: fixed;
     left: 0;
