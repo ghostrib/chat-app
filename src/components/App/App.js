@@ -196,8 +196,8 @@ class App extends Component {
           <SideBar usersOnline={usersOnline} />
           <ChatBox messages={messages} />
           <TextInput user={user} state={state} app={app} />
-          <Modal forms={forms} app={app} />
         </GridContainer>
+        <Modal forms={forms} app={app} />
       </div>
 
     );

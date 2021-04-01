@@ -1,0 +1,44 @@
+.divider {
+  grid-area: divider;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.divider__top,
+.divider__bottom {
+  height: inherit;
+  width: 3px;
+  background: hsla(0, 0%, 50%, 0.4);
+  margin: 8px 0;
+}
+
+.divider__text {
+  font-family: "Lato";
+}
+
+@media (max-width: 768px) {
+  .divider {
+    grid-area: divider;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin: 16px 0 32px 0;
+    height: 1px;
+    padding: 0 48px;
+  }
+
+  .divider__top,
+  .divider__bottom {
+    background: black;
+    height: inherit;
+    width: 100%;
+  }
+
+  .divider__text {
+    padding: 0 16px;
+  }
+}

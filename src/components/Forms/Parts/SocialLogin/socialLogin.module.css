@@ -1,0 +1,33 @@
+.paragraph {
+  grid-area: paragraph;
+  color: #191919;
+  margin: 12px 0 0 0;
+  font-size: Min(var(--responsive-font-size), 32px);
+}
+
+.social {
+  grid-area: social;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+  margin-top: 24px;
+  font-size: 0.75em;
+}
+
+.button__wrapper {
+  margin: 12px 0 0 0;
+}
+
+@media (max-width: 768px) {
+  .social {
+    justify-content: flex-start;
+  }
+
+  .paragraph {
+    display: none;
+  }
+  .button__wrapper {
+    margin: 8px 0 0 0;
+  }
+}

@@ -50,45 +50,63 @@ $text-column: $button-width - $button-height;
   // font-size: calc(var(--media-button-height) * 0.4);
 }
 
+.button:active,
+.button:focus {
+  box-shadow: 0 0 0 2px #202020;
+}
+
 .google {
   background-color: $google-blue;
   box-shadow: 0 0 0 1px $google-outline;
   &:hover {
-    box-shadow: 0 0 0 1px $google-active-blue;
+    // box-shadow: 0 0 0 1px $google-active-blue;
     background: $google-hover-blue;
   }
   &:active {
-    box-shadow: 0 0 0 1px $google-focused-blue;
+    // box-shadow: 0 0 0 1px $google-focused-blue;
     background: $google-active-blue;
   }
   &:focus {
-    box-shadow: 0 0 0 1px $google-focused-blue;
+    // box-shadow: 0 0 0 1px $google-focused-blue;
   }
 }
 
 .facebook {
   background-color: $facebook-blue;
-  box-shadow: 0 0 0 1px $facebook-outline;
+  // box-shadow: 0 0 0 1px $facebook-outline;
   &:hover {
-    box-shadow: 0 0 0 1px $facebook-active-blue;
+    // box-shadow: 0 0 0 1px $facebook-active-blue;
     background: $facebook-hover-blue;
   }
   &:active {
-    box-shadow: 0 0 0 1px $facebook-focused-blue;
+    // box-shadow: 0 0 0 1px $facebook-focused-blue;
     background: $facebook-active-blue;
   }
   &:focus {
-    box-shadow: 0 0 0 1px $facebook-focused-blue;
+    // box-shadow: 0 0 0 1px $facebook-focused-blue;
   }
 }
 
+// .icon__wrapper {
+//   // height: calc(var(--media-button-height) - 4px);
+//   height: var(--media-button-height);
+//   max-height: var(--max-button-height);
+
+//   // width: calc(var(--media-button-height) - 4px);
+//   width: var(--media-button-height);
+//   max-width: var(--max-button-width);
+
+//   border-radius: 4px;
+//   background: whitesmoke;
+//   position: absolute;
+//   margin: 0 0 0 2px;
+// }
+
 .icon__wrapper {
-  height: calc(var(--media-button-height) - 4px);
-  max-height: calc(var(--media-button-height) - 4px);
-
-  width: calc(var(--media-button-height) - 4px);
-  max-width: calc(var(--media-button-height) - 4px);
-
+  height: var(--icon-box-height);
+  max-height: var(--max-button-height);
+  width: var(--icon-box-width);
+  max-width: var(--max-button-width);
   border-radius: 4px;
   background: whitesmoke;
   position: absolute;
@@ -96,11 +114,18 @@ $text-column: $button-width - $button-height;
 }
 
 .icon {
-  // margin-top: calc(var(--media-button-height) * 0.025);
-  height: calc(var(--media-button-height) - 4px);
-  max-height: calc(var(--media-button-height) - 4px);
-  max-width: calc(var(--media-button-height) - 4px);
+  height: var(--icon-box-height);
+  max-height: var(--max-button-height);
+  max-width: var(--max-button-width);
 }
+
+// .icon {
+//   // margin-top: calc(var(--media-button-height) * 0.025);
+//   // height: calc(var(--media-button-height) - 4px);
+//   height: var(--media-button-height);
+//   max-height: var(--max-button-height);
+//   max-width: var(--max-button-width);
+// }
 
 .button__text {
   color: #e6e6e6;
@@ -117,32 +142,6 @@ $text-column: $button-width - $button-height;
     --media-button-width: 60vw;
     --media-button-height: calc(var(--media-button-width) / 6);
   }
-
-  .button {
-    width: var(--media-button-width);
-    height: var(--media-button-height);
-    // max-width: 800px;
-    // font-size: calc(var(--media-button-height) * 0.4);
-  }
-
-  .icon__wrapper {
-    height: var(--media-button-height);
-    width: var(--media-button-height);
-    border-radius: 4px;
-    background: whitesmoke;
-    position: absolute;
-  }
-
-  .icon {
-    height: var(--media-button-height);
-  }
-
-  .button__text {
-    font-size: clamp(4px, calc(var(--media-button-height) * 0.4), 24px);
-    // font-size:    var(--button-font-size);
-
-    transform: translate(calc(var(--media-button-height) * 1.5), 0%);
-  }
 }
 
 @media (min-width: 966px) and (hover: none) {
@@ -150,5 +149,11 @@ $text-column: $button-width - $button-height;
     transform: translate(140px, 0%);
     font-size: 32px;
     // font-size: calc((var(--max-button-width) * 0.015) + 1.5vw);
+  }
+}
+
+@media (max-width: 768px) {
+  .button {
+    margin: 12px 0 0 0;
   }
 }

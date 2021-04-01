@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Message from './Message/Message';
 import PropTypes from 'prop-types';
 import s from './chatbox.module.scss';
@@ -11,6 +11,13 @@ const AlwaysScrollToBottom = () => {
 };
 
 const ChatBox = ({ messages }) => {
+  const [ height, setHeight ] = useState('');
+  useEffect(() => {
+    window.addEventListener('resize', function(e) {
+      console.log(window.innerHeight);
+    });
+  });
+
   return (
     <main className={s.main}>
       <ul className={s.main__list}>

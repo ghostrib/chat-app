@@ -1,5 +1,5 @@
 {
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "editor.formatOnPaste": false,
   "eslint.lintTask.enable": true,
   "eslint.format.enable": true,
@@ -14,9 +14,36 @@
     "source.organizeImports": false,
     "source.fixAll.eslint": true
   },
+
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace"
+  },
+
+  "[css]": {
+    // "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.formatOnSave": true
+  },
+
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.formatOnSave": true
+  },
+
   "editor.tabSize": 2,
   "files.autoSave": "onFocusChange",
-  "prettier.enable": false,
   "html.format.enable": false,
   "javascript.format.enable": false,
   "javascript.format.insertSpaceAfterCommaDelimiter": false,
@@ -26,5 +53,6 @@
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
   "javascript.format.insertSpaceBeforeAndAfterBinaryOperators": false,
   "javascript.format.insertSpaceAfterSemicolonInForStatements": false,
-  "typescript.format.enable": false
+  "typescript.format.enable": false,
+  "prettier.requireConfig": false
 }

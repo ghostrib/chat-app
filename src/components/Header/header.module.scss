@@ -6,8 +6,8 @@
   display: flex;
   justify-content: center;
   border-bottom: 2px ridge #191919;
+  grid-area: header;
 }
-
 
 .container {
   width: 90%;
@@ -20,7 +20,6 @@
 }
 
 .logo {
-  
   font-size: calc(1.5em + 1vh + 0.75vw);
 
   font-weight: 700;
@@ -69,10 +68,9 @@
   }
 }
 
-
 .profile__image {
   border-radius: 6px;
-  border:none;
+  border: none;
   outline: none;
   height: calc(2em + 0.5vw);
   width: calc(2em + 0.5vw);

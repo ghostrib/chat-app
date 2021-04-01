@@ -1,0 +1,93 @@
+.input__wrapper {
+  margin: 12px 0 0 0;
+  display: flex;
+  flex-direction: column;
+
+  max-width: var(--max-button-width);
+  width: var(--media-button-width);
+}
+
+.input {
+  margin: 24px 0 0 0;
+  padding-left: 16px;
+  border-radius: 4px;
+
+  border: none;
+  outline: none;
+  box-shadow: 0 0 0 1px black;
+  -webkit-box-shadow: 0 0 0 1px black;
+
+  height: var(--media-button-height);
+  max-height: var(--max-button-height);
+
+  width: 100%;
+  /* max-width: var(--max-button-width); */
+
+  font-size: Min(var(--responsive-font-size), 24px);
+}
+
+input:active,
+input:focus {
+  box-shadow: 0 0 0 2px dodgerblue;
+}
+
+.input:-webkit-autofill {
+  animation-name: onAutoFillStart;
+  /* // transition: background-color 50000s ease-in-out 0s; */
+}
+
+.input:not(:-webkit-autofill) {
+  animation-name: onAutoFillCancel;
+}
+
+.label__email,
+.label__password {
+  /* font-size: Min(var(--responsive-font-size), 24px); */
+  font-size: 1rem;
+  transform: translate(16px, calc(var(--media-button-height) - 0.5rem));
+  width: 0;
+  height: 0;
+  cursor: text;
+  color: hsla(0, 0%, 40%, 0.95);
+  transition: color 0.2s ease-in-out;
+}
+
+.focused {
+  /* // font-size: Min(var(--responsive-font-size), 12px); */
+  font-size: 0.75em;
+  position: absolute;
+  transform: translate(0, 0) scale(-1) rotate(180deg);
+  color: darkblue;
+  font-weight: bold;
+  /* // font-size: 13px; */
+  transition: transform 0.2s ease-in-out;
+}
+
+/* (min-device-width: 414px) and (max-device-width: 736px)  */
+/* and (orientation: portrait) */
+
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+  .input__wrapper {
+    margin-top: 16px;
+  }
+
+  .input {
+    margin-top: 16px;
+  }
+
+  .focused {
+    font-size: 0.65em;
+  }
+
+  .input:active,
+  .input:focus {
+    border: 2px solid dodgerblue;
+    /* outline-offset: -2px; */
+  }
+}
+
+@keyframes onAutoFillStart {
+}
+
+@keyframes onAutoFillCancel {
+}

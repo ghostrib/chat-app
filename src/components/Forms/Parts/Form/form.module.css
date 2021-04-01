@@ -1,0 +1,54 @@
+.form {
+  margin: 64px 32px;
+
+  height: var(--form-height);
+  width: 700px;
+  min-width: 390px;
+
+  display: grid;
+  grid-template-columns: 49% 2% 49%;
+
+  grid-template-rows: var(--banner-height) var(--content-height) var(
+      --banner-height
+    );
+
+  grid-template-areas:
+    "header header header"
+    "standard divider social"
+    "footer footer footer";
+
+  background: lightgrey;
+}
+
+@media (max-width: 736px) {
+  .container > * {
+    overflow: hidden;
+  }
+
+  .section,
+  .container,
+  .form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: auto;
+    min-width: 100vw;
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: min-content max-content 1% auto max-content;
+    grid-template-areas:
+      "header"
+      "standard"
+      "divider"
+      "social"
+      "footer";
+  }
+
+  .footer {
+    height: var(--banner-height);
+  }
+}
