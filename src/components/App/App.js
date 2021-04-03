@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase, { providers } from '../../firebase';
 import services from '../../services';
 import { checkCookies } from '../../utils/cookies';
-import ChatBox from '../ChatBox/ChatBox';
+import MessageList from '../MessageList/MessageList';
 // import Footer from '../Footer/Footer';
 import GridContainer from '../Grid/Grid';
 import Header from '../Header/Header';
@@ -190,15 +190,15 @@ class App extends Component {
     const { usersOnline, messages, forms, user } = this.state;
     const { state, app } = this;
     return (
-      <div className={s.app}>
+      <>
         <GridContainer>
           <Header user={user} app={app} />
           <SideBar usersOnline={usersOnline} />
-          <ChatBox messages={messages} />
+          <MessageList messages={messages} />
           <TextInput user={user} state={state} app={app} />
         </GridContainer>
         <Modal forms={forms} app={app} />
-      </div>
+      </>
 
     );
   }

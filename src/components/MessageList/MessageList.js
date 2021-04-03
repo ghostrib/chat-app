@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Message from './Message/Message';
 import PropTypes from 'prop-types';
-import s from './chatbox.module.scss';
+import s from './messagelist.module.scss';
 
 /** https://stackoverflow.com/a/61266099 */
 const AlwaysScrollToBottom = () => {
@@ -10,7 +10,7 @@ const AlwaysScrollToBottom = () => {
   return <div ref={elementRef} />;
 };
 
-const ChatBox = ({ messages }) => {
+const MessageList = ({ messages }) => {
   const [ height, setHeight ] = useState('');
   useEffect(() => {
     window.addEventListener('resize', function(e) {
@@ -33,8 +33,8 @@ const ChatBox = ({ messages }) => {
   );
 };
 
-export default ChatBox;
+export default MessageList;
 
-ChatBox.propTypes = {
+MessageList.propTypes = {
   messages: PropTypes.array.isRequired,
 };
