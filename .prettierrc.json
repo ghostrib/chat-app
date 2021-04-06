@@ -1,3 +1,12 @@
 {
-  "embeddedLanguageFormatting": "auto"
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "endOfLine": "auto",
+  "jsxSingleQuote": false,
+  "semi": true,
+  "trailingComma": "es5",
+  "printWidth": 100,
+  "singleQuote": true,
+  "useTabs": false,
+  "tabWidth": 2
 }
