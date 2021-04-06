@@ -28,3 +28,4 @@ yarn-error.log*
 trash
 
 modules
+src/components/Forms/Signup

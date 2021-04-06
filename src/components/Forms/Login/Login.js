@@ -10,7 +10,6 @@ import { useState } from 'react';
 
 import firebase from '../../../firebase';
 
-
 const Login = ({ app }) => {
   const { toggleModal, showSignup } = app;
   const [ value, setValue ] = useState({ email: '', password: '' });
@@ -26,20 +25,22 @@ const Login = ({ app }) => {
     }
   };
 
-
   return (
-
     <Wrapper>
       <Form value={value} setError={setError} handleLogin={handleLogin}>
         <FormHeader headerText="LOGIN" toggleModal={toggleModal} />
-        <SocialLogin />
+        <StandardLogin
+          handleLogin={handleLogin}
+          error={error}
+          setError={setError}
+          value={value}
+          setValue={setValue}
+        />
         <Divider />
-        <StandardLogin handleLogin={handleLogin} error={error} setError={setError} value={value} setValue={setValue}/>
-        <FormFooter showSignup={showSignup}/>
+        <SocialLogin />
+        <FormFooter showSignup={showSignup} />
       </Form>
     </Wrapper>
-
-
   );
 };
 

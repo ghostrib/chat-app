@@ -15,10 +15,6 @@
   font-size: Min(var(--responsive-font-size), 32px);
 }
 
-.button__wrapper {
-  /* margin: 24px 0 24px 0; */
-}
-
 @media (max-width: 768px) {
   .social {
     justify-content: flex-start;
@@ -26,8 +22,5 @@
 
   .paragraph {
     display: none;
-  }
-  .button__wrapper {
-    /* margin: 8px 0 0 0; */
   }
 }

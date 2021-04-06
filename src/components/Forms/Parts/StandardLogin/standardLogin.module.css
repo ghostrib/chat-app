@@ -18,10 +18,6 @@
   .paragraph {
     display: none;
   }
-
-  .standard {
-    /* margin-top: 0; */
-  }
 }
 
 @media (width: 640px) and (height: 360) {
