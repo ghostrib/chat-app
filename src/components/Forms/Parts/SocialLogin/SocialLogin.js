@@ -1,5 +1,5 @@
 import s from './socialLogin.module.css';
-import SocialMediaButton from '../SocialMediaButton/SocialMediaButton';
+import SocialMediaButton from '../SocialMediaButton/Button';
 import PrivacyPolicy from '../PrivacyPolicy/PrivacyPolicy';
 import googleImage from '../../../../assets/google.png';
 import facebookImage from '../../../../assets/facebook.png';

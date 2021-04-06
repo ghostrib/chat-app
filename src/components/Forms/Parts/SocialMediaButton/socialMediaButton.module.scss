@@ -26,10 +26,6 @@ $icon-margin-top: $icon-height / 2;
 $logo-column: $button-height;
 $text-column: $button-width - $button-height;
 
-:root {
-  --max-button-width: 540px;
-}
-
 .button {
   margin: 24px 0 0 0;
   cursor: pointer;
@@ -131,29 +127,34 @@ $text-column: $button-width - $button-height;
   color: #e6e6e6;
   // font-size: calc(var(--media-button-height) * 0.4);
   // font-size: clamp(8px, calc(var(--media-button-height) * 0.4), 48px);
-  font-size: var(--button-font-size);
+  // font-size: var(--button-font-size);
   // letter-spacing: 0.24px;
+  font-size: clamp(calc(3px + 1vw), calc(6px + 1vw), 16px);
   word-spacing: 1.5px;
-  transform: translate(calc(var(--media-button-height) * 1.5), 0%);
+  transform: translate(calc(var(--media-button-height) * 1.2), 0%);
 }
 
-@media (hover: none) {
+// @media (min-width: 966px) and (hover: none) {
+//   .button__text {
+//     transform: translate(140px, 0%);
+//     font-size: 32px;
+//   }
+// }
+
+@media (max-width: 240px) {
   :root {
-    --media-button-width: 60vw;
-    --media-button-height: calc(var(--media-button-width) / 6);
+    --max-button-width: 180px;
   }
 }
 
-@media (min-width: 966px) and (hover: none) {
+@media (min-width: 1440px) {
   .button__text {
-    transform: translate(140px, 0%);
-    font-size: 32px;
-    // font-size: calc((var(--max-button-width) * 0.015) + 1.5vw);
+    font-size: 18px;
   }
 }
 
-@media (max-width: 768px) {
-  .button {
-    margin: 12px 0 0 0;
-  }
-}
+// @media (max-width: 768px) {
+//   .button {
+//     margin: 12px 0 0 0;
+//   }
+// }

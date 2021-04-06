@@ -1,0 +1,89 @@
+:root {
+  --input-height: 54px;
+  --border-width: 1px;
+
+  --top: -7px;
+
+  --label-y: calc(1em + var(--border-width) / 2);
+  --label-blur: translate(1.5em, calc(1em + 2px));
+}
+
+.container {
+  position: relative;
+  height: var(--input-height);
+  width: 240px;
+}
+
+.input_wrapper {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  position: absolute;
+  padding: 1.5em;
+  border: none;
+  // box-shadow: 0px 0px 0px var(--border-width) black;box-shadow
+  border-radius: 4px;
+}
+
+.fieldset {
+  height: calc(100% + 8px);
+  width: calc(100% + var(--border-width) * 2);
+  border: var(--border-width) solid blue;
+  border-radius: 5px;
+  position: absolute;
+  margin: auto;
+  top: var(--top);
+  left: calc(var(--border-width) * -1);
+  z-index: -1;
+}
+
+.fieldset__focused {
+  border: calc(var(--border-width) + 1px) solid blue;
+}
+
+.legend {
+  visibility: hidden;
+  font-weight: 700;
+  color: hsla(0, 0%, 0%, 0.4);
+  font-size: 12px;
+  padding: 0 4px;
+}
+
+.label {
+  position: absolute;
+}
+
+.input__focused {
+  box-shadow: 0 0 0 0;
+}
+
+.input__blurred {
+  box-shadow: 0px 0px 0px var(--border-width) grey;
+}
+
+.input__blurred:hover {
+  box-shadow: 0px 0px 0px var(--border-width) black;
+}
+
+.label__focused {
+  //visibility: hidden;
+  transform: translate(16px, -7px);
+  font-size: 12px;
+  color: blue;
+  font-weight: bold;
+  transition: all 0.1s linear;
+}
+
+.label__blurred {
+  transform: var(--label-blur);
+  transition: all 0.055s linear;
+}

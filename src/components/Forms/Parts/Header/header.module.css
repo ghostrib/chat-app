@@ -8,6 +8,7 @@
   font-family: "Amatic SC";
   font-size: var(--banner-font-size);
   color: whitesmoke;
+  -webkit-filter: drop-shadow(4px 4px 4px black);
   filter: drop-shadow(4px 4px 4px black);
   text-align: center;
   height: 100%;
@@ -25,6 +26,7 @@
   margin-right: 3rem;
 
   color: whitesmoke;
+  -webkit-filter: drop-shadow(4px 4px 4px black);
   filter: drop-shadow(4px 4px 4px black);
 }
 
@@ -36,7 +38,7 @@
   margin-top: calc(var(--banner-height) * 0.75 * -1);
 }
 
-@media (max-width: 732px) {
+@media (max-width: 768px) {
   .header {
     width: 100%;
   }

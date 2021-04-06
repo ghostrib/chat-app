@@ -1,5 +1,5 @@
 .form {
-  margin: 64px 32px;
+  margin: 32px;
 
   height: var(--form-height);
   width: 700px;
@@ -20,7 +20,27 @@
   background: lightgrey;
 }
 
-@media (max-width: 736px) {
+@media (max-width: 768px) and (hover) {
+  .form {
+    margin: 32px;
+    height: 80vh;
+    max-height: 900px;
+    width: 65vw;
+    min-width: 240px;
+    /* min-height: 540px; */
+    grid-template-columns: auto;
+    grid-template-rows: -webkit-min-content -webkit-max-content 1% auto -webkit-max-content;
+    grid-template-rows: min-content max-content 1% auto max-content;
+    grid-template-areas:
+      "header"
+      "standard"
+      "divider"
+      "social"
+      "footer";
+  }
+}
+
+@media (max-width: 768px) and (hover: none) {
   .container > * {
     overflow: hidden;
   }
@@ -28,17 +48,17 @@
   .section,
   .container,
   .form {
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     left: 0;
     margin: auto;
     min-width: 100vw;
     width: 100%;
     min-height: 100%;
-    height: 100%;
 
     display: grid;
     grid-template-columns: 100%;
+    grid-template-rows: -webkit-min-content -webkit-max-content 1% auto -webkit-max-content;
     grid-template-rows: min-content max-content 1% auto max-content;
     grid-template-areas:
       "header"

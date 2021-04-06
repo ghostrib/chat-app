@@ -2,23 +2,36 @@
   grid-area: standard;
   display: flex;
   flex-direction: column;
+  justify-content: stretch;
   align-items: center;
-  margin-top: 24px;
+  margin-top: 12px;
 }
 
 .paragraph {
   grid-area: paragraph;
   color: #191919;
-  margin: 12px 0 0 0;
+  margin: 12px 0 16px 0;
   font-size: Min(var(--responsive-font-size), 32px);
 }
 
-@media screen and (max-width: 738px) {
+@media screen and (max-width: 768px) {
   .paragraph {
     display: none;
   }
 
   .standard {
-    margin-top: 0;
+    /* margin-top: 0; */
+  }
+}
+
+@media (width: 640px) and (height: 360) {
+  .standard {
+    margin-top: 0px;
+  }
+}
+
+@media (width: 360px) {
+  .standard {
+    margin-top: 0px;
   }
 }

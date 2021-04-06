@@ -1,0 +1,104 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
+
+$facebook-blue: hsl(221, 44%, 41%);
+$facebook-outline: hsl(221, 44%, 39%);
+$facebook-hover-blue: hsl(221, 44%, 37%);
+$facebook-active-blue: hsl(221, 44%, 33%);
+$facebook-focused-blue: hsl(222, 44%, 25%);
+
+$google-blue: hsl(217, 89%, 61%);
+$google-outline: hsl(217, 89%, 57%);
+$google-hover-blue: hsl(217, 89%, 52%);
+$google-active-blue: hsl(217, 89%, 43%);
+$google-focused-blue: hsl(217, 89%, 34%);
+
+:root {
+  --min-width: 80px;
+  --max-width: var(--max-button-width);
+  --mid-width: var(--media-button-width);
+  --radius: 4px;
+
+  --width: clamp(var(--min-width), var(--mid-width), var(--max-width));
+  --height: calc(var(--width) / 6);
+
+  --icon-gap: calc(var(--height) / 6);
+  --icon-margin-left: calc(var(--icon-gap) / 2);
+
+  --icon-wrapper-height: calc(var(--height) - var(--icon-gap));
+  --icon-wrapper-width: var(--icon-wrapper-height);
+
+  --text-width: calc(var(--height) * 1.5);
+}
+
+.button {
+  margin: 32px 0 0 0;
+  width: var(--width);
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+  height: var(--height);
+  border-radius: var(--radius);
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+}
+
+.google {
+  background: $google-blue;
+  box-shadow: 0 0 0 2px $google-outline;
+  &:hover {
+    background: $google-hover-blue;
+    box-shadow: 0 0 0 2px $google-active-blue;
+  }
+  &:active {
+    background: $google-active-blue;
+    box-shadow: 0 0 0 2px $google-focused-blue;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2px $google-focused-blue;
+  }
+}
+
+.facebook {
+  background-color: $facebook-blue;
+  box-shadow: 0 0 0 2px $facebook-outline;
+  &:hover {
+    background: $facebook-hover-blue;
+    box-shadow: 0 0 0 2px $facebook-active-blue;
+  }
+  &:active {
+    background: $facebook-active-blue;
+    box-shadow: 0 0 0 2px $facebook-focused-blue;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2px $facebook-focused-blue;
+  }
+}
+
+.icon_wrapper {
+  height: var(--icon-wrapper-height);
+  width: var(--icon-wrapper-width);
+  margin-left: var(--icon-margin-left);
+  border-radius: var(--radius);
+  background: whitesmoke;
+  position: absolute;
+  display: flex;
+}
+
+.icon {
+  margin: auto;
+  height: 70%;
+}
+
+.btn_txt {
+  color: whitesmoke;
+  font-size: calc(var(--height) * 0.425);
+  font-family: "Roboto";
+  transform: translate(var(--text-width), 0%);
+}
+
+@media (max-width: 360px) {
+  .button {
+    margin: 12px 0 0 0;
+  }
+}

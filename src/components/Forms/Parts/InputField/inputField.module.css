@@ -1,14 +1,15 @@
 .input__wrapper {
-  margin: 12px 0 0 0;
+  /* margin: 12px 0 0 0; */
   display: flex;
   flex-direction: column;
 
   max-width: var(--max-button-width);
   width: var(--media-button-width);
+  /* height: calc(var(--media-button-height)); */
 }
 
 .input {
-  margin: 24px 0 0 0;
+  margin: 32px 0 0 0;
   padding-left: 16px;
   border-radius: 4px;
 
@@ -32,11 +33,13 @@ input:focus {
 }
 
 .input:-webkit-autofill {
+  -webkit-animation-name: onAutoFillStart;
   animation-name: onAutoFillStart;
   /* // transition: background-color 50000s ease-in-out 0s; */
 }
 
 .input:not(:-webkit-autofill) {
+  -webkit-animation-name: onAutoFillCancel;
   animation-name: onAutoFillCancel;
 }
 
@@ -44,7 +47,8 @@ input:focus {
 .label__password {
   /* font-size: Min(var(--responsive-font-size), 24px); */
   font-size: 1rem;
-  transform: translate(16px, calc(var(--media-button-height) - 0.5rem));
+  /* transform: translate(16px, calc(var(--media-button-height) - 0.5rem)); */
+  transform: translate(16px, 40px);
   width: 0;
   height: 0;
   cursor: text;
@@ -56,7 +60,7 @@ input:focus {
   /* // font-size: Min(var(--responsive-font-size), 12px); */
   font-size: 0.75em;
   position: absolute;
-  transform: translate(0, 0) scale(-1) rotate(180deg);
+  transform: translate(0, 16px) scale(-1) rotate(180deg);
   color: darkblue;
   font-weight: bold;
   /* // font-size: 13px; */
@@ -65,6 +69,13 @@ input:focus {
 
 /* (min-device-width: 414px) and (max-device-width: 736px)  */
 /* and (orientation: portrait) */
+
+@media (max-width: 360px) {
+  .label__email,
+  .label__password {
+    font-size: 14px;
+  }
+}
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .input__wrapper {
@@ -86,7 +97,13 @@ input:focus {
   }
 }
 
+@-webkit-keyframes onAutoFillStart {
+}
+
 @keyframes onAutoFillStart {
+}
+
+@-webkit-keyframes onAutoFillCancel {
 }
 
 @keyframes onAutoFillCancel {

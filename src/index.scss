@@ -30,7 +30,8 @@
   --sidebar-width: 200px;
 
   --media-button-width: 240px;
-  --max-button-width: 540px;
+  // --max-button-width: 540px;
+  --max-button-width: 300px;
 
   --media-button-height: calc(var(--media-button-width) / 6);
   --max-button-height: 64px;
@@ -48,12 +49,17 @@
   //   var(--max-font-size)
   // );
 
-  --button-font-size: Min(calc(var(--media-button-height) * 0.4), 36px);
-  --form-font-size: Min(calc((3.5vw + 0.5rem) * 0.5), 24px);
+  // --button-font-size: Min(calc(var(--media-button-height) * 0.4), 12px);
+  --form-font-size: Min(calc((3.5vw + 0.5rem) * 0.5), 16px);
+  --button-font-size: clamp(
+    calc(1vw * 0.1em),
+    calc(4vw * 0.5em),
+    calc(3vw * 1em)
+  );
 
   // --overlay-opacity: 0.9;
 
-  --form-height: 500px;
+  --form-height: 550px;
   --form-width: 700px;
 
   --banner-height: 60px;
@@ -63,7 +69,6 @@
   );
 
   --label-transform: Min(var(--media-button-height), 34px);
-  --max-button-width: 600px;
 }
 
 html,

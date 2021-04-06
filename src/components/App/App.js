@@ -9,7 +9,6 @@ import Header from '../Header/Header';
 import Modal from '../Modal/Modal';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
-import s from './app.module.scss';
 
 class App extends Component {
   constructor(props) {
