@@ -6,7 +6,6 @@ const port = config.port || 1337;
 const express = require('express');
 const app = express();
 
-
 /**
  * Middleware
  */
@@ -19,7 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../build')));
 
-
 /**
  * Routes
  */
@@ -27,9 +25,6 @@ app.use(express.static(path.join(__dirname, '../build')));
 require('./routes/entry.js')(app);
 require('./routes/search.js')(app);
 
-
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
-
-

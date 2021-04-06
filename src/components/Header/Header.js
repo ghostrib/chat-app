@@ -33,7 +33,7 @@ const Header = ({ user, app }) => {
           <div className={s.logo__name}>The Elbow Room</div>
         </div>
         {user.isSignedIn ? (
-          <OptionsButton user={user} showOptions={showOptions}/>
+          <OptionsButton user={user} showOptions={showOptions} />
         ) : (
           <LoginButton showLogin={showLogin} isSignedIn={user.isSignedIn} />
         )}

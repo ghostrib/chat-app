@@ -11,9 +11,8 @@ const AlwaysScrollToBottom = () => {
 };
 
 const MessageList = ({ messages }) => {
-  // const [ height, setHeight ] = useState('');
   useEffect(() => {
-    window.addEventListener('resize', function(e) {
+    window.addEventListener('resize', function (e) {
       console.log(window.innerHeight);
     });
   });
@@ -23,9 +22,7 @@ const MessageList = ({ messages }) => {
       <ul className={s.main__list}>
         {messages.map((messageObject, i) => {
           const { name, message, image } = messageObject;
-          return (
-            <Message image={image} name={name} message={message} key={i} />
-          );
+          return <Message image={image} name={name} message={message} key={i} />;
         })}
         <AlwaysScrollToBottom />
       </ul>

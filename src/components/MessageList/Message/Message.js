@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import s from './message.module.scss';
 import SVG from 'react-inlinesvg';
 
-
 const Message = ({ name, image, message }) => {
   return (
     <li className={s.container__user}>

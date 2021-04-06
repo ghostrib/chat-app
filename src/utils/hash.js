@@ -1,4 +1,3 @@
-// https://stackoverflow.com/a/43383990
 export const generateHash = filename => {
   const strBuf = new TextEncoder('utf-8').encode(filename);
   return crypto.subtle.digest('SHA-256', strBuf).then(hash => {

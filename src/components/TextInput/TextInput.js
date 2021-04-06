@@ -4,7 +4,6 @@ import React from 'react';
 import firebase from '../../firebase';
 import s from './textinput.module.scss';
 
-
 class TextInput extends React.Component {
   constructor(props) {
     super(props);
@@ -48,33 +47,18 @@ class TextInput extends React.Component {
   }
 
   componentDidMount() {
-    // window.addEventListener('resize', this.getAvailableHeight);
-
-    // console.log(this.inputRef.current);
     if (sessionStorage.getItem('autosave')) {
       this.setState({ message: sessionStorage.getItem('autosave') });
     }
   }
 
-  // getAvailableHeight() {
-  //   setTimeout(() => {
-  //     console.log(window.innerHeight);
-  //   }, 500);
-  // }
-
   render() {
     const { updateMessage, sendMessage } = this;
     const { message } = this.state;
     return (
-      <div
-
-        ref={this.inputRef}
-        className={s.message}
-        // onFocus={this.getAvailableHeight}
-      >
+      <div ref={this.inputRef} className={s.message}>
         <form className={s.message__form} onSubmit={sendMessage}>
           <input
-
             onChange={updateMessage}
             type="text"
             className={s.message__form__input}

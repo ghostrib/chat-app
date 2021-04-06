@@ -16,7 +16,6 @@
   justify-content: space-between;
   align-items: center;
   white-space: nowrap;
-  // padding: 0 0 1em 0;
 }
 
 .logo {
@@ -29,7 +28,7 @@
 }
 
 .logo__name {
-  font-family: "Amatic SC";
+  font-family: 'Amatic SC';
   color: var(--header-color);
 }
 

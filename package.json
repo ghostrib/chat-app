@@ -25,7 +25,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint './src/**/*.js'",
     "lint:fix": "eslint --fix './src/**/*.js'",
-    "pretty": "prettier \"./**/*.{js,jsx,json}\"",
+    "prettier": "prettier \"./**/*.{js,jsx,json,css,scss}\"",
+    "prettier:fix": "prettier --write \"./**/*.{js,jsx,json,css,scss}\"",
     "server:build": "npm run build && nodemon ./server/index.js",
     "server:dev": "nodemon ./server/index.js",
     "server": "npm run build && node ./server/index.js"

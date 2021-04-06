@@ -1,4 +1,4 @@
-module.exports = (app) => {
+module.exports = app => {
   const path = require('path');
   const router = require('express').Router();
 
@@ -9,5 +9,3 @@ module.exports = (app) => {
 
   app.use('/', router);
 };
-
-

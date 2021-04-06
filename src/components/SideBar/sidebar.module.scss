@@ -18,22 +18,17 @@
   /* Track */
   ::-webkit-scrollbar-track {
     background: transparent;
-    // background: hsla(215, 0%, 83%, 0.5);
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    // background: hsl(35, 86%, 50%);
     background: hsl(215, 23%, 45%);
     border: none; //1px solid hsl(35, 100%, 50%);
-    // border-radius: 8px;
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(215, 23%, 45%);
-
-    // width: 18px;
   }
 }
 

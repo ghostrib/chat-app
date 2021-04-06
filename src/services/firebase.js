@@ -3,8 +3,7 @@ import firebase from '../firebase';
 import { createIcon } from './icons';
 import { generateHash } from '../utils/hash';
 
-
-export const loginWith = async (provider) => {
+export const loginWith = async provider => {
   try {
     await firebase.auth().signInWithRedirect(provider);
   }
@@ -13,9 +12,10 @@ export const loginWith = async (provider) => {
   }
 };
 
-
-export const getUsersOnline = (callback) => {
-  return firebase.database().ref('/users')
+export const getUsersOnline = callback => {
+  return firebase
+    .database()
+    .ref('/users')
     .orderByChild('online')
     .equalTo(true)
     .on('value', data => {
@@ -24,7 +24,7 @@ export const getUsersOnline = (callback) => {
           return {
             name: user.name,
             image: user.image,
-            userId: user.userId
+            userId: user.userId,
           };
         });
         callback(usersOnline);
@@ -32,13 +32,12 @@ export const getUsersOnline = (callback) => {
     });
 };
 
-
-export const getMessages = (callback) => {
+export const getMessages = callback => {
   return firebase
     .database()
     .ref('/messages')
     .limitToLast(50)
-    .on('value', (data) => {
+    .on('value', data => {
       if (data.val()) {
         const messages = Object.values(data.val());
         callback(messages);
@@ -46,22 +45,18 @@ export const getMessages = (callback) => {
     });
 };
 
-
-export const setOnlineStatus = (status) => {
+export const setOnlineStatus = status => {
   if (typeof status !== 'boolean') {
     throw new Error({ message: `Cannot set online status to ${status}` });
   }
   const user = firebase.auth().currentUser;
   if (user) {
-    return firebase.database()
-      .ref('users')
-      .child(user.uid)
+    return firebase.database().ref('users').child(user.uid)
       .update({ online: status });
   }
 };
 
-
-export const getUser = async (uid) => {
+export const getUser = async uid => {
   uid = uid || firebase.auth().currentUser.uid;
   const data = await firebase.database().ref('/users').child(uid)
     .get();
@@ -69,10 +64,11 @@ export const getUser = async (uid) => {
   return { name, image, userId, isSignedIn: online };
 };
 
-
 export const isValidUsername = (name, callback) => {
   name = name.trim().toLowerCase();
-  firebase.database().ref('/users')
+  firebase
+    .database()
+    .ref('/users')
     .orderByChild('username')
     .equalTo(name)
     .once('value', snapshot => {
@@ -83,8 +79,7 @@ export const isValidUsername = (name, callback) => {
     });
 };
 
-
-export const createUserAccount = async (authUser) => {
+export const createUserAccount = async authUser => {
   try {
     const userId = await generateHash(authUser.uid);
     const image = createIcon(userId, '#191919');
@@ -100,7 +95,6 @@ export const createUserAccount = async (authUser) => {
   }
 };
 
-
 export const signupWithEmail = async (name, email, password) => {
   try {
     const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -114,8 +108,7 @@ export const signupWithEmail = async (name, email, password) => {
   }
 };
 
-
-export const isEmailAvailable = async (email) => {
+export const isEmailAvailable = async email => {
   const data = await firebase.database().ref('users').get();
   const values = await data.val();
   const matches = Object.values(values)
@@ -123,5 +116,3 @@ export const isEmailAvailable = async (email) => {
     .filter(usedEmail => usedEmail === email);
   return matches.length === 0;
 };
-
-

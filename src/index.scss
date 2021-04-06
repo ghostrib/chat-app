@@ -1,12 +1,10 @@
-// @import url(https://fonts.googleapis.com/css?family=Lato:400);
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   list-style-type: none;
   text-decoration: none;
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 :root {
@@ -21,16 +19,11 @@
 
   --main-height: calc(100% - (var(--banner-height) + var(--footer-height)));
 
-  // --main-height: calc(
-  //   100vh - var(--header-height) - var(--input-height) -
-  //     var(--input-padding-bottom)
-  // );
-
   --sidebar-height: calc(100vh - var(--header-height));
   --sidebar-width: 200px;
 
   --media-button-width: 240px;
-  // --max-button-width: 540px;
+
   --max-button-width: 300px;
 
   --media-button-height: calc(var(--media-button-width) / 6);
@@ -43,30 +36,15 @@
   --max-font-size: 36px;
   --responsive-font-size: calc(var(--media-button-height) * 0.4);
 
-  // --button-font-size: clamp(
-  //   var(--min-font-size),
-  //   var(--responsive-font-size),
-  //   var(--max-font-size)
-  // );
-
-  // --button-font-size: Min(calc(var(--media-button-height) * 0.4), 12px);
   --form-font-size: Min(calc((3.5vw + 0.5rem) * 0.5), 16px);
-  --button-font-size: clamp(
-    calc(1vw * 0.1em),
-    calc(4vw * 0.5em),
-    calc(3vw * 1em)
-  );
-
-  // --overlay-opacity: 0.9;
+  --button-font-size: clamp(calc(1vw * 0.1em), calc(4vw * 0.5em), calc(3vw * 1em));
 
   --form-height: 550px;
   --form-width: 700px;
 
   --banner-height: 60px;
   --banner-font-size: calc(var(--banner-height) * 0.66666666666666666);
-  --content-height: calc(
-    var(--form-height) - var(--banner-height) - var(--banner-height)
-  );
+  --content-height: calc(var(--form-height) - var(--banner-height) - var(--banner-height));
 
   --label-transform: Min(var(--media-button-height), 34px);
 }
@@ -85,44 +63,18 @@ body,
 
 /* Track */
 ::-webkit-scrollbar-track {
-  // background: transparent;
   background: hsla(215, 0%, 83%, 0.5);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  // background: hsl(35, 86%, 50%);
   background: hsl(215, 23%, 45%);
   border: 2px ridge hsl(215, 20%, 34%);
-  // border: 2px ridge hsl(35, 100%, 50%);
+
   border-radius: 6px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(215, 33%, 52%);
-
-  // width: 18px;
 }
-
-// @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
-//   // html,
-//   // body,
-//   // #root {
-//   //   height: 100%;
-//   //   width: 100%;
-//   //   position: relative;
-//   // }
-
-//   // ::before,
-//   // ::after,
-//   // * {
-//   //   margin: 0;
-//   //   padding: 0;
-//   //   font-size: unset;
-//   //   text-decoration: none;
-//   //   background: unset;
-//   //   color: unset;
-//   //   position: unset;
-//   // }
-// }

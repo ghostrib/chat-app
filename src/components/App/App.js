@@ -3,12 +3,15 @@ import firebase, { providers } from '../../firebase';
 import services from '../../services';
 import { checkCookies } from '../../utils/cookies';
 import MessageList from '../MessageList/MessageList';
-// import Footer from '../Footer/Footer';
-import GridContainer from '../Grid/Grid';
+
 import Header from '../Header/Header';
 import Modal from '../Modal/Modal';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
+
+import s from './app.module.scss';
+
+const GridContainer = ({ children }) => <section className={s.container}>{children}</section>;
 
 class App extends Component {
   constructor(props) {
@@ -100,9 +103,7 @@ class App extends Component {
     ) {
       sessionStorage.setItem('credential', JSON.stringify(error.credential));
 
-      const signInMethods = await firebase
-        .auth()
-        .fetchSignInMethodsForEmail(error.email);
+      const signInMethods = await firebase.auth().fetchSignInMethodsForEmail(error.email);
       const providerKey = signInMethods[0].split('.')[0];
       const provider = providers[providerKey];
       firebase.auth().signInWithRedirect(provider);
@@ -141,11 +142,9 @@ class App extends Component {
         const { operationType, additionalUserInfo } = result;
         if (operationType === 'signIn') {
           if (additionalUserInfo.isNewUser) {
-            // first time user
             this.handleCreatingNewAccount(result.user);
           }
           else {
-            // returning user
             await services.setOnlineStatus(true);
             const user = await services.getUser(result.user.uid);
             this.setState({ user });
@@ -173,7 +172,7 @@ class App extends Component {
     services.getUsersOnline(setUsersOnline);
     services.getMessages(setMessages);
 
-    firebase.auth().onAuthStateChanged((authUser) => {
+    firebase.auth().onAuthStateChanged(authUser => {
       this.handleAuthChange(authUser);
       this.handleRedirect();
     });
@@ -198,7 +197,6 @@ class App extends Component {
         </GridContainer>
         <Modal forms={forms} app={app} />
       </>
-
     );
   }
 }
