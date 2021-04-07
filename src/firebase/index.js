@@ -28,5 +28,3 @@ const providers = {
 export { providers };
 
 export default firebase;
-
-window.firebase = firebase;
