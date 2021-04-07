@@ -22,6 +22,7 @@ class App extends Component {
         isLoginForm: false,
         isSignupForm: false,
         isOptionsPage: false,
+        isResetPage: false
       },
       messages: [],
       usersOnline: [],
@@ -31,6 +32,7 @@ class App extends Component {
     this.showLogin = this.showLogin.bind(this);
     this.showSignup = this.showSignup.bind(this);
     this.showOptions = this.showOptions.bind(this);
+    this.showReset = this.showReset.bind(this);
     this.setUser = this.setUser.bind(this);
     this.setUsersOnline = this.setUsersOnline.bind(this);
     this.setMessages = this.setMessages.bind(this);
@@ -39,6 +41,7 @@ class App extends Component {
       showLogin: this.showLogin,
       showSignup: this.showSignup,
       showOptions: this.showOptions,
+      showReset: this.showReset,
       toggleModal: this.toggleModal,
       setUser: this.setUser,
     };
@@ -57,6 +60,8 @@ class App extends Component {
         isLoginForm: true,
         isSignupForm: false,
         isOptionsPage: false,
+        isResetPage: false
+
       },
     });
   }
@@ -68,6 +73,8 @@ class App extends Component {
         isLoginForm: false,
         isSignupForm: true,
         isOptionsPage: false,
+        isResetPage: false
+
       },
     });
   }
@@ -79,7 +86,21 @@ class App extends Component {
         isLoginForm: false,
         isSignupForm: false,
         isOptionsPage: true,
+        isResetPage: false
+
       },
+    });
+  }
+
+  showReset() {
+    this.setState({
+      forms: {
+        isModalVisible: true,
+        isLoginForm: false,
+        isSignupForm: false,
+        isOptionsPage: false,
+        isResetPage: true
+      }
     });
   }
 

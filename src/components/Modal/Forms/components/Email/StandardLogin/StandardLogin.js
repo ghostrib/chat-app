@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import InputField from '../InputField/InputField';
 
 import SubmitButton from '../SubmitButton/SubmitButton';
 
 import s from './standardLogin.module.css';
 
-const StandardLogin = ({ handleLogin, setValue, value, error, setError }) => {
+const StandardLogin = ({ handleLogin, setValue, value, error, setError, app }) => {
+  // const [ showReset, setShowReset ] = useState(false);
+
   return (
     <div className={s.standard}>
       <p className={s.paragraph}>Login with email and password</p>
@@ -27,7 +30,7 @@ const StandardLogin = ({ handleLogin, setValue, value, error, setError }) => {
       />
       {/* <ForgotPassword /> */}
       <div className={s.forgot__password}>
-        <button type="button" className={s.forgot__password__button}>
+        <button type="button" onClick={() => app.showReset()} className={s.forgot__password__button}>
           Forgot password?
         </button>
       </div>

@@ -49,7 +49,7 @@
 
 .optionsButton {
   height: var(--header-height);
-  display: flex;
+  display: inline-flex;
   justify-content: flex-end;
   height: auto;
   align-items: center;
@@ -73,4 +73,14 @@
   outline: none;
   height: calc(2em + 0.5vw);
   width: calc(2em + 0.5vw);
+}
+
+.username {
+  color: whitesmoke;
+  margin-right: 16px;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
 }

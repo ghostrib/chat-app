@@ -1,7 +1,7 @@
 import FormHeader from '../components/Header/Header';
-import SocialLogin from '../components/RightSide';
+import SocialLogin from '../components/Other';
 import Divider from '../components/Divider/Divider';
-import StandardLogin from '../components/LeftSide/StandardLogin/StandardLogin';
+import StandardLogin from '../components/Email/StandardLogin/StandardLogin';
 import FormFooter from '../components/Footer/Footer';
 
 import { useState } from 'react';
@@ -19,6 +19,7 @@ const Login = ({ app }) => {
     console.log('inside handler');
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
+      app.toggleModal();
     }
     catch (error) {
       setError('The email or password you entered is incorrect');
@@ -47,6 +48,7 @@ const Login = ({ app }) => {
             setError={setError}
             value={value}
             setValue={setValue}
+            app={app}
           />
           <Divider />
           <SocialLogin />

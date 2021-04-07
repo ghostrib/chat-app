@@ -18,9 +18,12 @@ const LoginButton = ({ showLogin, isSignedIn }) => {
 
 const OptionsButton = ({ user, showOptions }) => {
   return (
-    <button className={s.optionsButton} onClick={showOptions}>
-      <SVG className={s.profile__image} src={user.image} />
-    </button>
+    <div className={s.wrapper}>
+      <span className={s.username}>{user.name}</span>
+      <button className={s.optionsButton} onClick={showOptions}>
+        <SVG className={s.profile__image} src={user.image} />
+      </button>
+    </div>
   );
 };
 

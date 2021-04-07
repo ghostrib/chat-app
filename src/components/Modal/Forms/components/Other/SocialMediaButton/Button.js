@@ -19,11 +19,11 @@ const Button = ({ brand }) => {
   const image = brand === 'google' ? googleImage : facebookImage;
 
   return (
-    <button type="button" onClick={() => loginWith(provider)} class={`${s[brand]} ${s.button}`}>
-      <span class={s.icon_wrapper}>
-        <img class={s.icon} src={image} alt={`${brand} icon`} />
+    <button type="button" onClick={() => loginWith(provider)} className={`${s[brand]} ${s.button}`}>
+      <span className={s.icon_wrapper}>
+        <img className={s.icon} src={image} alt={`${brand} icon`} />
       </span>
-      <span class={s.btn_txt}>
+      <span className={s.btn_txt}>
         <b>Sign in with {brandName}</b>
       </span>
     </button>
