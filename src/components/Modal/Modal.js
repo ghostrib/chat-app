@@ -24,7 +24,7 @@ const Modal = ({ forms, app }) => {
         <Signup app={app} />
       ) : showOptions ? (
         <Options app={app} />
-       ) : showReset ? (
+      ) : showReset ? (
         <ResetPassword app={app} />
       ) : null}
     </div>

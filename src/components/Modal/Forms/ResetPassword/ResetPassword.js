@@ -1,29 +1,9 @@
 import s from './reset.module.scss';
-import services from '../../../../services';
 import firebase from '../../../../firebase';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import { validateEmail } from '../../../../utils/validate';
-import { debounce } from '../../../../utils/debounce';
-import { useState, useRef, useEffect } from 'react';
-
-// const Header = ({ app }) => {
-//   const { toggleModal } = app;
-//   return (
-//     <header className={s.header}>
-//       <h4 className={s.title}>OPTIONS</h4>
-//       <span onClick={toggleModal} className={s.close}>
-//         &times;
-//       </span>
-//     </header>
-//   );
-// };
-
-// const signOut = async () => {
-//   await services.setOnlineStatus(false);
-//   await firebase.auth().signOut();
-//   await toggleModal();
-// };
+import { useState } from 'react';
 
 const sendEmail = async email => {
   try {
@@ -46,7 +26,9 @@ const ResetPassword = ({ app }) => {
     e.preventDefault();
     const response = await sendEmail(email);
     if (response) {
-      setResult('We were unable to locate your account. Please double check your email is spelled correctly');
+      setResult(
+        'We were unable to locate your account. Please double check your email is spelled correctly'
+      );
       setIsError(true);
     }
     else {
@@ -55,14 +37,14 @@ const ResetPassword = ({ app }) => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setEmail(e.target.value);
     setResult('');
     setIsError(false);
     handleValidation(e);
   };
 
-  const handleValidation = (e) => {
+  const handleValidation = e => {
     validateEmail(e.target.value) ? setIsDisabled(false) : setIsDisabled(true);
   };
 
@@ -74,7 +56,12 @@ const ResetPassword = ({ app }) => {
           <p className={s.paragraph}>Enter the email address associated with your account below</p>
 
           <div className={s.wrapper}>
-            <input type="email" className={s.input} onChange={handleChange} onBlur={handleValidation}/>
+            <input
+              type="email"
+              className={s.input}
+              onChange={handleChange}
+              onBlur={handleValidation}
+            />
           </div>
           <div className={s.wrapper}>
             <button className={s.button} disabled={isDisabled}>
@@ -92,15 +79,3 @@ const ResetPassword = ({ app }) => {
 };
 
 export default ResetPassword;
-
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <ul className={s.options__list}>
-<Header app={app} />
-<li className={s.options__list__item}>
-  <button className={s.button} onClick={signOut}>
-Sign OUUUTTT
-  </button>
-</li>
-</ul> */
-}

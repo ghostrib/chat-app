@@ -27,6 +27,7 @@
     "lint:fix": "eslint --fix './src/**/*.js'",
     "prettier": "prettier \"./**/*.{js,jsx,json,css,scss}\"",
     "prettier:fix": "prettier --write \"./**/*.{js,jsx,json,css,scss}\"",
+    "format:fix": "npm run prettier:fix && npm run lint:fix",
     "server:build": "npm run build && nodemon ./server/index.js",
     "server:dev": "nodemon ./server/index.js",
     "server": "npm run build && node ./server/index.js",

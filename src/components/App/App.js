@@ -22,7 +22,7 @@ class App extends Component {
         isLoginForm: false,
         isSignupForm: false,
         isOptionsPage: false,
-        isResetPage: false
+        isResetPage: false,
       },
       messages: [],
       usersOnline: [],
@@ -60,8 +60,7 @@ class App extends Component {
         isLoginForm: true,
         isSignupForm: false,
         isOptionsPage: false,
-        isResetPage: false
-
+        isResetPage: false,
       },
     });
   }
@@ -73,8 +72,7 @@ class App extends Component {
         isLoginForm: false,
         isSignupForm: true,
         isOptionsPage: false,
-        isResetPage: false
-
+        isResetPage: false,
       },
     });
   }
@@ -86,8 +84,7 @@ class App extends Component {
         isLoginForm: false,
         isSignupForm: false,
         isOptionsPage: true,
-        isResetPage: false
-
+        isResetPage: false,
       },
     });
   }
@@ -99,8 +96,8 @@ class App extends Component {
         isLoginForm: false,
         isSignupForm: false,
         isOptionsPage: false,
-        isResetPage: true
-      }
+        isResetPage: true,
+      },
     });
   }
 
