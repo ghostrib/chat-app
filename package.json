@@ -29,7 +29,8 @@
     "prettier:fix": "prettier --write \"./**/*.{js,jsx,json,css,scss}\"",
     "server:build": "npm run build && nodemon ./server/index.js",
     "server:dev": "nodemon ./server/index.js",
-    "server": "npm run build && node ./server/index.js"
+    "server": "npm run build && node ./server/index.js",
+    "deploy": "pm2 deploy ecosystem.config.js development"
   },
   "eslintConfig": {
     "extends": [
