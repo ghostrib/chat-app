@@ -1,0 +1,27 @@
+.main {
+  background: #ebebeb;
+  grid-area: main;
+  height: var(--main-height);
+  overflow-y: auto;
+}
+
+.main__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.main__list__item {
+  padding: 10px;
+}
+
+.user_image {
+  max-height: 40px;
+}
+
+
+@media (hover:none) {
+  .main__list {
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+}

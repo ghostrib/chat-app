@@ -1,0 +1,42 @@
+.sidebar {
+  background: var(--sidebar-bg);
+  grid-area: sidebar;
+  height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+  border-right: 1px solid #202020;
+  color: #c1c6cb;
+}
+
+.sidebar__list__item {
+  margin: 12px 0 4px 4px;
+  min-height: 20px;
+  max-height: 60px;
+
+  display: flex;
+  height: 100%;
+  align-items: center;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.sidebar__list__item:hover {
+  background: #6698c8;
+  color: #303e4d;
+}
+
+.name {
+  padding: 2px;
+}
+
+.image {
+  max-width: 30px;
+  min-height: inherit;
+  max-height: inherit;
+}
+
+
+@media (hover: none) {
+  .sidebar {
+    display: none;
+  }
+}

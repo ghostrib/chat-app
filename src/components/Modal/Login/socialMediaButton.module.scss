@@ -1,0 +1,122 @@
+$googlePrimary: hsl(217, 83%, 59%);
+$googleOutline: hsl(217, 93%, 44%);
+$googleHover: hsl(217, 86%, 40%);
+$googleActive: hsl(217, 80%, 35%);
+
+$facebookPrimary: hsl(221, 31%, 49%);
+$facebookOutline: hsl(221, 41%, 54%);
+$facebookHover: hsl(221, 31%, 39%);
+$facebookActive: hsl(221, 30%, 35%);
+
+.button {
+  width: 200px;
+  height: var(--media-button-height);
+
+  display: grid;
+  grid-template-columns: var(--media-button-height) var(--media-button-diff);
+  grid-template-rows: var(--media-button-height);
+  grid-template-areas: "logo text";
+  align-items: center;
+
+  border-radius: 2px;
+  border: none;
+  outline: none;
+  box-shadow: 0 0 0 1px $googleOutline;
+}
+
+.google {
+  background: linear-gradient(
+    90deg,
+    white 0px,
+    white var(--media-button-height),
+    $googlePrimary var(--media-button-height)
+  );
+
+  &:hover {
+    color: white;
+    background: linear-gradient(
+      90deg,
+      white 0px,
+      white var(--media-button-height),
+      $googleHover var(--media-button-height)
+    );
+  }
+
+  &:active {
+    background: linear-gradient(
+      90deg,
+      white 0px,
+      white var(--media-button-height),
+      $googleActive var(--media-button-height)
+    );
+  }
+
+}
+
+.facebook {
+  background: linear-gradient(
+    90deg,
+    white 0px,
+    white var(--media-button-height),
+    $facebookPrimary var(--media-button-height)
+  );
+
+  &:hover {
+    color: white;
+    background: linear-gradient(
+      90deg,
+      white 0px,
+      white var(--media-button-height),
+      $facebookHover var(--media-button-height)
+    );
+  }
+
+  &:active {
+    background: linear-gradient(
+      90deg,
+      white 0px,
+      white var(--media-button-height),
+      $facebookActive var(--media-button-height)
+    );
+  }
+}
+
+.button__anchor {
+  grid-area: logo;
+  display: flex;
+  // position: absolute;
+  justify-content: center;
+
+  // text-align: center;
+}
+
+.text__background {
+  grid-area: text;
+  position: relative;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.button__text {
+  position: absolute;
+  left: 1rem;
+  color: white;
+  font-weight: bold;
+  font-size: 1em;
+  text-shadow: 1px 1px 2px black;
+  font-family: "Arial";
+}
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) and (max-device-width:1024px) {
+  
+  .button__anchor {
+    position: absolute;
+    transform: translate(-2px, -22px);
+  }
+  .button__text {
+    left: 4rem;
+  }
+}
