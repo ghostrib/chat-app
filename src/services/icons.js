@@ -5,10 +5,9 @@ const randomColor = () => {
   return `#${Math.random().toString(16).slice(2, 8)}`;
 };
 
-const groupColors = (color) => {
+const groupColors = color => {
   let { h } = convertHextoHsl(color);
   h = h <= 75 || h >= 165 ? h : keepHueInRange(h + h);
-  // trying to avoid a wash of green
 
   const hue1 = keepHueInRange(h + 45);
   const hue2 = keepHueInRange(h - 45);
@@ -33,10 +32,9 @@ export const createIcon = (hash, background = '#0000', size = 100) => {
   const colors = groupColors(randomColor());
   colors.push(background);
   let icon = jdenticon.toSvg(hash, size, { backColor: '#ffffff', padding: 0.115 });
-  icon.match(/#[a-fA-F0-9]{6}/g).forEach((match) => {
+  icon.match(/#[a-fA-F0-9]{6}/g).forEach(match => {
     icon = icon.replace(match, colors[colors.length - 1]);
     colors.pop();
   });
   return icon;
 };
-

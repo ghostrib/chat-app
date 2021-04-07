@@ -1,19 +1,20 @@
 import React from 'react';
 import s from './sidebar.module.scss';
-
 import PropTypes from 'prop-types';
 import UserCard from './UserCard/UserCard';
 
 const SideBar = ({ usersOnline }) => {
+  const displayUsersOnline = () => {
+    return usersOnline.map((user, i) => {
+      return <UserCard key={Math.random()} name={user.name} image={user.image} />;
+    });
+  };
+
   return (
     <aside className={s.sidebar}>
-      <ul className={s.sidebar__list}>
-        {usersOnline.map((user, i) => {
-          return (
-            <UserCard key={(i + 1) * Math.random()} name={user.name} image={user.image} />
-          );
-        })}
-      </ul>
+      <div className={s.container}>
+        <ul className={s.list}>{displayUsersOnline()}</ul>
+      </div>
     </aside>
   );
 };

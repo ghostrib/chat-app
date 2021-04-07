@@ -1,29 +1,17 @@
 .sidebar__list__item {
-  margin: 12px 0 4px 4px;
-  min-height: 20px;
-  max-height: 60px;
-
+  margin: 32px 0;
   display: flex;
-  height: 100%;
   align-items: center;
-  overflow: hidden;
-  padding: 10px;
-}
-
-.sidebar__list__item:hover {
-  background: #6698c8;
-  color: #303e4d;
-  
-}
-
-.name {
-  padding: 2px;
+  font-size: 0.85em;
+  color: #c1c6cb;
 }
 
 .image {
-  max-width: 30px;
-  max-height: 30px;
-  min-height: inherit;
-  max-height: inherit;
-  margin: 0 10px 0 0;
+  margin-left: 16px;
+  width: 15%;
+  height: auto;
+}
+
+.name {
+  margin-left: 8px;
 }

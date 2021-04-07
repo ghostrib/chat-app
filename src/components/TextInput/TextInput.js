@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import PropTypes from 'prop-types';
 import React from 'react';
 import firebase from '../../firebase';
@@ -11,6 +12,7 @@ class TextInput extends React.Component {
     };
     this.updateMessage = this.updateMessage.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.inputRef = React.createRef(null);
   }
 
   sendMessage(e) {
@@ -54,12 +56,12 @@ class TextInput extends React.Component {
     const { updateMessage, sendMessage } = this;
     const { message } = this.state;
     return (
-      <div className={s.message}>
+      <div ref={this.inputRef} className={s.message}>
         <form className={s.message__form} onSubmit={sendMessage}>
           <input
             onChange={updateMessage}
             type="text"
-            className={s.message__form__text}
+            className={s.message__form__input}
             placeholder="Say hi..."
             name="message"
             value={message}
@@ -72,7 +74,7 @@ class TextInput extends React.Component {
 
 TextInput.propTypes = {
   state: PropTypes.object.isRequired,
-  app: PropTypes.object.isRequired
+  app: PropTypes.object.isRequired,
 };
 
 export default TextInput;

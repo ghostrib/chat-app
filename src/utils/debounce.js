@@ -1,6 +1,6 @@
 export const debounce = (func, wait) => {
   let timeout;
-  return function(...args) {
+  return function (...args) {
     const context = this;
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => {
@@ -9,5 +9,3 @@ export const debounce = (func, wait) => {
     }, wait);
   };
 };
-
-

@@ -8,6 +8,7 @@
   width: 100%;
   opacity: var(--overlay-opacity);
   background: black;
+  z-index: 3;
 }
 
 .modal__window {
@@ -27,4 +28,9 @@
 
 .visible {
   display: block;
+  position: relative;
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }

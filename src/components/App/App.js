@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import firebase, { providers } from '../../firebase';
 import services from '../../services';
 import { checkCookies } from '../../utils/cookies';
-import ChatBox from '../ChatBox/ChatBox';
-// import Footer from '../Footer/Footer';
-import GridContainer from '../Grid/Grid';
+import MessageList from '../MessageList/MessageList';
+
 import Header from '../Header/Header';
 import Modal from '../Modal/Modal';
 import SideBar from '../SideBar/Sidebar';
 import TextInput from '../TextInput/TextInput';
+
+import s from './app.module.scss';
+
+const GridContainer = ({ children }) => <section className={s.container}>{children}</section>;
 
 class App extends Component {
   constructor(props) {
@@ -19,6 +22,7 @@ class App extends Component {
         isLoginForm: false,
         isSignupForm: false,
         isOptionsPage: false,
+        isResetPage: false,
       },
       messages: [],
       usersOnline: [],
@@ -28,6 +32,7 @@ class App extends Component {
     this.showLogin = this.showLogin.bind(this);
     this.showSignup = this.showSignup.bind(this);
     this.showOptions = this.showOptions.bind(this);
+    this.showReset = this.showReset.bind(this);
     this.setUser = this.setUser.bind(this);
     this.setUsersOnline = this.setUsersOnline.bind(this);
     this.setMessages = this.setMessages.bind(this);
@@ -36,6 +41,7 @@ class App extends Component {
       showLogin: this.showLogin,
       showSignup: this.showSignup,
       showOptions: this.showOptions,
+      showReset: this.showReset,
       toggleModal: this.toggleModal,
       setUser: this.setUser,
     };
@@ -54,6 +60,7 @@ class App extends Component {
         isLoginForm: true,
         isSignupForm: false,
         isOptionsPage: false,
+        isResetPage: false,
       },
     });
   }
@@ -65,6 +72,7 @@ class App extends Component {
         isLoginForm: false,
         isSignupForm: true,
         isOptionsPage: false,
+        isResetPage: false,
       },
     });
   }
@@ -76,6 +84,19 @@ class App extends Component {
         isLoginForm: false,
         isSignupForm: false,
         isOptionsPage: true,
+        isResetPage: false,
+      },
+    });
+  }
+
+  showReset() {
+    this.setState({
+      forms: {
+        isModalVisible: true,
+        isLoginForm: false,
+        isSignupForm: false,
+        isOptionsPage: false,
+        isResetPage: true,
       },
     });
   }
@@ -100,9 +121,7 @@ class App extends Component {
     ) {
       sessionStorage.setItem('credential', JSON.stringify(error.credential));
 
-      const signInMethods = await firebase
-        .auth()
-        .fetchSignInMethodsForEmail(error.email);
+      const signInMethods = await firebase.auth().fetchSignInMethodsForEmail(error.email);
       const providerKey = signInMethods[0].split('.')[0];
       const provider = providers[providerKey];
       firebase.auth().signInWithRedirect(provider);
@@ -141,11 +160,9 @@ class App extends Component {
         const { operationType, additionalUserInfo } = result;
         if (operationType === 'signIn') {
           if (additionalUserInfo.isNewUser) {
-            // first time user
             this.handleCreatingNewAccount(result.user);
           }
           else {
-            // returning user
             await services.setOnlineStatus(true);
             const user = await services.getUser(result.user.uid);
             this.setState({ user });
@@ -173,7 +190,7 @@ class App extends Component {
     services.getUsersOnline(setUsersOnline);
     services.getMessages(setMessages);
 
-    firebase.auth().onAuthStateChanged((authUser) => {
+    firebase.auth().onAuthStateChanged(authUser => {
       this.handleAuthChange(authUser);
       this.handleRedirect();
     });
@@ -189,13 +206,15 @@ class App extends Component {
     const { usersOnline, messages, forms, user } = this.state;
     const { state, app } = this;
     return (
-      <GridContainer>
-        <Header user={user} app={app} />
-        <SideBar usersOnline={usersOnline} />
-        <ChatBox messages={messages} />
-        <TextInput user={user} state={state} app={app} />
+      <>
+        <GridContainer>
+          <Header user={user} app={app} />
+          <SideBar usersOnline={usersOnline} />
+          <MessageList messages={messages} />
+          <TextInput user={user} state={state} app={app} />
+        </GridContainer>
         <Modal forms={forms} app={app} />
-      </GridContainer>
+      </>
     );
   }
 }
