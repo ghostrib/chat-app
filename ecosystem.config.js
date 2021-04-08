@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      script: 'current/server/index.js',
+      script: 'server/index.js',
       name: 'elbowroom.dev',
       watch: '.',
       env: {
