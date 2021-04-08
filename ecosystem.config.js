@@ -4,6 +4,12 @@ module.exports = {
       script: 'server/index.js',
       name: 'elbowroom.dev',
       watch: '.',
+      env: {
+        NODE_ENV: 'development',
+      },
+      env_production: {
+        NODE_ENV: 'production'
+      }
     },
   ],
 
@@ -17,8 +23,8 @@ module.exports = {
       ssh_options: 'IdentityFile=~/.ssh/mattbrannon',
       'pre-deploy-local': '',
       'post-deploy':
-        'npm install && npm run build && pm2 startOrRestart ecosystem.config.js --env development',
-      'pre-setup': 'echo "$HOME"',
+        'npm install && npm run build && pm2 startOrRestart ecosystem.config.js',
+      'pre-setup': 'echo "----------$HOME"------------------',
     },
   },
 };
