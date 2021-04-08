@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      script: 'server/index.js',
+      script: 'current/server/index.js',
       name: 'elbowroom.dev',
       watch: '.',
       env: {
@@ -24,7 +24,6 @@ module.exports = {
       'pre-deploy-local': '',
       'post-deploy':
         'npm install && npm run build && pm2 startOrRestart ecosystem.config.js',
-      'pre-setup': 'echo "----------$HOME"------------------',
     },
   },
 };
