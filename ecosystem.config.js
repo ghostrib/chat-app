@@ -22,7 +22,7 @@ module.exports = {
       ssh_options: 'IdentityFile=~/.ssh/mattbrannon',
       'pre-deploy-local': '',
       'post-deploy':
-        'npm install && npm run build && pm2 startOrRestart ecosystem.config.js',
+        'npm install && npm run build && pm2 restart index --watch',
     },
   },
 };
