@@ -31,7 +31,7 @@
     "server:build": "npm run build && nodemon ./server/index.js",
     "server:dev": "nodemon ./server/index.js",
     "server": "npm run build && node ./server/index.js",
-    "deploy": "pm2 deploy ecosystem.config.js development"
+    "deploy": "pm2 deploy ecosystem.config.js"
   },
   "eslintConfig": {
     "extends": [
