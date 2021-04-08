@@ -2,7 +2,6 @@ module.exports = {
   apps: [
     {
       script: 'server/index.js',
-      name: 'elbowroom.dev',
       watch: '.',
       env: {
         NODE_ENV: 'development',
