@@ -3,9 +3,11 @@ import services from '../../../../services';
 import firebase from '../../../../firebase';
 import Header from '../components/Header/Header';
 
-const ResetPassword = ({ app }) => {
+const Options = ({ app }) => {
   const { toggleModal } = app;
-  const signOut = async () => {
+
+  const signOut = async (e) => {
+    await e.preventDefault();
     await services.setOnlineStatus(false);
     await firebase.auth().signOut();
     await toggleModal();
@@ -14,11 +16,11 @@ const ResetPassword = ({ app }) => {
   return (
     <section className={s.section}>
       <div className={s.container}>
-        <form className={s.form}>
+        <form className={s.form} onSubmit={signOut} >
           <Header toggleModal={toggleModal} headerText="Settings" />
           <p className={s.paragraph}>Something missing? I don't care</p>
           <div className={s.wrapper}>
-            <button className={s.button} onClick={signOut}>
+            <button className={s.button}>
               Signout
             </button>
           </div>
@@ -28,4 +30,4 @@ const ResetPassword = ({ app }) => {
   );
 };
 
-export default ResetPassword;
+export default Options;
