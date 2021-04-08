@@ -2,14 +2,17 @@ module.exports = {
   apps: [
     {
       script: 'server/index.js',
-      watch: '.',
+      watch: true,
+      exec_mode: 'cluster',
+      instances: 4,
+      ignore_watch: [ 'node_modules' ],
       env: {
         NODE_ENV: 'development',
       },
       env_production: {
         NODE_ENV: 'production'
       },
-      exec_mode: 'cluster'
+
     },
   ],
 
@@ -23,7 +26,7 @@ module.exports = {
       ssh_options: 'IdentityFile=~/.ssh/mattbrannon',
       'pre-deploy-local': '',
       'post-deploy':
-        'npm install && npm run build && pm2 reload index --watch',
+        'npm install && npm run build && pm2 start server/index --watch -i 4',
     },
   },
 };
