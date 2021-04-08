@@ -13,7 +13,7 @@ module.exports = {
       host: '165.232.145.102',
       ref: 'origin/staging',
       repo: 'git@github.com:ghostrib/chat-app.git',
-      path: '/var/www/chat-app/current/',
+      path: '/var/www/chat-app',
       ssh_options: 'IdentityFile=~/.ssh/mattbrannon',
       'pre-deploy-local': '',
       'post-deploy':
