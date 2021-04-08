@@ -26,7 +26,7 @@ module.exports = {
       ssh_options: 'IdentityFile=~/.ssh/mattbrannon',
       'pre-deploy-local': '',
       'post-deploy':
-        'npm install && npm run build && pm2 start server/index --watch -i 4',
+        'npm install && npm run build && pm2 start server/index.js --watch -i 4',
     },
   },
 };
