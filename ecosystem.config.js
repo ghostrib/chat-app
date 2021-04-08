@@ -8,7 +8,8 @@ module.exports = {
       },
       env_production: {
         NODE_ENV: 'production'
-      }
+      },
+      exec_mode: 'cluster'
     },
   ],
 
@@ -22,7 +23,7 @@ module.exports = {
       ssh_options: 'IdentityFile=~/.ssh/mattbrannon',
       'pre-deploy-local': '',
       'post-deploy':
-        'npm install && npm run build && pm2 restart index --watch',
+        'npm install && npm run build && pm2 reload index --watch',
     },
   },
 };
