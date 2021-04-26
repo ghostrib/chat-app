@@ -10,8 +10,7 @@ export const parseCookies = () => {
     if (val !== null) {
       try {
         val = decodeURIComponent(val.replace(/"+/g, ''));
-      }
-      catch (ex) {
+      } catch (ex) {
         return null;
       }
     }

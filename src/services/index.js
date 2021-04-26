@@ -8,6 +8,7 @@ import {
   setOnlineStatus,
   getUser,
   isEmailAvailable,
+  loginWithEmailAndPassword,
 } from './firebase';
 
 import { createIcon } from './icons';
@@ -23,6 +24,9 @@ const services = {
   setOnlineStatus,
   getUser,
   isEmailAvailable,
+  loginWithEmailAndPassword,
 };
 
 export default services;
+
+// export services;

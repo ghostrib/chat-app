@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
-  text-decoration: none;
+  // text-decoration: none;
   font-family: 'Lato', sans-serif;
 }
 
@@ -24,7 +24,7 @@
 
   --media-button-width: 240px;
 
-  --max-button-width: 300px;
+  --max-button-width: 320px;
 
   --media-button-height: calc(var(--media-button-width) / 6);
   --max-button-height: 64px;
@@ -37,16 +37,25 @@
   --responsive-font-size: calc(var(--media-button-height) * 0.4);
 
   --form-font-size: Min(calc((3.5vw + 0.5rem) * 0.5), 16px);
-  --button-font-size: clamp(calc(1vw * 0.1em), calc(4vw * 0.5em), calc(3vw * 1em));
+  --button-font-size: clamp(
+    calc(1vw * 0.1em),
+    calc(4vw * 0.5em),
+    calc(3vw * 1em)
+  );
 
   --form-height: 550px;
   --form-width: 700px;
 
   --banner-height: 60px;
   --banner-font-size: calc(var(--banner-height) * 0.66666666666666666);
-  --content-height: calc(var(--form-height) - var(--banner-height) - var(--banner-height));
+  --content-height: calc(
+    var(--form-height) - var(--banner-height) - var(--banner-height)
+  );
 
   --label-transform: Min(var(--media-button-height), 34px);
+
+  --border-width: 1px;
+  --inverse-width: calc(var(--border-width) * -1);
 }
 
 html,
