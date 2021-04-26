@@ -124,7 +124,8 @@ export const loginWithEmailAndPassword = async (email, password, callback) => {
   try {
     return await firebase.auth().signInWithEmailAndPassword(email, password);
   } catch (error) {
-    callback(error.message);
+    // callback(error.message);
+    throw Error(error);
   }
 };
 window.firebase = firebase;

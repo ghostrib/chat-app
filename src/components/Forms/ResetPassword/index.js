@@ -30,9 +30,9 @@ export default function ResetPassword({ app }) {
     const response = await sendEmail(email);
     if (response) {
       console.log(response);
+      setIsError(true);
       if (response.code === 'auth/invalid-email') {
         setResult(<p>The email you entered is not a valid email address</p>);
-        setIsError(true);
       } else if (response.code === 'auth/user-not-found') {
         setResult(
           <>

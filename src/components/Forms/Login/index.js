@@ -24,12 +24,11 @@ export default function Form({ app }) {
     e.preventDefault();
     const { email, password } = input;
     try {
-      const result = await loginWithEmailAndPassword(email, password, () => {
-        setError('Your email or password is incorrect');
-      });
+      const result = await loginWithEmailAndPassword(email, password);
+      app.toggleModal();
       return result;
     } catch (error) {
-      console.log(error.message);
+      setError('The email or password you entered is incorrect');
     }
   };
 
