@@ -13,7 +13,7 @@
   --header-height: 60px;
 
   --input-height: 80px;
-  --input-padding-bottom: 40px;
+  --input-padding-bottom: 0px;
 
   --footer-height: calc(var(--input-height) + var(--input-padding-bottom));
 
@@ -56,6 +56,10 @@
 
   --border-width: 1px;
   --inverse-width: calc(var(--border-width) * -1);
+
+  // @media (max-width: 768px) {
+  //   --input-height: 1rem;
+  // }
 }
 
 html,

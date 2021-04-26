@@ -1,6 +1,4 @@
-import s from './reset.module.scss';
 import firebase from '../../../firebase';
-import { validateEmail } from '../../../utils/validate';
 import { useState } from 'react';
 
 import { SubmitButton } from '../button';
@@ -19,10 +17,7 @@ const sendEmail = async (email) => {
   }
 };
 
-const ResetPassword = ({ app }) => {
-  // const { toggleModal } = app;
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [email, setEmail] = useState('');
+export default function ResetPassword({ app }) {
   const [result, setResult] = useState('');
   const [isError, setIsError] = useState(false);
   const [input, setInput] = useInput();
@@ -54,18 +49,6 @@ const ResetPassword = ({ app }) => {
     }
   };
 
-  const handleChange = (e) => {
-    setEmail(e.target.value);
-    setResult('');
-    setIsError(false);
-    handleValidation(e);
-    // setInput(e);
-  };
-
-  const handleValidation = (e) => {
-    validateEmail(e.target.value) ? setIsDisabled(false) : setIsDisabled(true);
-  };
-
   return (
     <Layout app={app} page="Reset Password">
       <Wrapper>
@@ -88,9 +71,7 @@ const ResetPassword = ({ app }) => {
       </Body>
     </Layout>
   );
-};
-
-export default ResetPassword;
+}
 
 const Body = styled.div`
   display: flex;

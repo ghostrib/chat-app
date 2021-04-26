@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import firebase from '../../firebase';
-import { Button } from '../Forms/button';
-import { MaxWidthWrapper } from '../Forms/maxwidth';
 
 export default function TextInput(props) {
   const [message, setMessage] = useState('');
@@ -42,22 +40,13 @@ export default function TextInput(props) {
 
   return (
     <Wrapper>
-      {/* <VerticalCenter> */}
-      {/* <MaxWidthWrapper max={720}> */}
       <MessageForm onSubmit={handleSubmit}>
         <MessageInput onChange={handleInputChange} value={message} />
         <SendButton>Send</SendButton>
       </MessageForm>
-      {/* </MaxWidthWrapper> */}
-      {/* </VerticalCenter> */}
     </Wrapper>
   );
 }
-
-// const VerticalCenter = styled.div`
-//   height: 100%;
-//   max-height: 90%;
-// `;
 
 const Wrapper = styled.div`
   background: #b3b3b3;
@@ -88,6 +77,10 @@ const MessageForm = styled.form`
   grid-gap: 2rem;
   grid-template-columns: 1fr;
   padding: 1rem 2rem 3rem;
+  @media (max-width: 768px) {
+    padding: 1rem 1rem;
+    grid-gap: 1rem;
+  }
 `;
 
 const MessageInput = styled.input.attrs((props) => ({
@@ -113,6 +106,15 @@ const MessageInput = styled.input.attrs((props) => ({
   &:active {
     box-shadow: 0 0 0 2px#0061eb;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    border: revert;
+    outline: revert;
+  }
 `;
 
 const SendButton = styled.button`
@@ -130,6 +132,10 @@ const SendButton = styled.button`
   height: 65%;
   outline: none;
   padding: 0 1.5rem;
+
+  @media (max-width: 768px) {
+    height: 100%;
+  }
 
   /* &:focus {
     box-shadow: 0 0 0 3px white;

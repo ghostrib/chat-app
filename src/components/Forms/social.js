@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { providers } from '../../firebase';
 import services from '../../services';
 import googleImage from '../../assets/google.svg';
