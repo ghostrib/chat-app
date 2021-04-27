@@ -59,7 +59,7 @@ const ButtonTextWrapper = styled.span`
 
   @supports (-webkit-touch-callout: none) {
     /* CSS specific to iOS devices */
-    padding-left: 1.5rem;
+    padding-left: 16px;
     font-size: 1.125rem;
   }
   @media (max-width: 768px) {
