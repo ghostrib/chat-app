@@ -3,14 +3,13 @@ module.exports = {
     {
       script: 'server/index.js',
       watch: true,
-      ignore_watch: [ 'node_modules' ],
+      ignore_watch: ['node_modules'],
       env: {
         NODE_ENV: 'development',
       },
       env_production: {
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
       },
-
     },
   ],
 
@@ -23,8 +22,7 @@ module.exports = {
       path: '/var/www/chat-app/',
       ssh_options: 'IdentityFile=~/.ssh/mattbrannon',
       'pre-deploy-local': '',
-      'post-deploy':
-        'npm install && npm run build && pm2 reload server/index.js --watch',
+      'post-deploy': 'npm install && npm run build && pm2 reload server/index.js --watch',
     },
   },
 };

@@ -8,21 +8,20 @@ const hue2rgb = (p, q, t) => {
 };
 
 const mapPreciseValues = ({ h, s, l }) => {
-  return [ h, s, l ].map((value, i) => {
+  return [h, s, l].map((value, i) => {
     return i === 0 ? value / 360 : value / 100;
   });
 };
 
 const hsl2rgb = ({ h, s, l }) => {
   let r, g, b;
-  [ h, s, l ] = mapPreciseValues({ h, s, l });
+  [h, s, l] = mapPreciseValues({ h, s, l });
 
   if (s === 0) {
     r = l;
     g = l;
     b = l;
-  }
-  else {
+  } else {
     const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
     const p = 2 * l - q;
 
@@ -39,8 +38,8 @@ const hsl2rgb = ({ h, s, l }) => {
 };
 
 const rgb2hex = ({ r, g, b }) => {
-  const rgb = [ r, g, b ].map(val => val.toString(16));
-  const [ h, e, x ] = rgb.map(char => (char = char.length === 1 ? `0${char}` : char));
+  const rgb = [r, g, b].map(val => val.toString(16));
+  const [h, e, x] = rgb.map(char => (char = char.length === 1 ? `0${char}` : char));
   return `#${h}${e}${x}`;
 };
 
@@ -61,7 +60,7 @@ const hex2rgb = str => {
 };
 
 const rgb2hsl = ({ r, g, b }) => {
-  const [ R, G, B ] = [ r, g, b ].map(n => (n /= 255));
+  const [R, G, B] = [r, g, b].map(n => (n /= 255));
   const max = Math.max(R, G, B);
   const min = Math.min(R, G, B);
   let h;
@@ -71,8 +70,7 @@ const rgb2hsl = ({ r, g, b }) => {
   if (max === min) {
     h = 0;
     s = 0;
-  }
-  else {
+  } else {
     const d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
 

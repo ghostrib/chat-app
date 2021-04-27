@@ -24,7 +24,7 @@ const groupColors = color => {
   const alt1 = convertHslToHex({ h: hue1, s: sat1, l: light1 });
   const alt2 = convertHslToHex({ h: hue2, s: sat2, l: light2 });
 
-  const colors = [ main, alt2, alt1 ];
+  const colors = [main, alt2, alt1];
   return colors;
 };
 

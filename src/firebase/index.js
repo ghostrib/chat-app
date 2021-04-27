@@ -27,4 +27,12 @@ const providers = {
 
 export { providers };
 
+// // const db = firebase.database();
+// export const database = () => {
+//   const db = firebase.database();
+//   return (function (path) {
+//     return db.ref(path);
+//   })();
+// };
+
 export default firebase;

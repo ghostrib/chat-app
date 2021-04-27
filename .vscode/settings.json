@@ -1,13 +1,12 @@
 {
   "editor.formatOnSave": true,
   "editor.formatOnPaste": false,
-  "eslint.lintTask.enable": true,
-  "eslint.format.enable": true,
-  "eslint.alwaysShowStatus": true,
+  "eslint.lintTask.enable": false,
+  "eslint.format.enable": false,
+  // "eslint.alwaysShowStatus": true,
 
-  "eslint.validate": ["javascript"],
-  "eslint.run": "onSave",
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  // "eslint.validate": ["javascript"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.parameterHints.enabled": false,
 
   "editor.codeActionsOnSave": {
@@ -16,11 +15,11 @@
   },
 
   "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
   "[javascriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
   "[jsonc]": {

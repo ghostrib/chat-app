@@ -22,6 +22,7 @@ const OptionsButton = ({ user, showOptions }) => {
       <span className={s.username}>{user.name}</span>
       <button className={s.optionsButton} onClick={showOptions}>
         <SVG className={s.profile__image} src={user.image} />
+        <span className={s.visuallyHidden}>Settings</span>
       </button>
     </div>
   );

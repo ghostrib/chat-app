@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import Message from './Message/Message';
+import Message from './Message';
 import PropTypes from 'prop-types';
-import s from './messagelist.module.scss';
 
 /** https://stackoverflow.com/a/61266099 */
 const AlwaysScrollToBottom = () => {
@@ -10,25 +9,21 @@ const AlwaysScrollToBottom = () => {
   return <div ref={elementRef} />;
 };
 
-const MessageList = ({ messages }) => {
-  useEffect(() => {
-    window.addEventListener('resize', function (e) {
-      console.log(window.innerHeight);
-    });
-  });
-
+const MessageList = React.forwardRef(({ messages }, ref) => {
   return (
-    <main className={s.main}>
-      <ul className={s.main__list}>
+    <main ref={ref} style={{ gridArea: 'content', overflowY: 'scroll' }}>
+      <ul>
         {messages.map((messageObject, i) => {
           const { name, message, image } = messageObject;
-          return <Message image={image} name={name} message={message} key={i} />;
+          return (
+            <Message image={image} name={name} key={i} message={message} />
+          );
         })}
         <AlwaysScrollToBottom />
       </ul>
     </main>
   );
-};
+});
 
 export default MessageList;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './sidebar.module.scss';
 import PropTypes from 'prop-types';
-import UserCard from './UserCard/UserCard';
+import UserCard from './UserCard';
 
 const SideBar = ({ usersOnline }) => {
   const displayUsersOnline = () => {

@@ -1,7 +1,7 @@
 import { generateHash } from './hash';
 import { checkCookies } from './cookies';
 import { debounce } from './debounce';
-import { validatePassword, validateEmail } from './validate';
+import { validatePassword, validateEmail, validateUsername } from './validate';
 
 const utils = {
   generateHash,
@@ -9,6 +9,7 @@ const utils = {
   debounce,
   validateEmail,
   validatePassword,
+  validateUsername,
 };
 
 export default utils;
