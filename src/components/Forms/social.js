@@ -73,10 +73,10 @@ const SocialMediaButton = styled.button.attrs((props) => {
   };
 })`
   /* margin: 2rem 0 0 0; */
-  width: 100%;
+  /* width: 100%; */
   /* min-width: var(--min-width); */
   min-width: 280px;
-  max-width: var(--max-width);
+  /* max-width: var(--max-width); */
   max-height: 48px;
   padding: var(--padding) 0;
   border-radius: var(--radius);
@@ -94,7 +94,7 @@ const SocialMediaButton = styled.button.attrs((props) => {
     /* margin: 1.5rem 0 0 0; */
     padding: calc(var(--padding) - 0.75rem);
     padding-left: 0;
-    max-width: calc(var(--max-width) - 3rem);
+    /* max-width: calc(var(--max-width) - 3rem); */
   }
 `;
 
