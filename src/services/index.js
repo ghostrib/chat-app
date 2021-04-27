@@ -7,7 +7,7 @@ import {
   signupWithEmail,
   setOnlineStatus,
   getUser,
-  isEmailAvailable,
+  emailAccountExists,
   loginWithEmailAndPassword,
 } from './firebase';
 
@@ -23,7 +23,7 @@ const services = {
   signupWithEmail,
   setOnlineStatus,
   getUser,
-  isEmailAvailable,
+  emailAccountExists,
   loginWithEmailAndPassword,
 };
 

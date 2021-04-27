@@ -38,6 +38,10 @@ class App extends Component {
     this.setUser = this.setUser.bind(this);
     this.setUsersOnline = this.setUsersOnline.bind(this);
     this.setMessages = this.setMessages.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+
+    this.inputRef = React.createRef();
+    this.mainRef = React.createRef();
 
     this.app = {
       showLogin: this.showLogin,
@@ -185,7 +189,14 @@ class App extends Component {
     }
   }
 
+  handleScroll() {
+    this.mainRef.current.addEventListener('touchstart', (e) => {
+      this.inputRef.current.blur();
+    });
+  }
+
   componentDidMount() {
+    this.handleScroll();
     const { setUsersOnline, setMessages } = this;
 
     window.addEventListener('unload', () => {
@@ -219,8 +230,8 @@ class App extends Component {
         <GridContainer>
           <Header user={user} app={app} />
           <SideBar usersOnline={usersOnline} />
-          <MessageList messages={messages} />
-          <TextInput user={user} state={state} app={app} />
+          <MessageList ref={this.mainRef} messages={messages} />
+          <TextInput ref={this.inputRef} user={user} state={state} app={app} />
         </GridContainer>
         <Modal forms={forms} app={app} />
       </>

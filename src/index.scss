@@ -13,7 +13,7 @@
   --header-height: 60px;
 
   --input-height: 80px;
-  --input-padding-bottom: 40px;
+  --input-padding-bottom: 0.5rem;
 
   --footer-height: calc(var(--input-height) + var(--input-padding-bottom));
 
@@ -61,6 +61,23 @@
   //   --input-height: 1rem;
   // }
 }
+
+// :root {
+//   --header-bg: hsl(215, 25%, 23%);
+//   --header-color: #e6e6e6;
+//   --header-height: 60px;
+//   --input-height: 80px;
+//   --input-padding-bottom: 40px;
+//   --footer-height: calc(var(--input-height) + var(--input-padding-bottom));
+//   /* --main-height: calc(100% - (var(--banner-height) + var(--footer-height))); */
+//   --sidebar-height: calc(100vh - var(--header-height));
+//   --sidebar-width: 200px;
+//   --media-button-width: 240px;
+//   --max-button-width: 320px;
+
+//   --banner-height: 60px;
+//   --banner-font-size: calc(var(--banner-height) * 0.66666666666666666);
+// }
 
 html,
 body,

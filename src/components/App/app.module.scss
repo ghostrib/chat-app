@@ -17,7 +17,7 @@
 
 @media (max-width: 768px) {
   .container {
-    grid-template-rows: var(--banner-height) var(--main-height) var(--footer-height);
+    // grid-template-rows: var(--banner-height) auto var(--footer-height);
     grid-template-columns: 100%;
     grid-template-areas:
       'header'
@@ -28,7 +28,7 @@
 
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .container {
-    grid-template-rows: var(--banner-height) var(--main-height) var(--footer-height);
+    // grid-template-rows: var(--banner-height) auto var(--footer-height);
     grid-template-columns: 100%;
     grid-template-areas:
       'header'

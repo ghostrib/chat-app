@@ -11,9 +11,9 @@ const AlwaysScrollToBottom = () => {
   return <div ref={elementRef} />;
 };
 
-const MessageList = ({ messages }) => {
+const MessageList = React.forwardRef(({ messages }, ref) => {
   return (
-    <main className={s.main}>
+    <main ref={ref} className={s.main}>
       <ul className={s.main__list}>
         {messages.map((messageObject, i) => {
           const { name, message, image } = messageObject;
@@ -25,7 +25,7 @@ const MessageList = ({ messages }) => {
       </ul>
     </main>
   );
-};
+});
 
 export default MessageList;
 

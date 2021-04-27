@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, createRef } from 'react';
 import styled from 'styled-components/macro';
 import firebase from '../../firebase';
 
-export default function TextInput(props) {
+const TextInput = React.forwardRef((props, ref) => {
+  console.log(ref);
   const [message, setMessage] = useState('');
+  const containerRef = createRef(null);
 
   const handleInputChange = (e) => {
     sessionStorage.setItem('autosave', e.target.value);
@@ -36,17 +38,25 @@ export default function TextInput(props) {
     if (savedItem) {
       setMessage(savedItem);
     }
-  }, []);
+
+    if (containerRef.current) {
+      containerRef.current.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+      });
+    }
+  }, [containerRef]);
 
   return (
-    <Wrapper>
+    <Wrapper ref={containerRef} id="text-input">
       <MessageForm onSubmit={handleSubmit}>
-        <MessageInput onChange={handleInputChange} value={message} />
+        <MessageInput ref={ref} onChange={handleInputChange} value={message} />
         <SendButton>Send</SendButton>
       </MessageForm>
     </Wrapper>
   );
-}
+});
+
+export default TextInput;
 
 const Wrapper = styled.div`
   background: #b3b3b3;
@@ -56,7 +66,7 @@ const Wrapper = styled.div`
   height: var(--footer-height);
   left: var(--sidebar-width);
   /* padding-bottom: var(--input-padding-bottom); */
-  position: sticky;
+  position: fixed;
   width: calc(100vw - var(--sidebar-width));
 
   @media screen and (max-width: 768px) {

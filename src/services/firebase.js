@@ -3,14 +3,6 @@ import firebase from '../firebase';
 import { createIcon } from './icons';
 import { generateHash } from '../utils/hash';
 
-export const loginWith = async (provider) => {
-  try {
-    await firebase.auth().signInWithRedirect(provider);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 export const getUsersOnline = (callback) => {
   return firebase
     .database()
@@ -31,7 +23,7 @@ export const getUsersOnline = (callback) => {
     });
 };
 
-window.getUsersOnline = getUsersOnline;
+// window.getUsersOnline = getUsersOnline;
 
 export const getMessages = (callback) => {
   return firebase
@@ -111,21 +103,29 @@ export const signupWithEmail = async (name, email, password) => {
   }
 };
 
-export const isEmailAvailable = async (email) => {
+export const emailAccountExists = async (email) => {
   const data = await firebase.database().ref('users').get();
   const values = await data.val();
   const matches = Object.values(values)
     .map((value) => value.email)
     .filter((usedEmail) => usedEmail === email);
-  return matches.length === 0;
+  return matches.length !== 0;
 };
 
 export const loginWithEmailAndPassword = async (email, password, callback) => {
   try {
     return await firebase.auth().signInWithEmailAndPassword(email, password);
   } catch (error) {
-    // callback(error.message);
     throw Error(error);
   }
 };
-window.firebase = firebase;
+
+export const loginWith = async (provider) => {
+  try {
+    await firebase.auth().signInWithRedirect(provider);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// window.firebase = firebase;
