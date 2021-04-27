@@ -22,7 +22,7 @@ module.exports = {
       path: '/var/www/chat-app/',
       ssh_options: 'IdentityFile=~/.ssh/mattbrannon',
       'pre-deploy-local': '',
-      'post-deploy': 'npm install && npm run build && pm2 reload server/index.js --watch',
+      'post-deploy': 'npm run build && pm2 reload server/index.js --watch',
     },
   },
 };

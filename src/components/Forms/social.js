@@ -39,9 +39,9 @@ const IconWrapper = styled.span`
 
   @supports (-webkit-touch-callout: none) {
     /* CSS specific to iOS devices */
-    width: 3rem;
+    /* width: 3rem;
     height: 3rem;
-    position: unset;
+    position: unset; */
   }
 `;
 
@@ -60,7 +60,8 @@ const ButtonTextWrapper = styled.span`
   @supports (-webkit-touch-callout: none) {
     /* CSS specific to iOS devices */
     padding-left: 16px;
-    font-size: 1.125rem;
+    /* font-size: 1.125rem; */
+    font-size: 16px;
   }
   @media (max-width: 768px) {
     /* margin-left: -1rem; */
