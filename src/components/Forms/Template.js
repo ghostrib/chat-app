@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import Header from './header';
 import Footer from './footer';
-import MaxWidthWrapper from './maxwidth';
+// import MaxWidthWrapper from './maxwidth';
 
 const OverLay = styled.div`
   background: black;

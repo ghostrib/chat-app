@@ -42,6 +42,7 @@ const IconWrapper = styled.span`
     /* width: 3rem;
     height: 3rem;
     position: unset; */
+    /* height: 400rem; */
   }
 `;
 
@@ -59,8 +60,9 @@ const ButtonTextWrapper = styled.span`
 
   @supports (-webkit-touch-callout: none) {
     /* CSS specific to iOS devices */
-    padding-left: 16px;
+    /* padding-left: 16px; */
     /* font-size: 1.125rem; */
+    /* margin-right: -80px; */
     font-size: 16px;
   }
   @media (max-width: 768px) {
@@ -89,12 +91,14 @@ const SocialMediaButton = styled.button.attrs((props) => {
 
   @supports (-webkit-touch-callout: none) {
     /* CSS specific to iOS devices */
+    min-width: 240px;
+    padding: 12px 0 12px 0;
   }
 
   @media (max-width: 768px) {
     /* margin: 1.5rem 0 0 0; */
-    padding: calc(var(--padding) - 0.75rem);
-    padding-left: 0;
+    /* padding: calc(var(--padding) - 0.75rem) 0; */
+    /* padding-left: 0; */
     /* max-width: calc(var(--max-width) - 3rem); */
   }
 `;
@@ -150,7 +154,6 @@ const Row = styled.div`
     // console.log(props);
     return `${Math.floor(props.size / 2)}px`;
   }};
-
   margin-top: ${(props) => {
     // console.log(props);
     return `${Math.floor(props.size / 2)}px`;
