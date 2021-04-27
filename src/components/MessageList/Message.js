@@ -1,28 +1,69 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import s from './message.module.scss';
 import SVG from 'react-inlinesvg';
-import Content from './Content';
+import styled from 'styled-components/macro';
 
-const Message = ({ name, image, message }) => {
+export default function Message({ name, image, message }) {
   return (
-    <li className={s.container__user}>
-      <div className={s.user}>
-        <div className={s.image}>
-          <SVG className={s.svg} src={image} width={40} height={40} />
-          {/* <img src={image} alt="avatar" className={s.user__image} /> */}
-        </div>
-        <div className={s.user__name}>{name}</div>
-        <div className={s.user__message}>{message}</div>
-      </div>
-    </li>
+    <Container>
+      <User>
+        <Image>
+          <ImageSVG image={image} />
+        </Image>
+        <Username>{name}</Username>
+        <MsgText>{message}</MsgText>
+      </User>
+    </Container>
+  );
+}
+
+const Container = styled.li`
+  margin: 12px;
+  padding: 12px;
+  &:hover {
+    background: hsla(300, 2%, 11%, 0.04);
+    border-radius: 4px;
+  }
+`;
+
+const User = styled.div`
+  align-items: flex-start;
+  display: grid;
+  font-size: calc(0.65em + 0.5vw);
+  gap: 2px calc(0.5em + 0.5vw);
+  grid-template-areas:
+    'image name'
+    'image message';
+  grid-template-columns: calc(3em + 0.5vw) auto;
+`;
+
+const Image = styled.div`
+  grid-area: image;
+  height: 100%;
+  width: 100%;
+`;
+
+const ImageSVG = ({ image }) => {
+  return (
+    <>
+      <SVG
+        src={image}
+        width={40}
+        height={40}
+        style={{
+          width: 'auto',
+          height: 'calc(0.5vw + 2vh + 1em)',
+          borderRadius: '100%',
+        }}
+      />
+    </>
   );
 };
 
-Message.propTypes = {
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  // message: PropTypes.string.isRequired,
-};
+const Username = styled.div`
+  font-weight: 800;
+  grid-area: name;
+`;
 
-export default Message;
+const MsgText = styled.div`
+  font-family: lato;
+  font-weight: 400;
+`;

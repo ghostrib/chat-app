@@ -3,7 +3,6 @@ import styled from 'styled-components/macro';
 import firebase from '../../firebase';
 
 const TextInput = React.forwardRef((props, ref) => {
-  console.log(ref);
   const [message, setMessage] = useState('');
   const containerRef = createRef(null);
 
@@ -77,11 +76,6 @@ const Wrapper = styled.div`
 `;
 
 const MessageForm = styled.form`
-  /* align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: center; */
-
   display: grid;
   grid-auto-flow: column;
   grid-gap: 2rem;

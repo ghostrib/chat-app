@@ -13,4 +13,3 @@ const utils = {
 };
 
 export default utils;
-window.utils = utils;

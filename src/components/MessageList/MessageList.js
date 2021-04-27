@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Message from './Message';
 import PropTypes from 'prop-types';
-import s from './messagelist.module.scss';
-import Content from './Content';
 
 /** https://stackoverflow.com/a/61266099 */
 const AlwaysScrollToBottom = () => {
@@ -13,8 +11,8 @@ const AlwaysScrollToBottom = () => {
 
 const MessageList = React.forwardRef(({ messages }, ref) => {
   return (
-    <main ref={ref} className={s.main}>
-      <ul className={s.main__list}>
+    <main ref={ref} style={{ gridArea: 'content', overflowY: 'scroll' }}>
+      <ul>
         {messages.map((messageObject, i) => {
           const { name, message, image } = messageObject;
           return (
